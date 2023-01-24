@@ -1,7 +1,8 @@
-#include <opencv2/opencv.hpp>
-#include <iostream>
-#include <stdio.h>
+#include "genericFilter.hpp"
 #include "testFilter.hpp"
+#include <iostream>
+#include <opencv2/opencv.hpp>
+#include <stdio.h>
 using namespace cv;
 using namespace std;
 
@@ -35,8 +36,11 @@ int main(int, char**) {
         return -1;
     }
 
-    testFitler filter;
-    filter.applyFilter(inframe);
+    testFitler test;
+    test.applyFilter(inframe);
+
+    GenericFilter generic;
+    generic.applyFilter(inframe);
 
     imshow("out", inframe);
     waitKey(0);

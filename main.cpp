@@ -1,5 +1,7 @@
-#include <opencv2/opencv.hpp>
+#include "genericFilter.hpp"
+#include "testFilter.hpp"
 #include <iostream>
+#include <opencv2/opencv.hpp>
 #include <stdio.h>
 using namespace cv;
 using namespace std;
@@ -33,6 +35,12 @@ int main(int, char**) {
         cerr << "ERROR! blank frame grabbed\n";
         return -1;
     }
+
+    testFitler test;
+    test.applyFilter(inframe);
+
+    GenericFilter generic;
+    generic.applyFilter(inframe);
 
     imshow("out", inframe);
     waitKey(0);

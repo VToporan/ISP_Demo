@@ -1,5 +1,17 @@
-add_library(filters "")
+add_library( filters "" )
 
-add_subdirectory(testFilter)
+target_sources(filters
+  PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/genericFilter.cpp
+  PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/genericFilter.hpp
+  )
 
-target_link_libraries(filters PRIVATE testFilter )
+target_include_directories(filters
+  PUBLIC
+    ${CMAKE_CURRENT_LIST_DIR}
+  )
+
+add_subdirectory( testFilter )
+
+target_link_libraries( filters PRIVATE testFilter )

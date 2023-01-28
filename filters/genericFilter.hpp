@@ -3,7 +3,7 @@
 
 #include <opencv2/core.hpp>
 
-class GenericFilter {
+class GenericFilterWrapper {
     private:
         int kernelSize;
 

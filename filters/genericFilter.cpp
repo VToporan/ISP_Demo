@@ -1,10 +1,10 @@
 #include "genericFilter.hpp"
 #include <stdio.h>
 
-void GenericFilter::applyFilter(cv::Mat indrame) {
+void GenericFilterWrapper::applyFilter(cv::Mat indrame) {
     return;
 }
 
-void GenericFilter::setKernelSize(int newKernelSize) {
+void GenericFilterWrapper::setKernelSize(int newKernelSize) {
     this->kernelSize = newKernelSize;
 }

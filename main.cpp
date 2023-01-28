@@ -1,5 +1,5 @@
 #include "genericFilter.hpp"
-#include "testFilter.hpp"
+#include "boxFilter.hpp"
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include <stdio.h>
@@ -36,11 +36,8 @@ int main(int, char**) {
         return -1;
     }
 
-    testFitler test;
-    test.applyFilter(inframe);
-
-    GenericFilter generic;
-    generic.applyFilter(inframe);
+    BoxFitlerWrapper boxFilterWrapper;
+    boxFilterWrapper.applyFilter(inframe);
 
     imshow("out", inframe);
     waitKey(0);

@@ -1,9 +1,9 @@
-#ifndef TEST_FILTER_H
-#define TEST_FILTER_H
+#ifndef BOX_FILTER_H
+#define BOX_FILTER_H
 
 #include <opencv2//core.hpp>
 
-class testFitler {
+class BoxFitlerWrapper {
     public:
         void applyFilter(cv::Mat &inframe);
 };

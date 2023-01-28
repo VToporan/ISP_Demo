@@ -10,4 +10,5 @@ target_sources(boxFilter
 target_include_directories(boxFilter
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}/../
   )

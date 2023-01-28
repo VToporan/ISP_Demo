@@ -5,11 +5,13 @@
 
 class GenericFilterWrapper {
     private:
-        int kernelSize;
+        cv::Size kernelSize;
 
     public:
+        explicit GenericFilterWrapper();
         virtual void applyFilter(cv::Mat indrame);
-        virtual void setKernelSize(int newKernelSize);
+        virtual void setKernelSize(cv::Size newKernelSize);
+        virtual cv::Size getKernelSize();
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include "boxFilter.hpp"
+#include "opencv2/imgproc.hpp"
 #include <stdio.h>
 
 void BoxFitlerWrapper::applyFilter(cv::Mat &inframe) {
-    printf("Print from box filter library \n");
+    cv::boxFilter(inframe, inframe, 0, getKernelSize());
 }

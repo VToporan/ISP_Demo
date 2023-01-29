@@ -12,6 +12,6 @@ target_include_directories(filters
     ${CMAKE_CURRENT_LIST_DIR}
   )
 
-add_subdirectory( testFilter )
+add_subdirectory( boxFilter )
 
-target_link_libraries( filters PRIVATE testFilter )
+target_link_libraries( filters PRIVATE boxFilter )

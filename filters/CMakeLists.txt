@@ -13,5 +13,6 @@ target_include_directories(filters
   )
 
 add_subdirectory( boxFilter )
+add_subdirectory( medianFilter )
 
-target_link_libraries( filters PRIVATE boxFilter )
+target_link_libraries( filters PRIVATE boxFilter medianFilter )

@@ -1,5 +1,6 @@
 #include "genericFilter.hpp"
 #include "boxFilter.hpp"
+#include "medianFilter.hpp"
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include <stdio.h>
@@ -36,8 +37,8 @@ int main(int, char**) {
         return -1;
     }
 
-    BoxFitlerWrapper boxFilterWrapper;
-    boxFilterWrapper.applyFilter(inframe);
+    MedianFitlerWrapper medianFilterWrapper;
+    medianFilterWrapper.applyFilter(inframe);
 
     imshow("out", inframe);
     waitKey(0);

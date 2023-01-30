@@ -3,6 +3,7 @@ add_library(gaussianFilter "")
 target_sources(gaussianFilter
   PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/gaussianFilter.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/../genericFilter.cpp
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/gaussianFilter.hpp
   )

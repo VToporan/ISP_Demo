@@ -37,13 +37,13 @@ int main(int, char**) {
         return -1;
     }
 
-    MedianFitlerWrapper medianFilterWrapper(-5);
-    medianFilterWrapper.applyFilter(inframe);
+    // MedianFitlerWrapper medianFilterWrapper(-5);
+    // medianFilterWrapper.applyFilter(inframe);
+    //
+    // BoxFitlerWrapper boxFilterWrapper(6);
+    // boxFilterWrapper.applyFilter(inframe);
 
-    BoxFitlerWrapper boxFilterWrapper(5);
-    boxFilterWrapper.applyFilter(inframe);
-
-    GaussianFitlerWrapper gaussianFilterWrapper(5);
+    GaussianFitlerWrapper gaussianFilterWrapper(15, 3, 30);
     gaussianFilterWrapper.applyFilter(inframe);
 
     imshow("out", inframe);

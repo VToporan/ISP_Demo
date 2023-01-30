@@ -1,5 +1,5 @@
 #include "boxFilter.hpp"
-#include "opencv2/imgproc.hpp"
+#include <opencv2/imgproc.hpp>
 #include <stdio.h>
 
 void BoxFitlerWrapper::applyFilter(cv::Mat &inframe) {

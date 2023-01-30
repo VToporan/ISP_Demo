@@ -37,8 +37,11 @@ int main(int, char**) {
         return -1;
     }
 
-    MedianFitlerWrapper medianFilterWrapper;
+    MedianFitlerWrapper medianFilterWrapper(-5);
     medianFilterWrapper.applyFilter(inframe);
+
+    BoxFitlerWrapper boxFilterWrapper(5);
+    boxFilterWrapper.applyFilter(inframe);
 
     imshow("out", inframe);
     waitKey(0);

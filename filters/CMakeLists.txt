@@ -15,5 +15,6 @@ target_include_directories(filters
 add_subdirectory( boxFilter )
 add_subdirectory( medianFilter )
 add_subdirectory( gaussianFilter )
+add_subdirectory( bilateralFilter )
 
-target_link_libraries( filters PRIVATE boxFilter medianFilter gaussianFilter )
+target_link_libraries( filters PRIVATE boxFilter medianFilter gaussianFilter bilateralFilter )

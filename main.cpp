@@ -2,6 +2,7 @@
 #include "boxFilter.hpp"
 #include "medianFilter.hpp"
 #include "gaussianFilter.hpp"
+#include "bilateralFilter.hpp"
 #include <opencv2/opencv.hpp>
 #include <stdio.h>
 using namespace cv;
@@ -43,8 +44,11 @@ int main(int, char**) {
     // BoxFitlerWrapper boxFilterWrapper(6);
     // boxFilterWrapper.applyFilter(inframe);
 
-    GaussianFitlerWrapper gaussianFilterWrapper(15, 3, 30);
-    gaussianFilterWrapper.applyFilter(inframe);
+    // GaussianFitlerWrapper gaussianFilterWrapper(15, 3, 30);
+    // gaussianFilterWrapper.applyFilter(inframe);
+
+    BilateralFitlerWrapper bilateralFilterWrapper(10, 10, 10);
+    bilateralFilterWrapper.applyFilter(inframe);
 
     imshow("out", inframe);
     waitKey(0);

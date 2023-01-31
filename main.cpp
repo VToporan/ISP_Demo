@@ -1,10 +1,11 @@
-#include "genericFilter.hpp"
-#include "boxFilter.hpp"
-#include "medianFilter.hpp"
-#include "gaussianFilter.hpp"
 #include "bilateralFilter.hpp"
+#include "boxFilter.hpp"
+#include "gaussianFilter.hpp"
+#include "genericFilter.hpp"
+#include "medianFilter.hpp"
 #include <opencv2/opencv.hpp>
 #include <stdio.h>
+
 using namespace cv;
 using namespace std;
 

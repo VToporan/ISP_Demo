@@ -21,7 +21,7 @@ GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize,
     this->sigmaX = initialSigma;
     this->sigmaY = 0;
 }
- 
+
 GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize,
                                              double initialSigmaX,
                                              double initialSigmaY)

@@ -6,11 +6,10 @@ GenericFilterWrapper::GenericFilterWrapper(int initialKernelSize) {
     setKernelSize1D(initialKernelSize);
 }
 
-void GenericFilterWrapper::applyFilter(cv::Mat indrame) {
-    return;
-}
+void GenericFilterWrapper::applyFilter(cv::Mat indrame) { return; }
 
-void GenericFilterWrapper::setKernelSize2D(int newKernelSizeX, int newKernelSizeY) {
+void GenericFilterWrapper::setKernelSize2D(int newKernelSizeX,
+                                           int newKernelSizeY) {
     if (newKernelSizeX < 1 || newKernelSizeY < 1) {
         this->kernelSizeX = 1;
         this->kernelSizeY = 1;
@@ -25,8 +24,8 @@ void GenericFilterWrapper::setKernelSize1D(int newKernelSize) {
     if (newKernelSize < 1) {
         this->kernelSizeX = 1;
         this->kernelSizeY = 1;
-        return; 
-    } 
+        return;
+    }
 
     this->kernelSizeX = newKernelSize;
     this->kernelSizeY = newKernelSize;

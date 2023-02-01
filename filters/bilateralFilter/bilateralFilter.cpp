@@ -38,7 +38,7 @@ BilateralFitlerWrapper::BilateralFitlerWrapper(int initialKernelSize,
 
 void BilateralFitlerWrapper::applyFilter(cv::Mat& inframe) {
     cv::Mat outframe;
-    cv::bilateralFilter(inframe, outframe, this->getKernelSize().height,
+    cv::bilateralFilter(inframe, outframe, this->getKernelSize1D(),
                         this->getSigmaColor(), this->getSigmaSpace());
     inframe = outframe;
 }
@@ -87,4 +87,10 @@ void BilateralFitlerWrapper::setKernelSize1D(int newKernelSize) {
     }
 
     this->diameter = newKernelSize;
+}
+
+int BilateralFitlerWrapper::getKernelSize1D() { return this->diameter; }
+
+cv::Size BilateralFitlerWrapper::getKernelSize2D() {
+    return cv::Size(this->diameter, this->diameter);
 }

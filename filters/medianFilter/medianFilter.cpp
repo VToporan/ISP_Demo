@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 void MedianFitlerWrapper::applyFilter(cv::Mat& inframe) {
-    cv::medianBlur(inframe, inframe, this->getKernelSize().height);
+    cv::medianBlur(inframe, inframe, this->getKernelSize1D());
 }
 
 void MedianFitlerWrapper::setKernelSize2D(int newKernelSizeX,
@@ -17,4 +17,12 @@ void MedianFitlerWrapper::setKernelSize1D(int newKernelSize) {
     }
 
     this->kernelSize = newKernelSize;
+}
+
+int MedianFitlerWrapper::getKernelSize1D() {
+    return this->kernelSize;
+}
+
+cv::Size MedianFitlerWrapper::getKernelSize2D() {
+    return cv::Size(this->kernelSize, this->kernelSize);
 }

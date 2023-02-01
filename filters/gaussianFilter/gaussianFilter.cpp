@@ -37,7 +37,7 @@ GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize,
 }
 
 void GaussianFitlerWrapper::applyFilter(cv::Mat& inframe) {
-    cv::GaussianBlur(inframe, inframe, this->getKernelSize(), this->getSigmaX(),
+    cv::GaussianBlur(inframe, inframe, this->getKernelSize2D(), this->getSigmaX(),
                      this->getSigmaY());
 }
 

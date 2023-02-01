@@ -24,6 +24,9 @@ class BilateralFitlerWrapper : GenericFilterWrapper {
     void setSigmaColor(int newSigmaColor);
     void setSigmaSpace(int newSigmaSpace);
 
+    int getKernelSize1D();
+    cv::Size getKernelSize2D();
+
     double getSigmaColor();
     double getSigmaSpace();
 

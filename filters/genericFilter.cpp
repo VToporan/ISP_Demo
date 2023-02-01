@@ -31,6 +31,10 @@ void GenericFilterWrapper::setKernelSize1D(int newKernelSize) {
     this->kernelSizeY = newKernelSize;
 }
 
-cv::Size GenericFilterWrapper::getKernelSize() {
+int GenericFilterWrapper::getKernelSize1D() {
+    return this->kernelSizeX;
+}
+
+cv::Size GenericFilterWrapper::getKernelSize2D() {
     return cv::Size(this->kernelSizeX, this->kernelSizeY);
 }

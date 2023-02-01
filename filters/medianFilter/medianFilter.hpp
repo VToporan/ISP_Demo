@@ -9,8 +9,7 @@ class MedianFitlerWrapper : GenericFilterWrapper {
     int kernelSize;
 
   public:
-    explicit MedianFitlerWrapper(int initialKernelSize)
-        : GenericFilterWrapper(initialKernelSize) {}
+    explicit MedianFitlerWrapper(int initialKernelSize);
     void setKernelSize2D(int newKernelSizeX, int newKernelSizeY);
     void setKernelSize1D(int newKernelSize);
     int getKernelSize1D();

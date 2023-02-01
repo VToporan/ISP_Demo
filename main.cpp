@@ -4,6 +4,7 @@
 #include "gaussianFilter.hpp"
 #include "genericFilter.hpp"
 #include "medianFilter.hpp"
+#include "dilateFilter.hpp"
 
 #include <opencv2/opencv.hpp>
 #include <stdio.h>
@@ -53,8 +54,11 @@ int main(int, char**) {
     // BilateralFitlerWrapper bilateralFilterWrapper(10, 10, 10);
     // bilateralFilterWrapper.applyFilter(inframe);
 
-    ErodeFitlerWrapper erodeFilterWrapper(10);
-    erodeFilterWrapper.applyFilter(inframe);
+    // ErodeFitlerWrapper erodeFilterWrapper(10);
+    // erodeFilterWrapper.applyFilter(inframe);
+
+    DilateFitlerWrapper dilateFilterWrapper(10);
+    dilateFilterWrapper.applyFilter(inframe);
 
     imshow("out", inframe);
     waitKey(0);

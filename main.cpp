@@ -1,8 +1,10 @@
 #include "bilateralFilter.hpp"
 #include "boxFilter.hpp"
+#include "erodeFilter.hpp"
 #include "gaussianFilter.hpp"
 #include "genericFilter.hpp"
 #include "medianFilter.hpp"
+
 #include <opencv2/opencv.hpp>
 #include <stdio.h>
 
@@ -48,8 +50,11 @@ int main(int, char**) {
     // GaussianFitlerWrapper gaussianFilterWrapper(15, 3, 30);
     // gaussianFilterWrapper.applyFilter(inframe);
 
-    BilateralFitlerWrapper bilateralFilterWrapper(10, 10, 10);
-    bilateralFilterWrapper.applyFilter(inframe);
+    // BilateralFitlerWrapper bilateralFilterWrapper(10, 10, 10);
+    // bilateralFilterWrapper.applyFilter(inframe);
+
+    ErodeFitlerWrapper erodeFilterWrapper(10);
+    erodeFilterWrapper.applyFilter(inframe);
 
     imshow("out", inframe);
     waitKey(0);

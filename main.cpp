@@ -5,6 +5,7 @@
 #include "genericFilter.hpp"
 #include "medianFilter.hpp"
 #include "dilateFilter.hpp"
+#include "sobelFilter.hpp"
 
 #include <opencv2/opencv.hpp>
 #include <stdio.h>
@@ -42,9 +43,9 @@ int main(int, char**) {
         return -1;
     }
 
-    // MedianFitlerWrapper medianFilterWrapper(-5);
+    // MedianFitlerWrapper medianFilterWrapper(5);
     // medianFilterWrapper.applyFilter(inframe);
-    //
+
     // BoxFitlerWrapper boxFilterWrapper(6);
     // boxFilterWrapper.applyFilter(inframe);
 
@@ -57,8 +58,11 @@ int main(int, char**) {
     // ErodeFitlerWrapper erodeFilterWrapper(10);
     // erodeFilterWrapper.applyFilter(inframe);
 
-    DilateFitlerWrapper dilateFilterWrapper(10);
-    dilateFilterWrapper.applyFilter(inframe);
+    // DilateFitlerWrapper dilateFilterWrapper(10);
+    // dilateFilterWrapper.applyFilter(inframe);
+
+    SobelFitlerWrapper sobelFilterWrapper(11, 3, 3);
+    sobelFilterWrapper.applyFilter(inframe);
 
     imshow("out", inframe);
     waitKey(0);

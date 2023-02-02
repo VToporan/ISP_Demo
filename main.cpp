@@ -1,5 +1,6 @@
 #include "bilateralFilter.hpp"
 #include "boxFilter.hpp"
+#include "cannyFilter.hpp"
 #include "erodeFilter.hpp"
 #include "gaussianFilter.hpp"
 #include "genericFilter.hpp"
@@ -61,8 +62,11 @@ int main(int, char**) {
     // DilateFitlerWrapper dilateFilterWrapper(10);
     // dilateFilterWrapper.applyFilter(inframe);
 
-    SobelFitlerWrapper sobelFilterWrapper(3, 1, 1);
-    sobelFilterWrapper.applyFilter(inframe);
+    // SobelFitlerWrapper sobelFilterWrapper(3, 1, 1);
+    // sobelFilterWrapper.applyFilter(inframe);
+
+    CannyFitlerWrapper cannyFitlerWrapper(3, 15);
+    cannyFitlerWrapper.applyFilter(inframe);
 
     imshow("out", inframe);
     waitKey(0);

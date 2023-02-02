@@ -28,7 +28,7 @@ SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize,
 
 void SobelFitlerWrapper::applyFilter(cv::Mat& inframe) {
     cv::Mat grayscale, gradX, gradY;
-    cvtColor(inframe, grayscale, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(inframe, grayscale, cv::COLOR_BGR2GRAY);
 
     cv::Sobel(grayscale, gradX, 0, this->getDerivX(), 0,
               this->getKernelSize1D());
@@ -51,8 +51,6 @@ void SobelFitlerWrapper::setKernelSize1D(int newKernelSize) {
     if ((newKernelSize % 2) == 0) {
         newKernelSize++;
     }
-
-    printf("Sobel kermel %d \n", newKernelSize);
 
     this->kernelSize = newKernelSize;
 }

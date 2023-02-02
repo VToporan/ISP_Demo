@@ -1,5 +1,6 @@
 #include "sobelFilter.hpp"
 #include "genericFilter.hpp"
+#include "opencv2/core.hpp"
 #include <opencv2/imgproc.hpp>
 #include <stdio.h>
 
@@ -26,12 +27,19 @@ SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize,
 }
 
 void SobelFitlerWrapper::applyFilter(cv::Mat& inframe) {
-    cv::Mat grayscale;
+    cv::Mat grayscale, gradX, gradY;
     cvtColor(inframe, grayscale, cv::COLOR_BGR2GRAY);
 
-    printf("Sobel kermel %d \n", this->getKernelSize1D());
-    cv::Sobel(grayscale, inframe, 0, this->getDerivX(), this->getDerivY(),
+    cv::Sobel(grayscale, gradX, 0, this->getDerivX(), 0,
               this->getKernelSize1D());
+    
+    cv::Sobel(grayscale, gradY, 0, 0, this->getDerivY(),
+              this->getKernelSize1D());
+
+    cv::convertScaleAbs(gradX, gradX);
+    cv::convertScaleAbs(gradY, gradY);
+
+    cv::addWeighted(gradX, 0.5, gradY, 0.5, 0, inframe);
 }
 
 void SobelFitlerWrapper::setKernelSize2D(int newKernelSizeX,

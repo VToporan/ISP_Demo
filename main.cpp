@@ -61,7 +61,7 @@ int main(int, char**) {
     // DilateFitlerWrapper dilateFilterWrapper(10);
     // dilateFilterWrapper.applyFilter(inframe);
 
-    SobelFitlerWrapper sobelFilterWrapper(11, 3, 3);
+    SobelFitlerWrapper sobelFilterWrapper(3, 1, 1);
     sobelFilterWrapper.applyFilter(inframe);
 
     imshow("out", inframe);

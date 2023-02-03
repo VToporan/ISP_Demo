@@ -4,7 +4,7 @@
 #include "genericFilter.hpp"
 #include <opencv2/core.hpp>
 
-class SobelFitlerWrapper : GenericFilterWrapper {
+class SobelFitlerWrapper : public GenericFilterWrapper {
   private:
     int kernelSize;
     int derivX;

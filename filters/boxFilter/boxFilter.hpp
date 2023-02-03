@@ -4,7 +4,7 @@
 #include "genericFilter.hpp"
 #include <opencv2/core.hpp>
 
-class BoxFitlerWrapper : GenericFilterWrapper {
+class BoxFitlerWrapper : public GenericFilterWrapper {
   public:
     explicit BoxFitlerWrapper(int initialKernelSize)
         : GenericFilterWrapper(initialKernelSize) {}

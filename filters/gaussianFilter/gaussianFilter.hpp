@@ -4,7 +4,7 @@
 #include "genericFilter.hpp"
 #include <opencv2/core.hpp>
 
-class GaussianFitlerWrapper : GenericFilterWrapper {
+class GaussianFitlerWrapper : public GenericFilterWrapper {
   private:
     double sigmaX;
     double sigmaY;

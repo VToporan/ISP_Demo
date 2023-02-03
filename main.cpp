@@ -1,15 +1,17 @@
 #include "bilateralFilter.hpp"
 #include "boxFilter.hpp"
 #include "cannyFilter.hpp"
+#include "dilateFilter.hpp"
 #include "erodeFilter.hpp"
 #include "gaussianFilter.hpp"
 #include "genericFilter.hpp"
 #include "medianFilter.hpp"
-#include "dilateFilter.hpp"
 #include "sobelFilter.hpp"
 
+#include <opencv2/highgui.hpp>
 #include <opencv2/opencv.hpp>
 #include <stdio.h>
+#include <string>
 
 using namespace cv;
 using namespace std;
@@ -44,32 +46,26 @@ int main(int, char**) {
         return -1;
     }
 
-    // MedianFitlerWrapper medianFilterWrapper(5);
-    // medianFilterWrapper.applyFilter(inframe);
-
-    // BoxFitlerWrapper boxFilterWrapper(6);
-    // boxFilterWrapper.applyFilter(inframe);
-
-    // GaussianFitlerWrapper gaussianFilterWrapper(15, 3, 30);
-    // gaussianFilterWrapper.applyFilter(inframe);
-
-    // BilateralFitlerWrapper bilateralFilterWrapper(10, 10, 10);
-    // bilateralFilterWrapper.applyFilter(inframe);
-
-    // ErodeFitlerWrapper erodeFilterWrapper(10);
-    // erodeFilterWrapper.applyFilter(inframe);
-
-    // DilateFitlerWrapper dilateFilterWrapper(10);
-    // dilateFilterWrapper.applyFilter(inframe);
-
-    // SobelFitlerWrapper sobelFilterWrapper(3, 1, 1);
-    // sobelFilterWrapper.applyFilter(inframe);
-
+    MedianFitlerWrapper medianFilterWrapper(5);
+    BoxFitlerWrapper boxFilterWrapper(6);
+    GaussianFitlerWrapper gaussianFilterWrapper(15, 3, 30);
+    BilateralFitlerWrapper bilateralFilterWrapper(10, 10, 10);
+    ErodeFitlerWrapper erodeFilterWrapper(10);
+    DilateFitlerWrapper dilateFilterWrapper(10);
+    SobelFitlerWrapper sobelFilterWrapper(3, 1, 1);
     CannyFitlerWrapper cannyFitlerWrapper(3, 15);
-    cannyFitlerWrapper.applyFilter(inframe);
 
-    imshow("out", inframe);
-    waitKey(0);
+    GenericFilterWrapper* wrappers[] = {
+        &medianFilterWrapper,    &boxFilterWrapper,   &gaussianFilterWrapper,
+        &bilateralFilterWrapper, &erodeFilterWrapper, &dilateFilterWrapper,
+        &sobelFilterWrapper,     &cannyFitlerWrapper};
 
+    int wrapperArrSize = sizeof(wrappers) / sizeof(wrappers[0]);
+    for (int i = 0; i < wrapperArrSize; ++i) {
+        cv::Mat outframe = inframe.clone();
+        wrappers[i]->applyFilter(outframe);
+        imshow("out" + to_string(i), outframe);
+    }
+    waitKey();
     return 0;
 }

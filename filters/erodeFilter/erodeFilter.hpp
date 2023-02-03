@@ -4,7 +4,7 @@
 #include "genericFilter.hpp"
 #include <opencv2/core.hpp>
 
-class ErodeFitlerWrapper : GenericFilterWrapper {
+class ErodeFitlerWrapper : public GenericFilterWrapper {
   public:
     explicit ErodeFitlerWrapper(int initialKernelSize)
         : GenericFilterWrapper(initialKernelSize) {}

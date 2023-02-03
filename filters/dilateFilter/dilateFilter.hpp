@@ -4,7 +4,7 @@
 #include "genericFilter.hpp"
 #include <opencv2/core.hpp>
 
-class DilateFitlerWrapper : GenericFilterWrapper {
+class DilateFitlerWrapper : public GenericFilterWrapper {
   public:
     explicit DilateFitlerWrapper(int initialKernelSize)
         : GenericFilterWrapper(initialKernelSize) {}

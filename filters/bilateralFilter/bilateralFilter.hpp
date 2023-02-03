@@ -4,7 +4,7 @@
 #include "genericFilter.hpp"
 #include <opencv2/core.hpp>
 
-class BilateralFitlerWrapper : GenericFilterWrapper {
+class BilateralFitlerWrapper : public GenericFilterWrapper {
   private:
     int diameter;
     double sigmaColor;

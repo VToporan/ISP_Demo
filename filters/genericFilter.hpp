@@ -10,7 +10,7 @@ class GenericFilterWrapper {
 
   public:
     explicit GenericFilterWrapper(int initialKernelSize);
-    virtual void applyFilter(cv::Mat indrame);
+    virtual void applyFilter(cv::Mat &inframe) = 0;
     virtual void setKernelSize1D(int newKernelSize);
     virtual void setKernelSize2D(int newKernelSizeX, int newKernelSizeY);
     virtual int getKernelSize1D();

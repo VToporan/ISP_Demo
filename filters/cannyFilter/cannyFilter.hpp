@@ -4,7 +4,7 @@
 #include "genericFilter.hpp"
 #include <opencv2/core.hpp>
 
-class CannyFitlerWrapper : GenericFilterWrapper {
+class CannyFitlerWrapper : public GenericFilterWrapper {
   private:
     int kernelSize;
     int lowTreshold;

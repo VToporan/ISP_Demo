@@ -6,8 +6,6 @@ GenericFilterWrapper::GenericFilterWrapper(int initialKernelSize) {
     setKernelSize1D(initialKernelSize);
 }
 
-void GenericFilterWrapper::applyFilter(cv::Mat indrame) { return; }
-
 void GenericFilterWrapper::setKernelSize2D(int newKernelSizeX,
                                            int newKernelSizeY) {
     if (newKernelSizeX < 1 || newKernelSizeY < 1) {
@@ -31,9 +29,7 @@ void GenericFilterWrapper::setKernelSize1D(int newKernelSize) {
     this->kernelSizeY = newKernelSize;
 }
 
-int GenericFilterWrapper::getKernelSize1D() {
-    return this->kernelSizeX;
-}
+int GenericFilterWrapper::getKernelSize1D() { return this->kernelSizeX; }
 
 cv::Size GenericFilterWrapper::getKernelSize2D() {
     return cv::Size(this->kernelSizeX, this->kernelSizeY);

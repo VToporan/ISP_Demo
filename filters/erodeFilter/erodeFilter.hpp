@@ -1,12 +1,12 @@
-#ifndef BOX_FILTER_H
-#define BOX_FILTER_H
+#ifndef ERODE_FILTER_H
+#define ERODE_FILTER_H
 
 #include "genericFilter.hpp"
 #include <opencv2/core.hpp>
 
-class BoxFitlerWrapper : public GenericFilterWrapper {
+class ErodeFitlerWrapper : public GenericFilterWrapper {
   public:
-    explicit BoxFitlerWrapper(int initialKernelSize)
+    explicit ErodeFitlerWrapper(int initialKernelSize)
         : GenericFilterWrapper(initialKernelSize) {}
     void applyFilter(cv::Mat& inframe);
 };

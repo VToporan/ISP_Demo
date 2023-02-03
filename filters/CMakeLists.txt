@@ -13,5 +13,12 @@ target_include_directories(filters
   )
 
 add_subdirectory( boxFilter )
+add_subdirectory( medianFilter )
+add_subdirectory( gaussianFilter )
+add_subdirectory( bilateralFilter )
+add_subdirectory( erodeFilter )
+add_subdirectory( dilateFilter )
+add_subdirectory( sobelFilter )
+add_subdirectory( cannyFilter )
 
-target_link_libraries( filters PRIVATE boxFilter )
+target_link_libraries( filters PRIVATE boxFilter medianFilter gaussianFilter bilateralFilter erodeFilter dilateFilter sobelFilter cannyFilter )

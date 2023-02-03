@@ -1,12 +1,12 @@
-#ifndef BOX_FILTER_H
-#define BOX_FILTER_H
+#ifndef DILATE_FILTER_H
+#define DILATE_FILTER_H
 
 #include "genericFilter.hpp"
 #include <opencv2/core.hpp>
 
-class BoxFitlerWrapper : public GenericFilterWrapper {
+class DilateFitlerWrapper : public GenericFilterWrapper {
   public:
-    explicit BoxFitlerWrapper(int initialKernelSize)
+    explicit DilateFitlerWrapper(int initialKernelSize)
         : GenericFilterWrapper(initialKernelSize) {}
     void applyFilter(cv::Mat& inframe);
 };

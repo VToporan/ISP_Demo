@@ -1,18 +1,36 @@
 #include "genericFilter.hpp"
+#include <opencv2/core.hpp>
 #include <stdio.h>
 
-GenericFilterWrapper::GenericFilterWrapper() {
-    this->kernelSize = cv::Size(30, 30); 
+GenericFilterWrapper::GenericFilterWrapper(int initialKernelSize) {
+    setKernelSize1D(initialKernelSize);
 }
 
-void GenericFilterWrapper::applyFilter(cv::Mat indrame) {
-    return;
+void GenericFilterWrapper::setKernelSize2D(int newKernelSizeX,
+                                           int newKernelSizeY) {
+    if (newKernelSizeX < 1 || newKernelSizeY < 1) {
+        this->kernelSizeX = 1;
+        this->kernelSizeY = 1;
+        return;
+    }
+
+    this->kernelSizeX = newKernelSizeX;
+    this->kernelSizeY = newKernelSizeY;
 }
 
-void GenericFilterWrapper::setKernelSize(cv::Size newKernelSize) {
-    this->kernelSize = newKernelSize;
+void GenericFilterWrapper::setKernelSize1D(int newKernelSize) {
+    if (newKernelSize < 1) {
+        this->kernelSizeX = 1;
+        this->kernelSizeY = 1;
+        return;
+    }
+
+    this->kernelSizeX = newKernelSize;
+    this->kernelSizeY = newKernelSize;
 }
 
-cv::Size GenericFilterWrapper::getKernelSize() {
-    return this->kernelSize;
+int GenericFilterWrapper::getKernelSize1D() { return this->kernelSizeX; }
+
+cv::Size GenericFilterWrapper::getKernelSize2D() {
+    return cv::Size(this->kernelSizeX, this->kernelSizeY);
 }

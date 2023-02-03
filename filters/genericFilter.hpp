@@ -4,14 +4,17 @@
 #include <opencv2/core.hpp>
 
 class GenericFilterWrapper {
-    private:
-        cv::Size kernelSize;
+  private:
+    int kernelSizeX;
+    int kernelSizeY;
 
-    public:
-        explicit GenericFilterWrapper();
-        virtual void applyFilter(cv::Mat indrame);
-        virtual void setKernelSize(cv::Size newKernelSize);
-        virtual cv::Size getKernelSize();
+  public:
+    explicit GenericFilterWrapper(int initialKernelSize);
+    virtual void applyFilter(cv::Mat &inframe) = 0;
+    virtual void setKernelSize1D(int newKernelSize);
+    virtual void setKernelSize2D(int newKernelSizeX, int newKernelSizeY);
+    virtual int getKernelSize1D();
+    virtual cv::Size getKernelSize2D();
 };
 
 #endif

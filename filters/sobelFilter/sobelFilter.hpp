@@ -9,6 +9,7 @@ class SobelFitlerWrapper : public GenericFilterWrapper {
     int kernelSize;
     int derivX;
     int derivY;
+    bool displayDirection;
 
   public:
     explicit SobelFitlerWrapper(int initialKernelSize);
@@ -25,6 +26,8 @@ class SobelFitlerWrapper : public GenericFilterWrapper {
     void setDerivY(int newDerivY);
     int getDerivX();
     int getDerivY();
+
+    void toggleDisplayDirection();
 
     void applyFilter(cv::Mat& inframe);
 };

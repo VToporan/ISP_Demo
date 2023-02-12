@@ -60,11 +60,13 @@ int main(int, char**) {
         &bilateralFilterWrapper, &erodeFilterWrapper, &dilateFilterWrapper,
         &sobelFilterWrapper,     &cannyFitlerWrapper};
 
+    sobelFilterWrapper.toggleDisplayDirection();
     int wrapperArrSize = sizeof(wrappers) / sizeof(wrappers[0]);
     for (int i = 0; i < wrapperArrSize; ++i) {
         cv::Mat outframe = inframe.clone();
         wrappers[i]->applyFilter(outframe);
         imshow("out" + to_string(i), outframe);
+        moveWindow("out" + to_string(i), (i/2) * 400, (i%2)*500);
     }
     waitKey();
     return 0;

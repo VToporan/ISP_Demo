@@ -20,5 +20,17 @@ add_subdirectory( erodeFilter )
 add_subdirectory( dilateFilter )
 add_subdirectory( sobelFilter )
 add_subdirectory( cannyFilter )
+add_subdirectory( embossFilter )
 
-target_link_libraries( filters PRIVATE boxFilter medianFilter gaussianFilter bilateralFilter erodeFilter dilateFilter sobelFilter cannyFilter )
+target_link_libraries(filters
+  PRIVATE 
+    boxFilter 
+    medianFilter 
+    gaussianFilter 
+    bilateralFilter 
+    erodeFilter 
+    dilateFilter 
+    sobelFilter 
+    cannyFilter 
+    embossFilter 
+  )

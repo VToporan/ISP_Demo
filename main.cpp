@@ -2,11 +2,13 @@
 #include "boxFilter.hpp"
 #include "cannyFilter.hpp"
 #include "dilateFilter.hpp"
+#include "embossFilter/embossFilter.hpp"
 #include "erodeFilter.hpp"
 #include "gaussianFilter.hpp"
 #include "genericFilter.hpp"
 #include "medianFilter.hpp"
 #include "sobelFilter.hpp"
+#include "embossFilter.hpp"
 
 #include <opencv2/highgui.hpp>
 #include <opencv2/opencv.hpp>
@@ -39,35 +41,43 @@ int main(int, char**) {
 
     openCapture(deviceID, apiID);
 
-    cap.read(inframe);
-
-    if (inframe.empty()) {
-        cerr << "ERROR! blank frame grabbed\n";
-        return -1;
-    }
-
     MedianFitlerWrapper medianFilterWrapper(5);
     BoxFitlerWrapper boxFilterWrapper(6);
     GaussianFitlerWrapper gaussianFilterWrapper(15, 3, 30);
-    BilateralFitlerWrapper bilateralFilterWrapper(10, 10, 10);
+    BilateralFitlerWrapper bilateralFilterWrapper(1, 1, 1);
     ErodeFitlerWrapper erodeFilterWrapper(10);
     DilateFitlerWrapper dilateFilterWrapper(10);
     SobelFitlerWrapper sobelFilterWrapper(3, 1, 1);
     CannyFitlerWrapper cannyFitlerWrapper(3, 15);
+    EmbossFitlerWrapper embossFitlerWrapper;
 
     GenericFilterWrapper* wrappers[] = {
-        &medianFilterWrapper,    &boxFilterWrapper,   &gaussianFilterWrapper,
-        &bilateralFilterWrapper, &erodeFilterWrapper, &dilateFilterWrapper,
-        &sobelFilterWrapper,     &cannyFitlerWrapper};
+        &medianFilterWrapper,   &boxFilterWrapper,
+        &gaussianFilterWrapper, &bilateralFilterWrapper,
+        &erodeFilterWrapper,    &dilateFilterWrapper,
+        &sobelFilterWrapper,    &cannyFitlerWrapper, &embossFitlerWrapper};
 
     sobelFilterWrapper.toggleDisplayDirection();
-    int wrapperArrSize = sizeof(wrappers) / sizeof(wrappers[0]);
-    for (int i = 0; i < wrapperArrSize; ++i) {
-        cv::Mat outframe = inframe.clone();
-        wrappers[i]->applyFilter(outframe);
-        imshow("out" + to_string(i), outframe);
-        moveWindow("out" + to_string(i), (i/2) * 400, (i%2)*500);
+
+    bool keepGoing = true;
+    while (keepGoing) {
+        cap.read(inframe);
+
+        if (inframe.empty()) {
+            cerr << "ERROR! blank frame grabbed\n";
+            return -1;
+        }
+
+        int wrapperArrSize = sizeof(wrappers) / sizeof(wrappers[0]);
+        for (int i = wrapperArrSize - 1; i < wrapperArrSize; ++i) {
+            cv::Mat outframe = inframe.clone();
+            wrappers[i]->applyFilter(outframe);
+            imshow("out" + to_string(i), outframe);
+            moveWindow("out" + to_string(i), (i / 2) * 400, (i % 2) * 500);
+        }
+        if(waitKey(5) == ' ') {
+            keepGoing = false;
+        }
     }
-    waitKey();
     return 0;
 }

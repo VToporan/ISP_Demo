@@ -20,6 +20,7 @@ class EmbossFitlerWrapper : public GenericFilterWrapper {
 
   public:
     explicit EmbossFitlerWrapper();
+    explicit EmbossFitlerWrapper(EmbossDirection initialDirection);
     void setEmbossDirection(EmbossDirection newDirection);
 
     void applyFilter(cv::Mat& inframe);

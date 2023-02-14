@@ -4,8 +4,7 @@
 #include <iostream>
 
 EmbossFitlerWrapper::EmbossFitlerWrapper() : GenericFilterWrapper(0) {
-    cv::Mat embossMatrix =
-        (cv::Mat_<int8_t>(3, 3) << 1, 1, 0, 1, 0, -1, 0, -1, -1);
+    cv::Mat embossMatrix = (cv::Mat_<int8_t>(3, 3) << 1, 1, 0, 1, 0, -1, 0, -1, -1);
 
     for (int i = 0; i < EMBOSS_DIRECTION_TOTAL; ++i) {
         this->embossKernels[(EmbossDirection)i] = embossMatrix.clone();
@@ -13,6 +12,10 @@ EmbossFitlerWrapper::EmbossFitlerWrapper() : GenericFilterWrapper(0) {
     }
 
     this->currentDirection = EMBOSS_DIRECTION_LEFT;
+}
+
+EmbossFitlerWrapper::EmbossFitlerWrapper(EmbossDirection initialDirection) : EmbossFitlerWrapper() {
+    this->currentDirection = initialDirection;
 }
 
 void EmbossFitlerWrapper::applyFilter(cv::Mat& inframe) {
@@ -24,6 +27,4 @@ void EmbossFitlerWrapper::applyFilter(cv::Mat& inframe) {
     inframe += 127;
 }
 
-void EmbossFitlerWrapper::setEmbossDirection(EmbossDirection newDirection) {
-    this->currentDirection = newDirection;
-}
+void EmbossFitlerWrapper::setEmbossDirection(EmbossDirection newDirection) { this->currentDirection = newDirection; }

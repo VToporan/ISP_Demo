@@ -21,6 +21,7 @@ add_subdirectory( dilateFilter )
 add_subdirectory( sobelFilter )
 add_subdirectory( cannyFilter )
 add_subdirectory( embossFilter )
+add_subdirectory( lensFilter )
 
 target_link_libraries(filters
   PRIVATE 
@@ -33,4 +34,5 @@ target_link_libraries(filters
     sobelFilter 
     cannyFilter 
     embossFilter 
+    lensFilter 
   )

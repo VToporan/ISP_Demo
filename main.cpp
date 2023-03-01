@@ -61,7 +61,7 @@ int main(int, char **) {
 
   sobelFilterWrapper.toggleDisplayDirection();
 
-  bool keepGoing = true;
+  bool keepGoing = false;
   do {
     cap.read(inframe);
 
@@ -71,13 +71,13 @@ int main(int, char **) {
     }
 
     int wrapperArrSize = sizeof(wrappers) / sizeof(wrappers[0]);
-    for (int i = wrapperArrSize - 1; i < wrapperArrSize; ++i) {
+    for (int i = 0; i < wrapperArrSize; ++i) {
       cv::Mat outframe = inframe.clone();
       wrappers[i]->applyFilter(outframe);
       imshow("out" + to_string(i), outframe);
       moveWindow("out" + to_string(i), (i / 2) * 400, (i % 2) * 500);
     }
-    if (waitKey(5) == ' ') {
+    if (waitKey(0) == ' ') {
       keepGoing = false;
     }
   } while (keepGoing);

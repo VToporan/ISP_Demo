@@ -15,31 +15,27 @@
 #include <stdio.h>
 #include <string>
 
-using namespace cv;
-using namespace std;
+#define DEVICE_ID (0)
+#define API_ID (cv::CAP_ANY)
 
-VideoCapture cap;
+cv::VideoCapture cap;
 
-void openCapture(int deviceID, int apiID) {
+void openCapture() {
+  int deviceID = 0;
+  int apiID = cv::CAP_ANY;
+  int ddepth = -1;
+
   cap.open(deviceID, apiID);
   if (!cap.isOpened()) {
-    cerr << "ERROR! Unable to open camera\n";
+    std::cerr << "ERROR! Unable to open camera\n";
     exit(-1);
   }
 }
 
 int main(int, char **) {
-  Mat inframe;
+  cv::Mat inframe;
 
-  int deviceID = 0;
-  int apiID = cv::CAP_ANY;
-  int ddepth = -1;
-  int kernel_size = 5;
-  Mat kernel = getStructuringElement(
-      MORPH_RECT, Size(2 * kernel_size + 1, 2 * kernel_size + 1),
-      Point(kernel_size, kernel_size));
-
-  openCapture(deviceID, apiID);
+  openCapture();
 
   MedianFitlerWrapper medianFilterWrapper(5);
   BoxFitlerWrapper boxFilterWrapper(6);
@@ -66,7 +62,7 @@ int main(int, char **) {
     cap.read(inframe);
 
     if (inframe.empty()) {
-      cerr << "ERROR! blank frame grabbed\n";
+      std::cerr << "ERROR! blank frame grabbed\n";
       return -1;
     }
 
@@ -74,10 +70,10 @@ int main(int, char **) {
     for (int i = 0; i < wrapperArrSize; ++i) {
       cv::Mat outframe = inframe.clone();
       wrappers[i]->applyFilter(outframe);
-      imshow("out" + to_string(i), outframe);
-      moveWindow("out" + to_string(i), (i / 2) * 400, (i % 2) * 500);
+      imshow("out" + std::to_string(i), outframe);
+      cv::moveWindow("out" + std::to_string(i), (i / 2) * 400, (i % 2) * 500);
     }
-    if (waitKey(0) == ' ') {
+    if (cv::waitKey(0) == ' ') {
       keepGoing = false;
     }
   } while (keepGoing);

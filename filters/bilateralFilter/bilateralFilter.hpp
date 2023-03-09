@@ -5,32 +5,24 @@
 #include <opencv2/core.hpp>
 
 class BilateralFitlerWrapper : public GenericFilterWrapper {
-  private:
-    int diameter;
-    double sigmaColor;
-    double sigmaSpace;
+    private:
+        int diameter;
+        double sigmaColor;
+        double sigmaSpace;
 
-  public:
-    explicit BilateralFitlerWrapper(int initialKernelSize);
-    explicit BilateralFitlerWrapper(int initialKernelSize, double initialSigma);
-    explicit BilateralFitlerWrapper(int initialKernelSize,
-                                    double initialSigmaColor,
-                                    double initialSigmaSpace);
+    public:
+        explicit BilateralFitlerWrapper(int initialKernelSize);
+        explicit BilateralFitlerWrapper(int initialKernelSize, double initialSigma);
+        explicit BilateralFitlerWrapper(int initialKernelSize, double initialSigmaColor, double initialSigmaSpace);
+        void applyFilter(cv::Mat &inframe);
 
-    void setKernelSize1D(int newKernelSizeX);
-    void setKernelSize2D(int newKernelSizeX, int newKernelSizeY);
+        void setDiameter(int newDiameter);
+        void setSigma(int newSigma);
+        void setSigmaColor(int newSigmaColor);
+        void setSigmaSpace(int newSigmaSpace);
 
-    void setSigma(int newSigma);
-    void setSigmaColor(int newSigmaColor);
-    void setSigmaSpace(int newSigmaSpace);
-
-    int getKernelSize1D();
-    cv::Size getKernelSize2D();
-
-    double getSigmaColor();
-    double getSigmaSpace();
-
-    void applyFilter(cv::Mat& inframe);
+        void setKernelSizeX(int newKernelSize);
+        void setKernelSizeY(int newKernelSize);
 };
 
 #endif

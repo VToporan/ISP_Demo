@@ -12,8 +12,6 @@ class MedianFitlerWrapper : virtual public GenericFilterWrapper {
     explicit MedianFitlerWrapper(int initialKernelSize);
     void setKernelSize2D(int newKernelSizeX, int newKernelSizeY);
     void setKernelSize1D(int newKernelSize);
-    int getKernelSize1D();
-    cv::Size getKernelSize2D();
     void applyFilter(cv::Mat& inframe);
 };
 

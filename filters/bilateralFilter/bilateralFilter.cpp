@@ -3,15 +3,12 @@
 #include <opencv2/imgproc.hpp>
 #include <stdio.h>
 
-BilateralFitlerWrapper::BilateralFitlerWrapper(int initialKernelSize)
-    : GenericFilterWrapper(initialKernelSize) {
+BilateralFitlerWrapper::BilateralFitlerWrapper(int initialKernelSize) {
     sigmaColor = 0;
     sigmaSpace = 0;
 }
 
-BilateralFitlerWrapper::BilateralFitlerWrapper(int initialKernelSize,
-                                               double initialSigma)
-    : GenericFilterWrapper(initialKernelSize) {
+BilateralFitlerWrapper::BilateralFitlerWrapper(int initialKernelSize, double initialSigma) {
     if (initialSigma < 0) {
         this->sigmaColor = 0;
         this->sigmaSpace = 0;
@@ -22,10 +19,8 @@ BilateralFitlerWrapper::BilateralFitlerWrapper(int initialKernelSize,
     this->sigmaSpace = 0;
 }
 
-BilateralFitlerWrapper::BilateralFitlerWrapper(int initialKernelSize,
-                                               double initialSigmaColor,
-                                               double initialSigmaSpace)
-    : GenericFilterWrapper(initialKernelSize) {
+BilateralFitlerWrapper::BilateralFitlerWrapper(int initialKernelSize, double initialSigmaColor,
+                                               double initialSigmaSpace) {
     if (initialSigmaColor < 0 || initialSigmaSpace < 0) {
         this->sigmaColor = 0;
         this->sigmaSpace = 0;
@@ -36,11 +31,19 @@ BilateralFitlerWrapper::BilateralFitlerWrapper(int initialKernelSize,
     this->sigmaSpace = initialSigmaSpace;
 }
 
-void BilateralFitlerWrapper::applyFilter(cv::Mat& inframe) {
+void BilateralFitlerWrapper::applyFilter(cv::Mat &inframe) {
     cv::Mat outframe;
-    cv::bilateralFilter(inframe, outframe, this->getKernelSize1D(),
-                        this->getSigmaColor(), this->getSigmaSpace());
+    cv::bilateralFilter(inframe, outframe, this->diameter, this->sigmaColor, this->sigmaSpace);
     inframe = outframe;
+}
+
+void BilateralFitlerWrapper::setDiameter(int newDiameter) {
+    if (newDiameter < 1) {
+        this->diameter = 1;
+        return;
+    }
+
+    this->diameter = newDiameter;
 }
 
 void BilateralFitlerWrapper::setSigma(int newSigma) {
@@ -70,27 +73,4 @@ void BilateralFitlerWrapper::setSigmaSpace(int newSigmaSpace) {
     }
 
     this->sigmaSpace = newSigmaSpace;
-}
-
-double BilateralFitlerWrapper::getSigmaColor() { return this->sigmaColor; }
-
-double BilateralFitlerWrapper::getSigmaSpace() { return this->sigmaSpace; }
-
-void BilateralFitlerWrapper::setKernelSize2D(int newKernelSizeX,
-                                             int newKernelSizeY) {
-    return;
-}
-
-void BilateralFitlerWrapper::setKernelSize1D(int newKernelSize) {
-    if (newKernelSize % 2) {
-        newKernelSize++;
-    }
-
-    this->diameter = newKernelSize;
-}
-
-int BilateralFitlerWrapper::getKernelSize1D() { return this->diameter; }
-
-cv::Size BilateralFitlerWrapper::getKernelSize2D() {
-    return cv::Size(this->diameter, this->diameter);
 }

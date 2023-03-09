@@ -5,12 +5,9 @@
 #include <cmath>
 #include <iostream>
 
-LensFitlerWrapper::LensFitlerWrapper() : GenericFilterWrapper(0) {
-  this->distortionAmount = 0;
-}
+LensFitlerWrapper::LensFitlerWrapper() { this->distortionAmount = 0; }
 
-LensFitlerWrapper::LensFitlerWrapper(float initialAmount)
-    : GenericFilterWrapper(0) {
+LensFitlerWrapper::LensFitlerWrapper(float initialAmount) {
   this->distortionAmount = initialAmount;
 }
 

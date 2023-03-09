@@ -2,6 +2,36 @@
 #include <opencv2/imgproc.hpp>
 #include <stdio.h>
 
-void BoxFitlerWrapper::applyFilter(cv::Mat& inframe) {
-    cv::boxFilter(inframe, inframe, 0, getKernelSize2D());
+BoxFitlerWrapper::BoxFitlerWrapper(int initialKernelSize) {
+    setKernelSizeX(initialKernelSize);
+    setKernelSizeY(initialKernelSize);
+}
+
+void BoxFitlerWrapper::applyFilter(cv::Mat &inframe) {
+    cv::boxFilter(inframe, inframe, 0,
+                  cv::Size(this->kernelSizeX, this->kernelSizeY));
+}
+
+bool sizeIsValid(int kernelSize) {
+    if (kernelSize <= 0) {
+        return false;
+    }
+
+    if ((kernelSize % 2) == 0) {
+        return false;
+    }
+
+    return true;
+}
+
+void BoxFitlerWrapper::setKernelSizeX(int newKernelSize) {
+    if (sizeIsValid(newKernelSize)) {
+        this->kernelSizeX = newKernelSize;
+    }
+}
+
+void BoxFitlerWrapper::setKernelSizeY(int newKernelSize) {
+    if (sizeIsValid(newKernelSize)) {
+        this->kernelSizeY = newKernelSize;
+    }
 }

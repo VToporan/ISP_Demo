@@ -3,15 +3,14 @@
 #include <opencv2/imgproc.hpp>
 #include <stdio.h>
 
-GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize)
-    : GenericFilterWrapper(initialKernelSize) {
-    sigmaX = 0;
-    sigmaY = 0;
+GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize) {
+    this->kernelSize = initialKernelSize;
+    this->sigmaX = 0;
+    this->sigmaY = 0;
 }
 
 GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize,
-                                             double initialSigma)
-    : GenericFilterWrapper(initialKernelSize) {
+                                             double initialSigma) {
     if (initialSigma < 0) {
         this->sigmaX = 0;
         this->sigmaY = 0;
@@ -19,13 +18,12 @@ GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize,
     }
 
     this->sigmaX = initialSigma;
-    this->sigmaY = 0;
+    this->sigmaY = initialSigma;
 }
 
 GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize,
                                              double initialSigmaX,
-                                             double initialSigmaY)
-    : GenericFilterWrapper(initialKernelSize) {
+                                             double initialSigmaY) {
     if (initialSigmaX < 0 || initialSigmaY < 0) {
         this->sigmaX = 0;
         this->sigmaY = 0;
@@ -36,9 +34,10 @@ GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize,
     this->sigmaY = initialSigmaY;
 }
 
-void GaussianFitlerWrapper::applyFilter(cv::Mat& inframe) {
-    cv::GaussianBlur(inframe, inframe, this->getKernelSize2D(), this->getSigmaX(),
-                     this->getSigmaY());
+void GaussianFitlerWrapper::applyFilter(cv::Mat &inframe) {
+    cv::GaussianBlur(inframe, inframe,
+                     cv::Size(this->kernelSize, this->kernelSize), this->sigmaX,
+                     this->sigmaY);
 }
 
 void GaussianFitlerWrapper::setSigma(int newSigma) {
@@ -69,7 +68,3 @@ void GaussianFitlerWrapper::setSigmaY(int newSigmaY) {
 
     this->sigmaY = newSigmaY;
 }
-
-double GaussianFitlerWrapper::getSigmaX() { return this->sigmaX; }
-
-double GaussianFitlerWrapper::getSigmaY() { return this->sigmaY; }

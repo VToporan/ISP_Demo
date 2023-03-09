@@ -67,7 +67,7 @@ int main(int, char **) {
     }
 
     int wrapperArrSize = sizeof(wrappers) / sizeof(wrappers[0]);
-    for (int i = 0; i < wrapperArrSize; ++i) {
+    for (int i = 4; i < wrapperArrSize; ++i) {
       cv::Mat outframe = inframe.clone();
       wrappers[i]->applyFilter(outframe);
       imshow("out" + std::to_string(i), outframe);

@@ -3,7 +3,7 @@
 #include "opencv2/imgproc.hpp"
 #include <iostream>
 
-EmbossFitlerWrapper::EmbossFitlerWrapper() : GenericFilterWrapper(0) {
+EmbossFitlerWrapper::EmbossFitlerWrapper() {
     cv::Mat embossMatrix = (cv::Mat_<int8_t>(3, 3) << 1, 1, 0, 1, 0, -1, 0, -1, -1);
 
     for (int i = 0; i < EMBOSS_DIRECTION_TOTAL; ++i) {
@@ -18,7 +18,7 @@ EmbossFitlerWrapper::EmbossFitlerWrapper(EmbossDirection initialDirection) : Emb
     this->currentDirection = initialDirection;
 }
 
-void EmbossFitlerWrapper::applyFilter(cv::Mat& inframe) {
+void EmbossFitlerWrapper::applyFilter(cv::Mat &inframe) {
     cv::Mat grayscale;
     cv::cvtColor(inframe, grayscale, cv::COLOR_BGR2GRAY);
 

@@ -14,16 +14,16 @@ enum EmbossDirection {
 };
 
 class EmbossFitlerWrapper : public GenericFilterWrapper {
-  private:
-    EmbossDirection currentDirection;
-    cv::Mat embossKernels[EMBOSS_DIRECTION_TOTAL];
+    private:
+        EmbossDirection currentDirection;
+        cv::Mat embossKernels[EMBOSS_DIRECTION_TOTAL];
 
-  public:
-    explicit EmbossFitlerWrapper();
-    explicit EmbossFitlerWrapper(EmbossDirection initialDirection);
-    void setEmbossDirection(EmbossDirection newDirection);
+    public:
+        explicit EmbossFitlerWrapper();
+        explicit EmbossFitlerWrapper(EmbossDirection initialDirection);
+        void setEmbossDirection(EmbossDirection newDirection);
 
-    void applyFilter(cv::Mat& inframe);
+        void applyFilter(cv::Mat &inframe);
 };
 
 #endif

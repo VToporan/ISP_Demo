@@ -7,40 +7,32 @@
 #include <iostream>
 #include <stdio.h>
 
-SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize)
-    : GenericFilterWrapper(initialKernelSize) {
-    this->setKernelSize1D(initialKernelSize);
+SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize) {
+    setKernelSize(initialKernelSize);
     this->displayDirection = false;
 }
 
-SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize,
-                                       int initialDerivate)
-    : GenericFilterWrapper(initialKernelSize) {
-    this->setKernelSize1D(initialKernelSize);
+SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize, int initialDerivate) {
+    setKernelSize(initialKernelSize);
     this->setDerivX(initialDerivate);
     this->setDerivY(initialDerivate);
     this->displayDirection = false;
 }
 
-SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize,
-                                       int initialDerivateX,
-                                       int initialDerivateY)
-    : GenericFilterWrapper(initialKernelSize) {
-    this->setKernelSize1D(initialKernelSize);
+SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize, int initialDerivateX, int initialDerivateY) {
+    setKernelSize(initialKernelSize);
     this->setDerivX(initialDerivateX);
     this->setDerivY(initialDerivateY);
     this->displayDirection = false;
 }
 
-void SobelFitlerWrapper::applyFilter(cv::Mat& inframe) {
+void SobelFitlerWrapper::applyFilter(cv::Mat &inframe) {
     cv::Mat grayscale, gradX, gradY;
     cv::cvtColor(inframe, grayscale, cv::COLOR_BGR2GRAY);
 
-    cv::Sobel(grayscale, gradX, CV_64F, this->getDerivX(), 0,
-              this->getKernelSize1D());
+    cv::Sobel(grayscale, gradX, CV_64F, this->derivX, 0, this->kernelSize);
 
-    cv::Sobel(grayscale, gradY, CV_64F, 0, this->getDerivY(),
-              this->getKernelSize1D());
+    cv::Sobel(grayscale, gradY, CV_64F, 0, this->derivY, this->kernelSize);
 
     if (!this->displayDirection) {
         cv::convertScaleAbs(gradX, gradX);
@@ -71,33 +63,22 @@ void SobelFitlerWrapper::applyFilter(cv::Mat& inframe) {
     }
 }
 
-void SobelFitlerWrapper::setKernelSize2D(int newKernelSizeX,
-                                         int newKernelSizeY) {
-    return;
-}
+void SobelFitlerWrapper::setKernelSize(int newKernelSize) {
+    if (newKernelSize < 0) {
+        this->kernelSize = 1;
+        return;
+    }
 
-void SobelFitlerWrapper::setKernelSize1D(int newKernelSize) {
     if ((newKernelSize % 2) == 0) {
-        newKernelSize++;
+        this->kernelSize = 1;
+        return;
     }
 
     this->kernelSize = newKernelSize;
-}
-
-int SobelFitlerWrapper::getKernelSize1D() { return this->kernelSize; }
-
-cv::Size SobelFitlerWrapper::getKernelSize2D() {
-    return cv::Size(this->kernelSize, this->kernelSize);
 }
 
 void SobelFitlerWrapper::setDerivX(int newDerivX) { this->derivX = newDerivX; }
 
 void SobelFitlerWrapper::setDerivY(int newDerivY) { this->derivY = newDerivY; }
 
-int SobelFitlerWrapper::getDerivX() { return this->derivX; }
-
-int SobelFitlerWrapper::getDerivY() { return this->derivY; }
-
-void SobelFitlerWrapper::toggleDisplayDirection() {
-    this->displayDirection = !this->displayDirection;
-}
+void SobelFitlerWrapper::toggleDisplayDirection() { this->displayDirection = !this->displayDirection; }

@@ -2,9 +2,7 @@
 #include <opencv2/imgproc.hpp>
 #include <stdio.h>
 
-DilateFitlerWrapper::DilateFitlerWrapper(int initialDiameter) {
-    setDilateDiameter(initialDiameter);
-}
+DilateFitlerWrapper::DilateFitlerWrapper(int initialDiameter) { setDilateDiameter(initialDiameter); }
 
 void DilateFitlerWrapper::applyFilter(cv::Mat &inframe) {
     cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(dilateDiameter, dilateDiameter));

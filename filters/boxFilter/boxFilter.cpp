@@ -8,8 +8,7 @@ BoxFitlerWrapper::BoxFitlerWrapper(int initialKernelSize) {
 }
 
 void BoxFitlerWrapper::applyFilter(cv::Mat &inframe) {
-    cv::boxFilter(inframe, inframe, 0,
-                  cv::Size(kernelSizeX, kernelSizeY));
+    cv::boxFilter(inframe, inframe, 0, cv::Size(kernelSizeX, kernelSizeY));
 }
 
 bool sizeIsValid(int kernelSize) {

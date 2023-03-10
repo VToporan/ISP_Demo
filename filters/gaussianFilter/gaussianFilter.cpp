@@ -9,8 +9,7 @@ GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize) {
     sigmaY = 0;
 }
 
-GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize,
-                                             double initialSigma) {
+GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize, double initialSigma) {
     if (initialSigma < 0) {
         sigmaX = 0;
         sigmaY = 0;
@@ -21,9 +20,7 @@ GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize,
     sigmaY = initialSigma;
 }
 
-GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize,
-                                             double initialSigmaX,
-                                             double initialSigmaY) {
+GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize, double initialSigmaX, double initialSigmaY) {
     if (initialSigmaX < 0 || initialSigmaY < 0) {
         sigmaX = 0;
         sigmaY = 0;
@@ -35,9 +32,7 @@ GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize,
 }
 
 void GaussianFitlerWrapper::applyFilter(cv::Mat &inframe) {
-    cv::GaussianBlur(inframe, inframe,
-                     cv::Size(kernelSize, kernelSize), sigmaX,
-                     sigmaY);
+    cv::GaussianBlur(inframe, inframe, cv::Size(kernelSize, kernelSize), sigmaX, sigmaY);
 }
 
 void GaussianFitlerWrapper::setSigma(int newSigma) {

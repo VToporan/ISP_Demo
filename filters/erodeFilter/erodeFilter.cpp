@@ -2,9 +2,7 @@
 #include <opencv2/imgproc.hpp>
 #include <stdio.h>
 
-ErodeFitlerWrapper::ErodeFitlerWrapper(int initialDiameter) {
-    setErodeDiameter(initialDiameter);
-}
+ErodeFitlerWrapper::ErodeFitlerWrapper(int initialDiameter) { setErodeDiameter(initialDiameter); }
 
 void ErodeFitlerWrapper::applyFilter(cv::Mat &inframe) {
     cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(erodeDiameter, erodeDiameter));

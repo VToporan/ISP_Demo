@@ -7,42 +7,34 @@
 #include <iostream>
 #include <stdio.h>
 
-SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize)
-    : GenericFilterWrapper(initialKernelSize) {
-    this->setKernelSize1D(initialKernelSize);
-    this->displayDirection = false;
+SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize) {
+    setKernelSize(initialKernelSize);
+    displayDirection = false;
 }
 
-SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize,
-                                       int initialDerivate)
-    : GenericFilterWrapper(initialKernelSize) {
-    this->setKernelSize1D(initialKernelSize);
-    this->setDerivX(initialDerivate);
-    this->setDerivY(initialDerivate);
-    this->displayDirection = false;
+SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize, int initialDerivate) {
+    setKernelSize(initialKernelSize);
+    setDerivX(initialDerivate);
+    setDerivY(initialDerivate);
+    displayDirection = false;
 }
 
-SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize,
-                                       int initialDerivateX,
-                                       int initialDerivateY)
-    : GenericFilterWrapper(initialKernelSize) {
-    this->setKernelSize1D(initialKernelSize);
-    this->setDerivX(initialDerivateX);
-    this->setDerivY(initialDerivateY);
-    this->displayDirection = false;
+SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize, int initialDerivateX, int initialDerivateY) {
+    setKernelSize(initialKernelSize);
+    setDerivX(initialDerivateX);
+    setDerivY(initialDerivateY);
+    displayDirection = false;
 }
 
-void SobelFitlerWrapper::applyFilter(cv::Mat& inframe) {
+void SobelFitlerWrapper::applyFilter(cv::Mat &inframe) {
     cv::Mat grayscale, gradX, gradY;
     cv::cvtColor(inframe, grayscale, cv::COLOR_BGR2GRAY);
 
-    cv::Sobel(grayscale, gradX, CV_64F, this->getDerivX(), 0,
-              this->getKernelSize1D());
+    cv::Sobel(grayscale, gradX, CV_64F, derivX, 0, kernelSize);
 
-    cv::Sobel(grayscale, gradY, CV_64F, 0, this->getDerivY(),
-              this->getKernelSize1D());
+    cv::Sobel(grayscale, gradY, CV_64F, 0, derivY, kernelSize);
 
-    if (!this->displayDirection) {
+    if (!displayDirection) {
         cv::convertScaleAbs(gradX, gradX);
         cv::convertScaleAbs(gradY, gradY);
         cv::addWeighted(gradX, 0.5, gradY, 0.5, 0, inframe);
@@ -71,33 +63,22 @@ void SobelFitlerWrapper::applyFilter(cv::Mat& inframe) {
     }
 }
 
-void SobelFitlerWrapper::setKernelSize2D(int newKernelSizeX,
-                                         int newKernelSizeY) {
-    return;
-}
-
-void SobelFitlerWrapper::setKernelSize1D(int newKernelSize) {
-    if ((newKernelSize % 2) == 0) {
-        newKernelSize++;
+void SobelFitlerWrapper::setKernelSize(int newKernelSize) {
+    if (newKernelSize < 0) {
+        kernelSize = 1;
+        return;
     }
 
-    this->kernelSize = newKernelSize;
+    if ((newKernelSize % 2) == 0) {
+        kernelSize = 1;
+        return;
+    }
+
+    kernelSize = newKernelSize;
 }
 
-int SobelFitlerWrapper::getKernelSize1D() { return this->kernelSize; }
+void SobelFitlerWrapper::setDerivX(int newDerivX) { derivX = newDerivX; }
 
-cv::Size SobelFitlerWrapper::getKernelSize2D() {
-    return cv::Size(this->kernelSize, this->kernelSize);
-}
+void SobelFitlerWrapper::setDerivY(int newDerivY) { derivY = newDerivY; }
 
-void SobelFitlerWrapper::setDerivX(int newDerivX) { this->derivX = newDerivX; }
-
-void SobelFitlerWrapper::setDerivY(int newDerivY) { this->derivY = newDerivY; }
-
-int SobelFitlerWrapper::getDerivX() { return this->derivX; }
-
-int SobelFitlerWrapper::getDerivY() { return this->derivY; }
-
-void SobelFitlerWrapper::toggleDisplayDirection() {
-    this->displayDirection = !this->displayDirection;
-}
+void SobelFitlerWrapper::toggleDisplayDirection() { displayDirection = !displayDirection; }

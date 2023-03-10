@@ -5,10 +5,16 @@
 #include <opencv2/core.hpp>
 
 class BoxFitlerWrapper : public GenericFilterWrapper {
-  public:
-    explicit BoxFitlerWrapper(int initialKernelSize)
-        : GenericFilterWrapper(initialKernelSize) {}
-    void applyFilter(cv::Mat& inframe);
+    private:
+        int kernelSizeX;
+        int kernelSizeY;
+
+    public:
+        explicit BoxFitlerWrapper(int initialKernelSize);
+        void applyFilter(cv::Mat &inframe);
+
+        void setKernelSizeX(int newKernelSize);
+        void setKernelSizeY(int newKernelSize);
 };
 
 #endif

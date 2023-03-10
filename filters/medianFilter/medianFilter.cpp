@@ -4,11 +4,11 @@
 #include <stdio.h>
 
 MedianFitlerWrapper::MedianFitlerWrapper(int initialKernelSize) {
-  this->setKernelSize1D(initialKernelSize);
+  setKernelSize1D(initialKernelSize);
 }
 
 void MedianFitlerWrapper::applyFilter(cv::Mat &inframe) {
-  cv::medianBlur(inframe, inframe, this->kernelSize);
+  cv::medianBlur(inframe, inframe, kernelSize);
 }
 
 void MedianFitlerWrapper::setKernelSize2D(int newKernelSizeX,
@@ -21,5 +21,5 @@ void MedianFitlerWrapper::setKernelSize1D(int newKernelSize) {
     newKernelSize++;
   }
 
-  this->kernelSize = newKernelSize;
+  kernelSize = newKernelSize;
 }

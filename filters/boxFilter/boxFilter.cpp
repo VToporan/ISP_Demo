@@ -9,7 +9,7 @@ BoxFitlerWrapper::BoxFitlerWrapper(int initialKernelSize) {
 
 void BoxFitlerWrapper::applyFilter(cv::Mat &inframe) {
     cv::boxFilter(inframe, inframe, 0,
-                  cv::Size(this->kernelSizeX, this->kernelSizeY));
+                  cv::Size(kernelSizeX, kernelSizeY));
 }
 
 bool sizeIsValid(int kernelSize) {
@@ -26,12 +26,12 @@ bool sizeIsValid(int kernelSize) {
 
 void BoxFitlerWrapper::setKernelSizeX(int newKernelSize) {
     if (sizeIsValid(newKernelSize)) {
-        this->kernelSizeX = newKernelSize;
+        kernelSizeX = newKernelSize;
     }
 }
 
 void BoxFitlerWrapper::setKernelSizeY(int newKernelSize) {
     if (sizeIsValid(newKernelSize)) {
-        this->kernelSizeY = newKernelSize;
+        kernelSizeY = newKernelSize;
     }
 }

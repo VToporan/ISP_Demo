@@ -9,32 +9,32 @@
 
 SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize) {
     setKernelSize(initialKernelSize);
-    this->displayDirection = false;
+    displayDirection = false;
 }
 
 SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize, int initialDerivate) {
     setKernelSize(initialKernelSize);
-    this->setDerivX(initialDerivate);
-    this->setDerivY(initialDerivate);
-    this->displayDirection = false;
+    setDerivX(initialDerivate);
+    setDerivY(initialDerivate);
+    displayDirection = false;
 }
 
 SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize, int initialDerivateX, int initialDerivateY) {
     setKernelSize(initialKernelSize);
-    this->setDerivX(initialDerivateX);
-    this->setDerivY(initialDerivateY);
-    this->displayDirection = false;
+    setDerivX(initialDerivateX);
+    setDerivY(initialDerivateY);
+    displayDirection = false;
 }
 
 void SobelFitlerWrapper::applyFilter(cv::Mat &inframe) {
     cv::Mat grayscale, gradX, gradY;
     cv::cvtColor(inframe, grayscale, cv::COLOR_BGR2GRAY);
 
-    cv::Sobel(grayscale, gradX, CV_64F, this->derivX, 0, this->kernelSize);
+    cv::Sobel(grayscale, gradX, CV_64F, derivX, 0, kernelSize);
 
-    cv::Sobel(grayscale, gradY, CV_64F, 0, this->derivY, this->kernelSize);
+    cv::Sobel(grayscale, gradY, CV_64F, 0, derivY, kernelSize);
 
-    if (!this->displayDirection) {
+    if (!displayDirection) {
         cv::convertScaleAbs(gradX, gradX);
         cv::convertScaleAbs(gradY, gradY);
         cv::addWeighted(gradX, 0.5, gradY, 0.5, 0, inframe);
@@ -65,20 +65,20 @@ void SobelFitlerWrapper::applyFilter(cv::Mat &inframe) {
 
 void SobelFitlerWrapper::setKernelSize(int newKernelSize) {
     if (newKernelSize < 0) {
-        this->kernelSize = 1;
+        kernelSize = 1;
         return;
     }
 
     if ((newKernelSize % 2) == 0) {
-        this->kernelSize = 1;
+        kernelSize = 1;
         return;
     }
 
-    this->kernelSize = newKernelSize;
+    kernelSize = newKernelSize;
 }
 
-void SobelFitlerWrapper::setDerivX(int newDerivX) { this->derivX = newDerivX; }
+void SobelFitlerWrapper::setDerivX(int newDerivX) { derivX = newDerivX; }
 
-void SobelFitlerWrapper::setDerivY(int newDerivY) { this->derivY = newDerivY; }
+void SobelFitlerWrapper::setDerivY(int newDerivY) { derivY = newDerivY; }
 
-void SobelFitlerWrapper::toggleDisplayDirection() { this->displayDirection = !this->displayDirection; }
+void SobelFitlerWrapper::toggleDisplayDirection() { displayDirection = !displayDirection; }

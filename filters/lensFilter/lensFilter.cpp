@@ -5,10 +5,10 @@
 #include <cmath>
 #include <iostream>
 
-LensFitlerWrapper::LensFitlerWrapper() { this->distortionAmount = 0; }
+LensFitlerWrapper::LensFitlerWrapper() { distortionAmount = 0; }
 
 LensFitlerWrapper::LensFitlerWrapper(float initialAmount) {
-  this->distortionAmount = initialAmount;
+  distortionAmount = initialAmount;
 }
 
 void LensFitlerWrapper::applyFilter(cv::Mat &inframe) {

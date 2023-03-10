@@ -38,9 +38,9 @@ int main(int, char **) {
     openCapture();
 
     MedianFitlerWrapper medianFilterWrapper(5);
-    BoxFitlerWrapper boxFilterWrapper(6);
+    BoxFitlerWrapper boxFilterWrapper(9);
     GaussianFitlerWrapper gaussianFilterWrapper(15, 3, 30);
-    BilateralFitlerWrapper bilateralFilterWrapper(1, 1, 1);
+    BilateralFitlerWrapper bilateralFilterWrapper(3, 3, 3);
     ErodeFitlerWrapper erodeFilterWrapper(10);
     DilateFitlerWrapper dilateFilterWrapper(10);
     SobelFitlerWrapper sobelFilterWrapper(3, 1, 1);
@@ -52,10 +52,10 @@ int main(int, char **) {
         &medianFilterWrapper, &boxFilterWrapper,   &gaussianFilterWrapper, &bilateralFilterWrapper, &erodeFilterWrapper,
         &dilateFilterWrapper, &sobelFilterWrapper, &cannyFitlerWrapper,    &embossFitlerWrapper,    &lensFilterWrapper,
     };
+    int wrapperIndex = 0;
+    int wrapperTotal = sizeof(wrappers) / sizeof(wrappers[0]);
 
-    sobelFilterWrapper.toggleDisplayDirection();
-
-    bool keepGoing = false;
+    bool keepGoing = true;
     do {
         cap.read(inframe);
 
@@ -64,15 +64,14 @@ int main(int, char **) {
             return -1;
         }
 
-        int wrapperArrSize = sizeof(wrappers) / sizeof(wrappers[0]);
-        for (int i = 4; i < wrapperArrSize; ++i) {
-            cv::Mat outframe = inframe.clone();
-            wrappers[i]->applyFilter(outframe);
-            imshow("out" + std::to_string(i), outframe);
-            cv::moveWindow("out" + std::to_string(i), (i / 2) * 400, (i % 2) * 500);
-        }
-        if (cv::waitKey(0) == ' ') {
-            keepGoing = false;
+        cv::Mat outframe = inframe.clone();
+        wrappers[wrapperIndex]->applyFilter(outframe);
+        imshow("ISP Demo", outframe);
+        if (cv::waitKey(5) == ' ') {
+            wrapperIndex++;
+            if (wrapperIndex >= wrapperTotal) {
+                keepGoing = false;
+            }
         }
     } while (keepGoing);
     return 0;

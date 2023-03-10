@@ -16,10 +16,6 @@ bool sizeIsValid(int kernelSize) {
         return false;
     }
 
-    if ((kernelSize % 2) == 0) {
-        return false;
-    }
-
     return true;
 }
 

@@ -17,6 +17,7 @@
 
 #define DEVICE_ID (0)
 #define API_ID (cv::CAP_ANY)
+#define WINDOW_NAME ("ISP Demo")
 
 cv::VideoCapture cap;
 
@@ -29,6 +30,14 @@ void openCapture() {
     if (!cap.isOpened()) {
         std::cerr << "ERROR! Unable to open camera\n";
         exit(-1);
+    }
+}
+
+int wrapperIndex = 0;
+bool freezeFrame = false;
+void CallBackFunc(int event, int x, int y, int flags, void *userdata) {
+    if (event == cv::EVENT_LBUTTONDOWN) {
+        freezeFrame = !freezeFrame;
     }
 }
 
@@ -52,26 +61,32 @@ int main(int, char **) {
         &medianFilterWrapper, &boxFilterWrapper,   &gaussianFilterWrapper, &bilateralFilterWrapper, &erodeFilterWrapper,
         &dilateFilterWrapper, &sobelFilterWrapper, &cannyFitlerWrapper,    &embossFitlerWrapper,    &lensFilterWrapper,
     };
-    int wrapperIndex = 0;
     int wrapperTotal = sizeof(wrappers) / sizeof(wrappers[0]);
 
     bool keepGoing = true;
-    do {
-        cap.read(inframe);
 
-        if (inframe.empty()) {
-            std::cerr << "ERROR! blank frame grabbed\n";
-            return -1;
+    cv::namedWindow(WINDOW_NAME, cv::WINDOW_NORMAL | cv::WINDOW_FREERATIO | cv::WINDOW_GUI_EXPANDED);
+    cv::resizeWindow(WINDOW_NAME, 1920, 1080);
+    cv::setMouseCallback(WINDOW_NAME, CallBackFunc);
+    do {
+        if (!freezeFrame) {
+            cap.read(inframe);
+
+            if (inframe.empty()) {
+                std::cerr << "ERROR! blank frame grabbed\n";
+                return -1;
+            }
         }
 
         cv::Mat outframe = inframe.clone();
         wrappers[wrapperIndex]->applyFilter(outframe);
-        imshow("ISP Demo", outframe);
+        cv::resize(outframe, outframe, cv::Size(1240, 1080));
+        cv::imshow(WINDOW_NAME, outframe);
         if (cv::waitKey(5) == ' ') {
             wrapperIndex++;
-            if (wrapperIndex >= wrapperTotal) {
-                keepGoing = false;
-            }
+        }
+        if (wrapperIndex >= 3) {
+            keepGoing = false;
         }
     } while (keepGoing);
     return 0;

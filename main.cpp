@@ -10,8 +10,19 @@
 #include "medianFilter.hpp"
 #include "sobelFilter.hpp"
 
+#include <cstdlib>
 #include <opencv2/highgui.hpp>
 #include <opencv2/opencv.hpp>
+
+#include <QApplication>
+#include <QGraphicsScene>
+#include <QLabel>
+#include <QMainWindow>
+#include <QPixmap>
+#include <QTimer>
+#include <QWidget>
+
+#include <qwindowdefs.h>
 #include <stdio.h>
 #include <string>
 
@@ -41,16 +52,50 @@ void CallBackFunc(int event, int x, int y, int flags, void *userdata) {
     }
 }
 
-#include <QApplication>
-#include <QLabel>
-#include <QWidget>
+class MainWindow : QMainWindow {
+        Q_OBJECT
+    public:
+        MainWindow() {}
+
+        ~MainWindow() {}
+        void start() {
+            QTimer *timer = new QTimer(this);
+            connect(timer, SIGNAL(timeout()), this, SLOT(Update()));
+            timer->start(20);
+        }
+
+    public slots:
+        void Update();
+
+    private:
+        cv::VideoCapture videoCap;
+        cv::Mat liveImage;
+        QImage image;
+        QLabel *label = new QLabel;
+};
+
+void MainWindow::Update() {
+    cv::Mat frame;
+    cap.read(frame);
+    if (frame.empty()) {
+        std::cerr << "ERROR! blank frame grabbed\n";
+        exit(1);
+    }
+    LensFitlerWrapper lensFilter = LensFitlerWrapper(-0.4);
+    lensFilter.applyFilter(frame);
+
+    image = QImage(frame.data, frame.cols, frame.rows, QImage::Format_RGB888).rgbSwapped();
+    label->setPixmap(QPixmap::fromImage(image));
+
+    label->show();
+}
 
 int main(int argc, char *argv[]) {
-
+    openCapture();
     QApplication app(argc, argv);
-    QLabel hello("<center>Welcome to my first Qt program</center>");
-    hello.setWindowTitle("My First Qt Program");
-    hello.resize(400, 400);
-    hello.show();
+    MainWindow *window = new MainWindow();
+    window->start();
     return app.exec();
 }
+
+#include "main.moc"

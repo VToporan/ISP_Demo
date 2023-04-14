@@ -1,5 +1,11 @@
 #include "window.hpp"
 
+MainWindow::MainWindow() {
+    openCapture();
+    startTimer();
+    label = new QLabel;
+}
+
 void MainWindow::openCapture() {
     int deviceID = 0;
     int apiID = cv::CAP_ANY;

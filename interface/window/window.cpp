@@ -4,7 +4,10 @@ MainWindow::MainWindow() {
     openCapture();
     startTimer();
     label = new QLabel;
-    layer = new Layer(8);
+    layers.push_back(new Layer(5));
+    layers.push_back(new Layer(4));
+}
+
 // https://asmaloney.com/2013/11/code/converting-between-cvmat-and-qimage-or-qpixmap
 static inline QImage cvMatToQImage(const cv::Mat &inMat) {
     switch (inMat.type()) {
@@ -65,8 +68,10 @@ void MainWindow::Update() {
         exit(1);
     }
 
-    layer->applyFilter(frame);
-    image = QImage(frame.data, frame.cols, frame.rows, QImage::Format_RGB888).rgbSwapped();
+    for (Layer *layer : layers) {
+        layer->applyFilter(frame);
+    }
+    image = cvMatToQImage(frame);
     label->setPixmap(QPixmap::fromImage(image));
 
     label->show();

@@ -24,11 +24,10 @@ void Layer::setupFilters() {
     allFilters.push_back(new MedianFitlerWrapper(3));
     allFilters.push_back(new GaussianFitlerWrapper(3));
     allFilters.push_back(new BilateralFitlerWrapper(3));
-    allFilters.push_back(new DilateFitlerWrapper(3));
-    allFilters.push_back(new ErodeFitlerWrapper(3));
+    allFilters.push_back(new DilateFitlerWrapper(15));
+    allFilters.push_back(new ErodeFitlerWrapper(15));
     allFilters.push_back(new SobelFitlerWrapper(1));
     allFilters.push_back(new CannyFitlerWrapper(3));
-    allFilters.push_back(new ErodeFitlerWrapper(3));
     allFilters.push_back(new EmbossFitlerWrapper());
     allFilters.push_back(new LensFitlerWrapper(0.3));
 }

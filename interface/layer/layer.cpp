@@ -1,6 +1,7 @@
 #include "layer.hpp"
 
 #include "genericFilter.hpp"
+#include "emptyFilter/emptyFilter.hpp"
 #include "boxFilter/boxFilter.hpp"
 #include "medianFilter/medianFilter.hpp"
 #include "gaussianFilter/gaussianFilter.hpp"
@@ -20,6 +21,7 @@ Layer::Layer(int initialIndex) {
 Layer::~Layer() { allFilters.clear(); }
 
 void Layer::setupFilters() {
+    allFilters.push_back(new EmptyFitlerWrapper());
     allFilters.push_back(new BoxFitlerWrapper(3));
     allFilters.push_back(new MedianFitlerWrapper(3));
     allFilters.push_back(new GaussianFitlerWrapper(3));

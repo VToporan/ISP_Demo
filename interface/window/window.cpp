@@ -4,8 +4,8 @@ MainWindow::MainWindow() {
     openCapture();
     startTimer();
     label = new QLabel;
-    layers.push_back(new Layer(5));
-    layers.push_back(new Layer(4));
+    layers.push_back(new Layer(0));
+    // layers.push_back(new Layer(6));
 }
 
 // https://asmaloney.com/2013/11/code/converting-between-cvmat-and-qimage-or-qpixmap
@@ -45,7 +45,6 @@ static inline QImage cvMatToQImage(const cv::Mat &inMat) {
 void MainWindow::openCapture() {
     int deviceID = 0;
     int apiID = cv::CAP_ANY;
-    int ddepth = -1;
 
     videoCap.open(deviceID, apiID);
     if (!videoCap.isOpened()) {

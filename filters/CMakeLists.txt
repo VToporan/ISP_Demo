@@ -10,6 +10,7 @@ target_include_directories(filters
     ${CMAKE_CURRENT_LIST_DIR}
   )
 
+add_subdirectory( emptyFilter )
 add_subdirectory( boxFilter )
 add_subdirectory( medianFilter )
 add_subdirectory( gaussianFilter )
@@ -23,6 +24,7 @@ add_subdirectory( lensFilter )
 
 target_link_libraries(filters
   PRIVATE 
+    emptyFilter 
     boxFilter 
     medianFilter 
     gaussianFilter 

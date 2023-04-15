@@ -3,47 +3,46 @@
 #include <opencv2/imgproc.hpp>
 #include <stdio.h>
 
+GaussianFitlerWrapper::GaussianFitlerWrapper() {
+    setKernelSize(3);
+    setSigmaX(5);
+    setSigmaY(5);
+}
+
 GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize) {
-    kernelSize = initialKernelSize;
-    sigmaX = 0;
-    sigmaY = 0;
+    setKernelSize(initialKernelSize);
+    setSigmaX(5);
+    setSigmaY(5);
 }
 
 GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize, double initialSigma) {
-    if (initialSigma < 0) {
-        sigmaX = 0;
-        sigmaY = 0;
-        return;
-    }
-
-    sigmaX = initialSigma;
-    sigmaY = initialSigma;
+    setKernelSize(initialKernelSize);
+    setSigmaX(initialSigma);
+    setSigmaY(initialSigma);
 }
 
 GaussianFitlerWrapper::GaussianFitlerWrapper(int initialKernelSize, double initialSigmaX, double initialSigmaY) {
-    if (initialSigmaX < 0 || initialSigmaY < 0) {
-        sigmaX = 0;
-        sigmaY = 0;
-        return;
-    }
-
-    sigmaX = initialSigmaX;
-    sigmaY = initialSigmaY;
+    setKernelSize(initialKernelSize);
+    setSigmaX(initialSigmaX);
+    setSigmaY(initialSigmaY);
 }
 
 void GaussianFitlerWrapper::applyFilter(cv::Mat &inframe) {
     cv::GaussianBlur(inframe, inframe, cv::Size(kernelSize, kernelSize), sigmaX, sigmaY);
 }
 
-void GaussianFitlerWrapper::setSigma(int newSigma) {
-    if (newSigma < 1) {
-        sigmaX = 0;
-        sigmaY = 0;
+void GaussianFitlerWrapper::setKernelSize(int newKernelSize) {
+    if (newKernelSize < 1) {
+        kernelSize = 3;
+        return;
+    } 
+
+    if (newKernelSize % 2 == 0) {
+        kernelSize = 3;
         return;
     }
 
-    sigmaX = newSigma;
-    sigmaY = 0;
+    kernelSize = newKernelSize;
 }
 
 void GaussianFitlerWrapper::setSigmaX(int newSigmaX) {

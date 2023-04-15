@@ -1,6 +1,10 @@
 #include "boxFilter.hpp"
 #include <opencv2/imgproc.hpp>
-#include <stdio.h>
+
+BoxFitlerWrapper::BoxFitlerWrapper() {
+    setKernelSizeX(3);
+    setKernelSizeY(3);
+}
 
 BoxFitlerWrapper::BoxFitlerWrapper(int initialKernelSize) {
     setKernelSizeX(initialKernelSize);

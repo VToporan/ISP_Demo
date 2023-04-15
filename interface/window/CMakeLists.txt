@@ -10,6 +10,7 @@ target_sources(window
 target_include_directories(window
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}/../
   )
 
 target_compile_options(window PRIVATE -fPIC)

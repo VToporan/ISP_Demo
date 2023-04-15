@@ -11,6 +11,7 @@ class CannyFitlerWrapper : public GenericFilterWrapper {
         int highTreshold;
 
     public:
+        explicit CannyFitlerWrapper();
         explicit CannyFitlerWrapper(int initialKernelSize);
         explicit CannyFitlerWrapper(int initialKernelSize, int initialTreshold);
         explicit CannyFitlerWrapper(int initialKernelSize, int initialLowTreshold, int initialHighTreshold);

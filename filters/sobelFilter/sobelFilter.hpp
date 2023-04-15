@@ -12,6 +12,7 @@ class SobelFitlerWrapper : public GenericFilterWrapper {
         bool displayDirection;
 
     public:
+        explicit SobelFitlerWrapper();
         explicit SobelFitlerWrapper(int initialKernelSize);
         explicit SobelFitlerWrapper(int initialKernelSize, int initialDerivate);
         explicit SobelFitlerWrapper(int initialKernelSize, int initialDerivateX, int initialDerivateY);

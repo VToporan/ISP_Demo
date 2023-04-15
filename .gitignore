@@ -46,3 +46,6 @@ _deps
 .cache
 .cmake
 *autogen
+
+#Miscellaneous
+.todo

@@ -7,8 +7,15 @@
 #include <iostream>
 #include <stdio.h>
 
+SobelFitlerWrapper::SobelFitlerWrapper() {
+    setKernelSize(3);
+    setDerivX(1);
+    setDerivY(1);
+}
 SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize) {
     setKernelSize(initialKernelSize);
+    setDerivX(1);
+    setDerivY(1);
     displayDirection = false;
 }
 

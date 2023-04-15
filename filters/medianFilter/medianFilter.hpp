@@ -5,14 +5,14 @@
 #include <opencv2/core.hpp>
 
 class MedianFitlerWrapper : virtual public GenericFilterWrapper {
-  private:
-    int kernelSize;
+    private:
+        int kernelSize;
 
-  public:
-    explicit MedianFitlerWrapper(int initialKernelSize);
-    void setKernelSize2D(int newKernelSizeX, int newKernelSizeY);
-    void setKernelSize1D(int newKernelSize);
-    void applyFilter(cv::Mat& inframe);
+    public:
+        explicit MedianFitlerWrapper();
+        explicit MedianFitlerWrapper(int initialKernelSize);
+        void setKernelSize(int newKernelSize);
+        void applyFilter(cv::Mat &inframe);
 };
 
 #endif

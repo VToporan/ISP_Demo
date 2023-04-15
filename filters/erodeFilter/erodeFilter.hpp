@@ -5,10 +5,11 @@
 #include <opencv2/core.hpp>
 
 class ErodeFitlerWrapper : public GenericFilterWrapper {
-    private: 
+    private:
         int erodeDiameter;
 
     public:
+        explicit ErodeFitlerWrapper();
         explicit ErodeFitlerWrapper(int initialDiameter);
         void applyFilter(cv::Mat &inframe);
 

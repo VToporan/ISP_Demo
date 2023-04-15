@@ -2,6 +2,8 @@
 #include <opencv2/imgproc.hpp>
 #include <stdio.h>
 
+DilateFitlerWrapper::DilateFitlerWrapper() { setDilateDiameter(3); }
+
 DilateFitlerWrapper::DilateFitlerWrapper(int initialDiameter) { setDilateDiameter(initialDiameter); }
 
 void DilateFitlerWrapper::applyFilter(cv::Mat &inframe) {

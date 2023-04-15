@@ -1,17 +1,17 @@
 #include "layer.hpp"
 
-#include "genericFilter.hpp"
-#include "emptyFilter/emptyFilter.hpp"
-#include "boxFilter/boxFilter.hpp"
-#include "medianFilter/medianFilter.hpp"
-#include "gaussianFilter/gaussianFilter.hpp"
 #include "bilateralFilter/bilateralFilter.hpp"
-#include "dilateFilter/dilateFilter.hpp"
-#include "erodeFilter/erodeFilter.hpp"
-#include "sobelFilter/sobelFilter.hpp"
+#include "boxFilter/boxFilter.hpp"
 #include "cannyFilter/cannyFilter.hpp"
+#include "dilateFilter/dilateFilter.hpp"
 #include "embossFilter/embossFilter.hpp"
+#include "emptyFilter/emptyFilter.hpp"
+#include "erodeFilter/erodeFilter.hpp"
+#include "gaussianFilter/gaussianFilter.hpp"
+#include "genericFilter.hpp"
 #include "lensFilter/lensFilter.hpp"
+#include "medianFilter/medianFilter.hpp"
+#include "sobelFilter/sobelFilter.hpp"
 
 Layer::Layer(int initialIndex) {
     setupFilters();
@@ -35,6 +35,9 @@ void Layer::setupFilters() {
 }
 
 void Layer::applyFilter(cv::Mat &inframe) {
-    currentFilter = allFilters[currentIndex];
-    currentFilter->applyFilter(inframe);
+    cv::Rect roi(100, 100, 200, 200);
+    cv::Mat outframe = inframe(roi);
+
+    allFilters[currentIndex]->applyFilter(outframe);
+    outframe.copyTo(inframe(roi));
 }

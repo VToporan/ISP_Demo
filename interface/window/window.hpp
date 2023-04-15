@@ -3,8 +3,10 @@
 
 #include <opencv2/opencv.hpp>
 
-#include <QMainWindow>
+#include "layer/layer.hpp"
+
 #include <QLabel>
+#include <QMainWindow>
 #include <QPixmap>
 #include <QTimer>
 
@@ -12,7 +14,7 @@ class MainWindow : QMainWindow {
         Q_OBJECT
     public:
         MainWindow();
-        ~MainWindow() {};
+        ~MainWindow(){};
 
         void startTimer();
         void openCapture();
@@ -24,6 +26,7 @@ class MainWindow : QMainWindow {
         cv::VideoCapture videoCap;
         cv::Mat liveImage;
         QImage image;
+        Layer *layer;
         QLabel *label;
 };
 

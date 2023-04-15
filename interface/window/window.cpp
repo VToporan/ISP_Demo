@@ -4,6 +4,7 @@ MainWindow::MainWindow() {
     openCapture();
     startTimer();
     label = new QLabel;
+    layer = new Layer(8);
 }
 
 void MainWindow::openCapture() {
@@ -32,6 +33,7 @@ void MainWindow::Update() {
         exit(1);
     }
 
+    layer->applyFilter(frame);
     image = QImage(frame.data, frame.cols, frame.rows, QImage::Format_RGB888).rgbSwapped();
     label->setPixmap(QPixmap::fromImage(image));
 

@@ -8,13 +8,15 @@
 
 class Layer {
     public:
-        Layer();
+        Layer(int initialIndex);
         ~Layer();
+        void setupFilters();
         void applyFilter(cv::Mat &inframe);
 
     private:
         std::vector<GenericFilterWrapper *> allFilters;
         GenericFilterWrapper *currentFilter;
+        int currentIndex;
 };
 
 #endif

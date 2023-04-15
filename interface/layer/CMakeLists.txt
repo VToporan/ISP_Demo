@@ -14,3 +14,5 @@ target_include_directories(layer
   )
 
 target_compile_options(layer PRIVATE -fPIC)
+
+target_link_libraries(layer PRIVATE filters)

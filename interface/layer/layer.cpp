@@ -12,22 +12,28 @@
 #include "embossFilter/embossFilter.hpp"
 #include "lensFilter/lensFilter.hpp"
 
-Layer::Layer() {
+Layer::Layer(int initialIndex) {
+    setupFilters();
+    currentIndex = initialIndex;
+}
+
+Layer::~Layer() { allFilters.clear(); }
+
+void Layer::setupFilters() {
     allFilters.push_back(new BoxFitlerWrapper(3));
     allFilters.push_back(new MedianFitlerWrapper(3));
     allFilters.push_back(new GaussianFitlerWrapper(3));
     allFilters.push_back(new BilateralFitlerWrapper(3));
     allFilters.push_back(new DilateFitlerWrapper(3));
     allFilters.push_back(new ErodeFitlerWrapper(3));
-    allFilters.push_back(new SobelFitlerWrapper(3));
+    allFilters.push_back(new SobelFitlerWrapper(1));
     allFilters.push_back(new CannyFitlerWrapper(3));
     allFilters.push_back(new ErodeFitlerWrapper(3));
-    allFilters.push_back(new LensFitlerWrapper(3));
+    allFilters.push_back(new EmbossFitlerWrapper());
+    allFilters.push_back(new LensFitlerWrapper(0.3));
 }
 
-Layer::~Layer() { allFilters.clear(); }
-
 void Layer::applyFilter(cv::Mat &inframe) {
-    currentFilter = allFilters[4];
+    currentFilter = allFilters[currentIndex];
     currentFilter->applyFilter(inframe);
 }

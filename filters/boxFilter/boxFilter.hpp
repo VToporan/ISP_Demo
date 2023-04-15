@@ -10,6 +10,7 @@ class BoxFitlerWrapper : public GenericFilterWrapper {
         int kernelSizeY;
 
     public:
+        explicit BoxFitlerWrapper();
         explicit BoxFitlerWrapper(int initialKernelSize);
         void applyFilter(cv::Mat &inframe);
 

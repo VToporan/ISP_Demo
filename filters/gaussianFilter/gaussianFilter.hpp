@@ -11,12 +11,12 @@ class GaussianFitlerWrapper : public GenericFilterWrapper {
         double sigmaY;
 
     public:
+        explicit GaussianFitlerWrapper();
         explicit GaussianFitlerWrapper(int initialKernelSize);
-        explicit GaussianFitlerWrapper(int initialKernelSize,
-                                       double initialSigma);
-        explicit GaussianFitlerWrapper(int initialKernelSize,
-                                       double initialSigmaX,
-                                       double initialSigmaY);
+        explicit GaussianFitlerWrapper(int initialKernelSize, double initialSigma);
+        explicit GaussianFitlerWrapper(int initialKernelSize, double initialSigmaX, double initialSigmaY);
+
+        void setKernelSize(int newKernelSize);
         void setSigma(int newSigma);
         void setSigmaX(int newSigmaX);
         void setSigmaY(int newSigmaY);

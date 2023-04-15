@@ -1,10 +1,19 @@
 #include "cannyFilter.hpp"
-#include "genericFilter.hpp"
 
 #include <opencv2/imgproc.hpp>
 #include <stdio.h>
 
-CannyFitlerWrapper::CannyFitlerWrapper(int initialKernelSize) { setKernelSize(initialKernelSize); }
+CannyFitlerWrapper::CannyFitlerWrapper() {
+    setKernelSize(3);
+    setLowTreshold(0);
+    setHighTreshold(255);
+}
+
+CannyFitlerWrapper::CannyFitlerWrapper(int initialKernelSize) {
+    setKernelSize(initialKernelSize);
+    setLowTreshold(0);
+    setHighTreshold(255);
+}
 
 CannyFitlerWrapper::CannyFitlerWrapper(int initialKernelSize, int initialLowTreshold) {
     setKernelSize(initialKernelSize);
@@ -26,13 +35,13 @@ void CannyFitlerWrapper::applyFilter(cv::Mat &inframe) {
 }
 
 void CannyFitlerWrapper::setKernelSize(int newKernelSize) {
-    if (newKernelSize < 0) {
-        kernelSize = 1;
+    if (newKernelSize < 3 || newKernelSize > 7) {
+        kernelSize = 3;
         return;
     }
 
     if ((newKernelSize % 2) == 0) {
-        kernelSize = 1;
+        kernelSize = 3;
         return;
     }
 

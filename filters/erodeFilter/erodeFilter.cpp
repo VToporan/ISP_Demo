@@ -2,6 +2,8 @@
 #include <opencv2/imgproc.hpp>
 #include <stdio.h>
 
+ErodeFitlerWrapper::ErodeFitlerWrapper() { setErodeDiameter(3); }
+
 ErodeFitlerWrapper::ErodeFitlerWrapper(int initialDiameter) { setErodeDiameter(initialDiameter); }
 
 void ErodeFitlerWrapper::applyFilter(cv::Mat &inframe) {

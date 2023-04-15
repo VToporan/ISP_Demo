@@ -5,7 +5,7 @@ MainWindow::MainWindow() {
     startTimer();
     label = new QLabel;
     layers.push_back(new Layer(0));
-    // layers.push_back(new Layer(6));
+    layers.push_back(new Layer(10));
 }
 
 // https://asmaloney.com/2013/11/code/converting-between-cvmat-and-qimage-or-qpixmap

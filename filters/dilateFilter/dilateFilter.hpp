@@ -5,10 +5,11 @@
 #include <opencv2/core.hpp>
 
 class DilateFitlerWrapper : public GenericFilterWrapper {
-    private: 
+    private:
         int dilateDiameter;
 
     public:
+        explicit DilateFitlerWrapper();
         explicit DilateFitlerWrapper(int initialDiameter);
         void applyFilter(cv::Mat &inframe);
 
@@ -16,4 +17,3 @@ class DilateFitlerWrapper : public GenericFilterWrapper {
 };
 
 #endif
-

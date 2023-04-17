@@ -1,11 +1,16 @@
 #include "window.hpp"
 
-MainWindow::MainWindow() {
+#include <QVBoxLayout>
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     openCapture();
     startTimer();
-    label = new QLabel;
     layers.push_back(new Layer(0));
     layers.push_back(new Layer(7));
+
+    view = new QGraphicsView;
+    scene = new QGraphicsScene;
+    pixmap = scene->addPixmap(QPixmap::fromImage(image));
+    view->setScene(scene);
 }
 
 // https://asmaloney.com/2013/11/code/converting-between-cvmat-and-qimage-or-qpixmap
@@ -71,7 +76,7 @@ void MainWindow::Update() {
         layer->applyFilter(frame);
     }
     image = cvMatToQImage(frame);
-    label->setPixmap(QPixmap::fromImage(image));
+    pixmap->setPixmap(QPixmap::fromImage(image));
 
-    label->show();
+    view->show();
 }

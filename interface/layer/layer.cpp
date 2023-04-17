@@ -13,9 +13,10 @@
 #include "medianFilter/medianFilter.hpp"
 #include "sobelFilter/sobelFilter.hpp"
 
-Layer::Layer(int initialIndex) {
+Layer::Layer(int initialIndex, QGraphicsRectItem* rectangle) {
     setupFilters();
     currentIndex = initialIndex;
+    rect = rectangle;
 }
 
 Layer::~Layer() { allFilters.clear(); }
@@ -35,7 +36,10 @@ void Layer::setupFilters() {
 }
 
 void Layer::applyFilter(cv::Mat &inframe) {
-    cv::Rect roi(100, 100, 200, 200);
+    float x = 0, y = 0, h = 100, w = 100;
+    x = rect->scenePos().x();
+    y = rect->scenePos().y();
+    cv::Rect roi(x, y, w, h);
     cv::Mat outframe = inframe(roi);
 
     allFilters[currentIndex]->applyFilter(outframe);

@@ -1,6 +1,5 @@
 #include "window.hpp"
 
-#include <QVBoxLayout>
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     openCapture();
     startTimer();
@@ -9,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     view = new QGraphicsView;
     scene = new QGraphicsScene;
+    QGraphicsRectItem *rect = scene->addRect(10, 10, 100, 100);
     pixmap = scene->addPixmap(QPixmap::fromImage(image));
     view->setScene(scene);
 }

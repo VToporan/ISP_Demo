@@ -14,10 +14,12 @@ target_include_directories(interface
 
 add_subdirectory( window )
 add_subdirectory( layer )
+add_subdirectory( roi )
 
 target_link_libraries(interface
   PRIVATE 
     window
     layer
+    roi
   )
 

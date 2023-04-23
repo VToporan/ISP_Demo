@@ -2,14 +2,15 @@
 #define LAYER_H
 
 #include "genericFilter.hpp"
+#include "roi/roi.hpp"
 
+#include <QGraphicsScene>
 #include <opencv2/opencv.hpp>
-#include <QGraphicsRectItem>
 #include <vector>
 
 class Layer {
     public:
-        Layer(int initialIndex, QGraphicsRectItem *rect);
+        Layer(int initialIndex, QGraphicsScene *scene);
         ~Layer();
         void setupFilters();
         void applyFilter(cv::Mat &inframe);
@@ -17,7 +18,7 @@ class Layer {
     private:
         std::vector<GenericFilterWrapper *> allFilters;
         GenericFilterWrapper *currentFilter;
-        QGraphicsRectItem *rect;
+        Roi *roi;
         int currentIndex;
 };
 

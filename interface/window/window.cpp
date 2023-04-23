@@ -7,19 +7,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     view = new QGraphicsView;
     scene = new QGraphicsScene;
     pixmap = scene->addPixmap(QPixmap::fromImage(image));
-    QGraphicsRectItem *rect = scene->addRect(10, 10, 100, 100, QPen(Qt::black));
-    std::cout << rect;
-    rect->setFlag(QGraphicsItem::ItemIsMovable);
-    int width = 512;
-    int height = 512;
+    int width = 1024;
+    int height = 1024;
     scene->setSceneRect(0, 0, width, height);
     view->setFixedSize(width, height);
     view->setSceneRect(0, 0, width, height);
     view->fitInView(0, 0, width, height, Qt::KeepAspectRatio);
     view->setScene(scene);
 
-    layers.push_back(new Layer(0, rect));
-    layers.push_back(new Layer(7, rect));
+    layers.push_back(new Layer(8, scene));
+    layers.push_back(new Layer(7, scene));
 }
 
 // https://asmaloney.com/2013/11/code/converting-between-cvmat-and-qimage-or-qpixmap

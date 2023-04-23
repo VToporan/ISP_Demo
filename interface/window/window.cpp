@@ -1,21 +1,22 @@
 #include "window.hpp"
+#include "opencv2/imgproc.hpp"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     openCapture();
     startTimer();
 
+    int width = 512;
+    int height = 512;
     view = new QGraphicsView;
     scene = new QGraphicsScene;
     pixmap = scene->addPixmap(QPixmap::fromImage(image));
-    int width = 1024;
-    int height = 1024;
     scene->setSceneRect(0, 0, width, height);
     view->setFixedSize(width, height);
+    view->setScene(scene);
     view->setSceneRect(0, 0, width, height);
     view->fitInView(0, 0, width, height, Qt::KeepAspectRatio);
-    view->setScene(scene);
 
-    layers.push_back(new Layer(8, scene));
+    layers.push_back(new Layer(0, scene));
     layers.push_back(new Layer(7, scene));
 }
 
@@ -78,6 +79,9 @@ void MainWindow::Update() {
         exit(1);
     }
 
+    int width = 512;
+    int height = 512;
+    cv::resize(frame, frame, cv::Size(height, width));
     for (Layer *layer : layers) {
         layer->applyFilter(frame);
     }

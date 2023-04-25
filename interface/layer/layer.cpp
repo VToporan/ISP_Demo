@@ -40,6 +40,8 @@ void Layer::applyFilter(cv::Mat &inframe) {
     double x = 0, y = 0, h = 100, w = 100;
     x = roi->pos().x();
     y = roi->pos().y();
+    h = roi->rect().height();
+    w = roi->rect().width();
     cv::Rect roi(x, y, w, h);
     cv::Mat outframe = inframe(roi);
 

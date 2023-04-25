@@ -10,7 +10,7 @@ target_sources(roi
 target_include_directories(roi
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}
-    ${CMAKE_CURRENT_LIST_DIR}/../../
+    ${CMAKE_CURRENT_LIST_DIR}/..
   )
 
 target_compile_options(roi PRIVATE -fPIC)

@@ -15,11 +15,15 @@ target_include_directories(interface
 add_subdirectory( window )
 add_subdirectory( layer )
 add_subdirectory( roi )
+add_subdirectory( handlebar )
+add_subdirectory( resizable )
 
 target_link_libraries(interface
   PRIVATE 
     window
     layer
     roi
+    handlebar
+    resizable
   )
 

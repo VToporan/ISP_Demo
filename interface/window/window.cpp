@@ -13,10 +13,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     scene->setSceneRect(0, 0, width, height);
     view->setFixedSize(width, height);
     view->setScene(scene);
-    view->setSceneRect(0, 0, width, height);
     view->fitInView(0, 0, width, height, Qt::KeepAspectRatio);
 
-    layers.push_back(new Layer(0, scene));
+    // layers.push_back(new Layer(0, scene));
     layers.push_back(new Layer(7, scene));
 }
 

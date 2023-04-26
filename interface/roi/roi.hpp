@@ -11,13 +11,14 @@
 class Roi : public Resizable {
     public:
         Roi(const QRectF &rect, QGraphicsItem *parent = 0);
-        void update();
+        void update(AnchorPosition currentAnchor);
 
     protected:
         virtual QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
     private:
         void setupHandles();
+        void updateNeighbours(AnchorPosition currentAnchor);
         std::vector<Handlebar *> handles;
 };
 

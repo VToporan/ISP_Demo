@@ -16,8 +16,11 @@ class Resizable : public QGraphicsRectItem {
     public:
         Resizable(const QRectF &rect, QGraphicsItem *parent = 0);
         virtual ~Resizable() {};
-        virtual void update() = 0;
+        virtual void update(AnchorPosition currentAnchor) = 0;
         virtual QRectF sceneRect();
+
+    protected:
+        bool initialised = false;
 };
 
 #endif

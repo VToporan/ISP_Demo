@@ -25,6 +25,7 @@ void EmbossFitlerWrapper::applyFilter(cv::Mat &inframe) {
     cv::filter2D(grayscale, inframe, -1, embossKernels[currentDirection]);
 
     inframe += 127;
+    cv::cvtColor(inframe, inframe, cv::COLOR_GRAY2BGR);
 }
 
 void EmbossFitlerWrapper::setEmbossDirection(EmbossDirection newDirection) { currentDirection = newDirection; }

@@ -32,6 +32,7 @@ void CannyFitlerWrapper::applyFilter(cv::Mat &inframe) {
     cv::cvtColor(inframe, grayscale, cv::COLOR_BGR2GRAY);
 
     cv::Canny(grayscale, inframe, lowTreshold, highTreshold, kernelSize);
+    cv::cvtColor(inframe, inframe, cv::COLOR_GRAY2BGR);
 }
 
 void CannyFitlerWrapper::setKernelSize(int newKernelSize) {

@@ -1,11 +1,22 @@
 #include "window.hpp"
+#include "opencv2/imgproc.hpp"
 
-MainWindow::MainWindow() {
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     openCapture();
     startTimer();
-    label = new QLabel;
-    layers.push_back(new Layer(0));
-    layers.push_back(new Layer(10));
+
+    int width = 512;
+    int height = 512;
+    view = new QGraphicsView;
+    scene = new QGraphicsScene;
+    pixmap = scene->addPixmap(QPixmap::fromImage(image));
+    scene->setSceneRect(0, 0, width, height);
+    view->setFixedSize(width, height);
+    view->setScene(scene);
+    view->fitInView(0, 0, width, height, Qt::KeepAspectRatio);
+
+    layers.push_back(new Layer(10, scene));
+    layers.push_back(new Layer(7, scene));
 }
 
 // https://asmaloney.com/2013/11/code/converting-between-cvmat-and-qimage-or-qpixmap
@@ -67,11 +78,14 @@ void MainWindow::Update() {
         exit(1);
     }
 
+    int width = 512;
+    int height = 512;
+    cv::resize(frame, frame, cv::Size(height, width));
     for (Layer *layer : layers) {
         layer->applyFilter(frame);
     }
     image = cvMatToQImage(frame);
-    label->setPixmap(QPixmap::fromImage(image));
+    pixmap->setPixmap(QPixmap::fromImage(image));
 
-    label->show();
+    view->show();
 }

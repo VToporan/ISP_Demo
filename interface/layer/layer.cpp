@@ -1,21 +1,23 @@
 #include "layer.hpp"
 
-#include "genericFilter.hpp"
-#include "emptyFilter/emptyFilter.hpp"
-#include "boxFilter/boxFilter.hpp"
-#include "medianFilter/medianFilter.hpp"
-#include "gaussianFilter/gaussianFilter.hpp"
 #include "bilateralFilter/bilateralFilter.hpp"
-#include "dilateFilter/dilateFilter.hpp"
-#include "erodeFilter/erodeFilter.hpp"
-#include "sobelFilter/sobelFilter.hpp"
+#include "boxFilter/boxFilter.hpp"
 #include "cannyFilter/cannyFilter.hpp"
+#include "dilateFilter/dilateFilter.hpp"
 #include "embossFilter/embossFilter.hpp"
+#include "emptyFilter/emptyFilter.hpp"
+#include "erodeFilter/erodeFilter.hpp"
+#include "gaussianFilter/gaussianFilter.hpp"
+#include "genericFilter.hpp"
 #include "lensFilter/lensFilter.hpp"
+#include "medianFilter/medianFilter.hpp"
+#include "sobelFilter/sobelFilter.hpp"
 
-Layer::Layer(int initialIndex) {
+Layer::Layer(int initialIndex, QGraphicsScene *scene) {
     setupFilters();
     currentIndex = initialIndex;
+    roi = new Roi(QRectF(10, 10, 100, 100));
+    scene->addItem(roi);
 }
 
 Layer::~Layer() { allFilters.clear(); }
@@ -35,6 +37,16 @@ void Layer::setupFilters() {
 }
 
 void Layer::applyFilter(cv::Mat &inframe) {
-    currentFilter = allFilters[currentIndex];
-    currentFilter->applyFilter(inframe);
+    QPointF origin = roi->mapToScene(roi->rect().x(), roi->rect().y());
+    qreal x = 0, y = 0, width = 0, height = 0;
+    x = origin.x();
+    y = origin.y();
+    width = roi->rect().width();
+    height = roi->rect().height();
+
+    cv::Rect roi(x, y, width, height);
+    cv::Mat outframe = inframe(roi);
+
+    allFilters[currentIndex]->applyFilter(outframe);
+    outframe.copyTo(inframe(roi));
 }

@@ -10,6 +10,7 @@ target_sources(layer
 target_include_directories(layer
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}/../
     ${CMAKE_CURRENT_LIST_DIR}/../../
   )
 

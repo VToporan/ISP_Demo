@@ -45,6 +45,7 @@ void SobelFitlerWrapper::applyFilter(cv::Mat &inframe) {
         cv::convertScaleAbs(gradX, gradX);
         cv::convertScaleAbs(gradY, gradY);
         cv::addWeighted(gradX, 0.5, gradY, 0.5, 0, inframe);
+        cv::cvtColor(inframe, inframe, cv::COLOR_GRAY2BGR);
 
     } else {
         cv::Vec3b channels;

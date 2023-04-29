@@ -5,7 +5,7 @@
 #include <cmath>
 #include <iostream>
 
-LensFitlerWrapper::LensFitlerWrapper() { distortionAmount = 0; }
+LensFitlerWrapper::LensFitlerWrapper() { distortionAmount = 0.9; }
 
 LensFitlerWrapper::LensFitlerWrapper(float initialAmount) { distortionAmount = initialAmount; }
 

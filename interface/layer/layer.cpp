@@ -37,13 +37,14 @@ void Layer::setupFilters() {
 }
 
 void Layer::applyFilter(cv::Mat &inframe) {
-    double x = 0, y = 0, h = 100, w = 100;
     QPointF origin = roi->mapToScene(roi->rect().x(), roi->rect().y());
+    qreal x = 0, y = 0, width = 0, height = 0;
     x = origin.x();
     y = origin.y();
-    h = roi->rect().height();
-    w = roi->rect().width();
-    cv::Rect roi(x, y, w, h);
+    width = roi->rect().width();
+    height = roi->rect().height();
+
+    cv::Rect roi(x, y, width, height);
     cv::Mat outframe = inframe(roi);
 
     allFilters[currentIndex]->applyFilter(outframe);

@@ -18,10 +18,13 @@ QVariant Handlebar::itemChange(GraphicsItemChange change, const QVariant &value)
         QPointF newPos = value.toPointF();
         QRectF sceneRect = parent->sceneRect();
         QRectF itemRect = rect();
-        newPos.setX(qMin(sceneRect.right() - parent->x() - itemRect.width() / 2 - 1,
-                         qMax(newPos.x(), sceneRect.left() - parent->x() - itemRect.width() / 2 + 1)));
-        newPos.setY(qMin(sceneRect.bottom() - parent->y() - itemRect.height() / 2 - 1,
-                         qMax(newPos.y(), sceneRect.top() - parent->y() - itemRect.height() / 2 + 1)));
+        qreal rightMargin = sceneRect.right() - parent->x() - itemRect.width() / 2 - 1;
+        qreal leftMargin = sceneRect.left() - parent->x() - itemRect.width() / 2 + 1;
+        qreal bottomMargin = sceneRect.bottom() - parent->y() - itemRect.height() / 2 - 1;
+        qreal topMargin = sceneRect.top() - parent->y() - itemRect.height() / 2 + 1;
+
+        newPos.setX(qMin(rightMargin, qMax(newPos.x(), leftMargin)));
+        newPos.setY(qMin(bottomMargin, qMax(newPos.y(), topMargin)));
         return newPos;
     }
 

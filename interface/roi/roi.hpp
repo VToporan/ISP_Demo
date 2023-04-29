@@ -18,7 +18,7 @@ class Roi : public Resizable {
 
     private:
         void setupHandles();
-        void updateNeighbours(AnchorPosition currentAnchor);
+        void handlebarUpdateNeighbours(AnchorPosition currentAnchor);
         std::vector<Handlebar *> handles;
 };
 

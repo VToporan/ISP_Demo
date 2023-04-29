@@ -24,7 +24,7 @@ void Roi::setupHandles() {
     initialised = true;
 }
 
-void Roi::updateNeighbours(AnchorPosition currentAnchor) {
+void Roi::handlebarUpdateNeighbours(AnchorPosition currentAnchor) {
     initialised = false;
 
     int xOffset = 1;
@@ -49,7 +49,7 @@ void Roi::update(AnchorPosition currentAnchor) {
         return;
     }
 
-    updateNeighbours(currentAnchor);
+    handlebarUpdateNeighbours(currentAnchor);
 
     qreal xMin = scene()->sceneRect().right();
     qreal yMin = scene()->sceneRect().bottom();
@@ -63,10 +63,10 @@ void Roi::update(AnchorPosition currentAnchor) {
         yMax = qMax(yMax, handle->y());
     }
 
-    qreal xOffset = handles.front()->rect().width() / 2;
-    qreal yOffset = handles.front()->rect().height() / 2;
     qreal width = qAbs(xMax - xMin);
     qreal heignt = qAbs(yMax - yMin);
+    qreal xOffset = handles.front()->rect().width() / 2;
+    qreal yOffset = handles.front()->rect().height() / 2;
 
     xMin += xOffset;
     yMin += yOffset;

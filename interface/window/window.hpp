@@ -3,19 +3,17 @@
 
 #include "layer/layer.hpp"
 
-#include <QGraphicsRectItem>
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include <QGraphicsPixmapItem>
-#include <QMainWindow>
+#include <QHBoxLayout>
 #include <QPixmap>
-#include <QRect>
 #include <QTimer>
+#include <QWidget>
 #include <opencv2/opencv.hpp>
 
 #include <vector>
 
-class MainWindow : QMainWindow {
+class MainWindow : QWidget {
         Q_OBJECT
     public:
         MainWindow(QWidget *parent);
@@ -31,8 +29,9 @@ class MainWindow : QMainWindow {
         cv::VideoCapture videoCap;
         cv::Mat liveImage;
         QImage image;
-        QGraphicsScene *scene;
+        QHBoxLayout *layout;
         QGraphicsView *view;
+        QGraphicsScene *scene;
         QGraphicsPixmapItem *pixmap;
         std::vector<Layer *> layers;
 };

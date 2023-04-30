@@ -1,7 +1,7 @@
 #include "window.hpp"
 #include "opencv2/imgproc.hpp"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
+MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
     openCapture();
     startTimer();
 
@@ -15,8 +15,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     view->setScene(scene);
     view->fitInView(0, 0, width, height, Qt::KeepAspectRatio);
 
+    layout = new QHBoxLayout;
+    layout->addWidget(view);
+    setLayout(layout);
+
     layers.push_back(new Layer(10, scene));
     layers.push_back(new Layer(7, scene));
+
+    show();
 }
 
 // https://asmaloney.com/2013/11/code/converting-between-cvmat-and-qimage-or-qpixmap
@@ -67,7 +73,7 @@ void MainWindow::openCapture() {
 void MainWindow::startTimer() {
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(Update()));
-    timer->start(10);
+    timer->start(50);
 }
 
 void MainWindow::Update() {
@@ -87,5 +93,4 @@ void MainWindow::Update() {
     image = cvMatToQImage(frame);
     pixmap->setPixmap(QPixmap::fromImage(image));
 
-    view->show();
 }

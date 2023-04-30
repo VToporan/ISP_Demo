@@ -2,6 +2,7 @@
 #define WINDOW_H
 
 #include "layer/layer.hpp"
+#include "sidebar/sidebar.hpp"
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -21,6 +22,7 @@ class MainWindow : QWidget {
 
         void startTimer();
         void openCapture();
+        void captureFrame();
 
     public slots:
         void Update();
@@ -29,10 +31,13 @@ class MainWindow : QWidget {
         cv::VideoCapture videoCap;
         cv::Mat liveImage;
         QImage image;
+        QGraphicsPixmapItem *pixmap;
+        bool freezeFrame;
+
         QHBoxLayout *layout;
         QGraphicsView *view;
         QGraphicsScene *scene;
-        QGraphicsPixmapItem *pixmap;
+        Sidebar *sidebar;
         std::vector<Layer *> layers;
 };
 

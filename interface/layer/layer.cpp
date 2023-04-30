@@ -41,8 +41,8 @@ void Layer::applyFilter(cv::Mat &inframe) {
     qreal x = 0, y = 0, width = 0, height = 0;
     x = origin.x();
     y = origin.y();
-    width = roi->rect().width();
-    height = roi->rect().height();
+    width = roi->rect().width() + 1;
+    height = roi->rect().height() + 1;
 
     cv::Rect roi(x, y, width, height);
     cv::Mat outframe = inframe(roi);

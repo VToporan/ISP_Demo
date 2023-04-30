@@ -12,10 +12,11 @@ class Sidebar : public QSplitter {
         Q_OBJECT;
 
     public:
-        Sidebar(bool *freezeFrame);
+        Sidebar(bool *freezeFrame, std::vector<Layer *> *layers);
 
     public slots:
         void handleFreezeFrame();
+        void handleLayerSelect(Layer *layer);
 
     private:
         bool *freezeFrame;

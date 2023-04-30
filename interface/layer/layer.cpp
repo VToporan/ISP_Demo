@@ -18,6 +18,7 @@ Layer::Layer(int initialIndex, QGraphicsScene *scene) {
     currentIndex = initialIndex;
     roi = new Roi(QRectF(10, 10, 100, 100));
     scene->addItem(roi);
+    setSelected(false);
 }
 
 Layer::~Layer() { allFilters.clear(); }
@@ -49,4 +50,8 @@ void Layer::applyFilter(cv::Mat &inframe) {
 
     allFilters[currentIndex]->applyFilter(outframe);
     outframe.copyTo(inframe(roi));
+}
+
+void Layer::setSelected(bool isSelected) {
+    roi->setSelected(isSelected);
 }

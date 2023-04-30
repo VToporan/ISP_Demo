@@ -12,6 +12,7 @@ class Roi : public Resizable {
     public:
         Roi(const QRectF &rect, QGraphicsItem *parent = 0);
         void update(AnchorPosition currentAnchor);
+        void setSelected(bool isSelected);
 
     protected:
         virtual QVariant itemChange(GraphicsItemChange change, const QVariant &value);

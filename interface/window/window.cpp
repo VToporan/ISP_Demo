@@ -16,15 +16,15 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
     view->setScene(scene);
     view->fitInView(0, 0, width, height, Qt::KeepAspectRatio);
 
-    sidebar = new Sidebar(&freezeFrame);
+    layers.push_back(new Layer(10, scene));
+    layers.push_back(new Layer(7, scene));
+
+    sidebar = new Sidebar(&freezeFrame, &layers);
 
     layout = new QHBoxLayout;
     layout->addWidget(sidebar);
     layout->addWidget(view);
     setLayout(layout);
-
-    layers.push_back(new Layer(10, scene));
-    layers.push_back(new Layer(7, scene));
 
     show();
 }

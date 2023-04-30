@@ -14,6 +14,7 @@ class Layer {
         ~Layer();
         void setupFilters();
         void applyFilter(cv::Mat &inframe);
+        void setSelected(bool isSelected);
 
     private:
         std::vector<GenericFilterWrapper *> allFilters;

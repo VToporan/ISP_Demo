@@ -1,26 +1,36 @@
 #include "sidebar.hpp"
 
-Sidebar::Sidebar(bool *freezeFrame) {
-    this->freezeFrame = freezeFrame;
+Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers) {
+    freezeFrame = initialFreezeFrame;
+    layers = initialLayers;
 
     setOrientation(Qt::Vertical);
     setMinimumSize(256, 0);
 
     layerSection = new QSplitter;
+    layerSection->setFixedSize(256, 256);
+    layerSection->setOrientation(Qt::Vertical);
+
     filterSection = new QSplitter;
-    layerSection->setMaximumSize(256, 256);
-    filterSection->setMaximumSize(256, 256);
+    filterSection->setFixedSize(256, 256);
+    filterSection->setOrientation(Qt::Vertical);
 
     toggleFreezeFrame = new QPushButton("Freeze Frame");
     connect(toggleFreezeFrame, &QPushButton::clicked, this, &Sidebar::handleFreezeFrame);
     layerSection->addWidget(toggleFreezeFrame);
+
+    for (int i = 0; i < layers->size(); ++i) {
+        QPushButton *newButton = new QPushButton(QString("Layer %1").arg(i));
+        connect(newButton, &QPushButton::clicked, this, [=]() { handleLayerSelect((*layers)[i]); });
+        layerSection->addWidget(newButton);
+    }
+
     filterSection->addWidget(new QPushButton("TEST"));
 
     addWidget(layerSection);
     addWidget(filterSection);
 }
 
-#include <iostream>
 void Sidebar::handleFreezeFrame() {
     *freezeFrame = !(*freezeFrame);
     if (*freezeFrame) {
@@ -30,3 +40,10 @@ void Sidebar::handleFreezeFrame() {
     }
 }
 
+void Sidebar::handleLayerSelect(Layer *selectedLayer) {
+    for (Layer *layer : *layers) {
+        layer->setSelected(false);
+    }
+
+    selectedLayer->setSelected(true);
+}

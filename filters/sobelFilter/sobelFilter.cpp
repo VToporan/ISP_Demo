@@ -16,21 +16,21 @@ SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize) {
     setKernelSize(initialKernelSize);
     setDerivX(1);
     setDerivY(1);
-    displayDirection = false;
+    setDisplayDirection(false);
 }
 
 SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize, int initialDerivate) {
     setKernelSize(initialKernelSize);
     setDerivX(initialDerivate);
     setDerivY(initialDerivate);
-    displayDirection = false;
+    setDisplayDirection(false);
 }
 
 SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize, int initialDerivateX, int initialDerivateY) {
     setKernelSize(initialKernelSize);
     setDerivX(initialDerivateX);
     setDerivY(initialDerivateY);
-    displayDirection = false;
+    setDisplayDirection(false);
 }
 
 void SobelFitlerWrapper::applyFilter(cv::Mat &inframe) {
@@ -89,4 +89,11 @@ void SobelFitlerWrapper::setDerivX(int newDerivX) { derivX = newDerivX; }
 
 void SobelFitlerWrapper::setDerivY(int newDerivY) { derivY = newDerivY; }
 
-void SobelFitlerWrapper::toggleDisplayDirection() { displayDirection = !displayDirection; }
+void SobelFitlerWrapper::setDisplayDirection(int isSet) { displayDirection = isSet; }
+
+std::vector<parameterConfig> SobelFitlerWrapper::allParameterConfigs() {
+    std::vector<parameterConfig> configs;
+    parameterConfig config = {0, 0, 1, 1, [this](int x){setDisplayDirection(x);}};
+    configs.push_back(config);
+    return configs;
+}

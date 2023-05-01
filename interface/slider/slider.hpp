@@ -1,31 +1,25 @@
 #ifndef SLIDER_H
 #define SLIDER_H
 
+#include "genericFilter.hpp"
+
 #include <QSlider>
 #include <iostream>
 
 class Slider : public QSlider {
     public:
-        Slider() {
+        Slider(parameterConfig config) {
             setFixedHeight(50);
             setOrientation(Qt::Horizontal);
             setTickPosition(QSlider::TicksBelow);
-            setMaximum(50);
-            setMinimum(-50);
-            setTickInterval(3);
-            setSingleStep(3);
+            setMinimum(config.minValue);
+            setMaximum(config.maxValue);
+            setTickInterval(config.step);
+            setSingleStep(config.step);
+            setValue(config.currentValue);
+
             connect(this, &QSlider::valueChanged, this, [=]() {
-                if (value() == currentValue) {
-                    return;
-                }
-                int offset = value() % singleStep();
-                if (offset) {
-                    int newValue = value() - (value() % singleStep());
-                    currentValue = newValue;
-                    setValue(newValue);
-                    return;
-                }
-                std::cout << value() << "\n";
+                config.setter(value());
             });
         }
 

@@ -25,9 +25,6 @@ Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers) 
         layerSection->addWidget(newButton);
     }
 
-    Slider *slider = new Slider;
-    filterSection->addWidget(slider);
-
     addWidget(layerSection);
     addWidget(filterSection);
 }
@@ -47,4 +44,7 @@ void Sidebar::handleLayerSelect(Layer *selectedLayer) {
     }
 
     selectedLayer->setSelected(true);
+    for (Slider *slider : selectedLayer->getSliders()) {
+        filterSection->addWidget(slider);
+    }
 }

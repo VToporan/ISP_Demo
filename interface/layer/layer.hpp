@@ -3,6 +3,7 @@
 
 #include "genericFilter.hpp"
 #include "roi/roi.hpp"
+#include "slider/slider.hpp"
 
 #include <QGraphicsScene>
 #include <opencv2/opencv.hpp>
@@ -15,6 +16,7 @@ class Layer {
         void setupFilters();
         void applyFilter(cv::Mat &inframe);
         void setSelected(bool isSelected);
+        std::vector<Slider *> getSliders();
 
     private:
         std::vector<GenericFilterWrapper *> allFilters;

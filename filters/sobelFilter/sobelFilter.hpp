@@ -21,7 +21,9 @@ class SobelFitlerWrapper : public GenericFilterWrapper {
         void setKernelSize(int newKernelSize);
         void setDerivX(int newDerivX);
         void setDerivY(int newDerivY);
-        void toggleDisplayDirection();
+        void setDisplayDirection(int isSet);
+
+        std::vector<parameterConfig> allParameterConfigs();
 };
 
 #endif

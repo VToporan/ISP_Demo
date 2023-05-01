@@ -25,7 +25,8 @@ Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers) 
         layerSection->addWidget(newButton);
     }
 
-    filterSection->addWidget(new QPushButton("TEST"));
+    Slider *slider = new Slider;
+    filterSection->addWidget(slider);
 
     addWidget(layerSection);
     addWidget(filterSection);

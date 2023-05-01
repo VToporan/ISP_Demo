@@ -2,9 +2,11 @@
 #define SIDEBAR_H
 
 #include "layer/layer.hpp"
+#include "slider/slider.hpp"
 
 #include <QPushButton>
 #include <QSplitter>
+#include <QSlider>
 
 #include <vector>
 

@@ -4,7 +4,9 @@
 #include "genericFilter.hpp"
 
 #include <QHBoxLayout>
+#include <QLabel>
 #include <QSlider>
+#include <QVBoxLayout>
 
 class Slider : public QWidget {
         Q_OBJECT;
@@ -14,6 +16,8 @@ class Slider : public QWidget {
 
     private:
         QSlider *slider;
+        QLabel *nameLabel;
+        QLabel *valueLabel;
         int currentValue;
 
         void setConfig(parameterConfig config);

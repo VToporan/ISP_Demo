@@ -1,17 +1,29 @@
 #include "slider.hpp"
 
+#include <QFont>
+#include <QSplitter>
 Slider::Slider(parameterConfig config) {
     currentValue = config.currentValue;
     slider = new QSlider;
     setConfig(config);
 
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(slider);
-    setLayout(layout);
+    nameLabel = new QLabel(config.name);
+    valueLabel = new QLabel(QString("%1").arg(currentValue));
+
+    QVBoxLayout *layoutVertical = new QVBoxLayout;
+    layoutVertical->addWidget(nameLabel);
+
+    QSplitter *layoutHorizontal = new QSplitter;
+    layoutHorizontal->addWidget(slider);
+    layoutHorizontal->addWidget(valueLabel);
+
+
+    layoutVertical->addWidget(layoutHorizontal);
+    setLayout(layoutVertical);
+    setMaximumHeight(64);
 }
 
 void Slider::setConfig(parameterConfig config) {
-    slider->setFixedHeight(50);
     slider->setOrientation(Qt::Horizontal);
     slider->setTickPosition(QSlider::TicksBelow);
     slider->setMinimum(config.minValue);
@@ -34,6 +46,7 @@ void Slider::setConfig(parameterConfig config) {
         }
 
         currentValue = newValue;
+        valueLabel->setText(QString("%1").arg(currentValue));
         config.setter(currentValue);
     });
 }

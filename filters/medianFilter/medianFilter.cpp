@@ -1,8 +1,6 @@
 #include "medianFilter.hpp"
-#include <opencv2/imgproc.hpp>
-#include <stdio.h>
 
-MedianFitlerWrapper::MedianFitlerWrapper() { setKernelSize(3); }
+MedianFitlerWrapper::MedianFitlerWrapper() { setKernelSize(1); }
 
 MedianFitlerWrapper::MedianFitlerWrapper(int initialKernelSize) { setKernelSize(initialKernelSize); }
 
@@ -10,8 +8,14 @@ void MedianFitlerWrapper::applyFilter(cv::Mat &inframe) { cv::medianBlur(inframe
 
 void MedianFitlerWrapper::setKernelSize(int newKernelSize) {
     if ((newKernelSize % 2) == 0) {
-        newKernelSize++;
+        return;
     }
 
     kernelSize = newKernelSize;
+}
+
+std::vector<parameterConfig> MedianFitlerWrapper::allParameterConfigs() {
+    std::vector<parameterConfig> configs;
+    configs.push_back({"Kernel size", kernelSize, 1, 49, 2, [this](int x) { setKernelSize(x); }});
+    return configs;
 }

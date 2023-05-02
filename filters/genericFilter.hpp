@@ -1,12 +1,14 @@
 #ifndef GENERIC_FILTER_H
 #define GENERIC_FILTER_H
 
-#include <functional>
 #include <opencv2/core.hpp>
+#include <opencv2/imgproc.hpp>
+#include <functional>
 #include <vector>
 
 class GenericFilterWrapper;
 typedef struct _parameterConfig {
+    const char* name;
     int currentValue;
     int minValue;
     int maxValue;

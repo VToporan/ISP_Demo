@@ -2,6 +2,7 @@
 
 #include <QFont>
 #include <QSplitter>
+#include <QGridLayout>
 Slider::Slider(parameterConfig config) {
     currentValue = config.currentValue;
     slider = new QSlider;
@@ -10,16 +11,12 @@ Slider::Slider(parameterConfig config) {
     nameLabel = new QLabel(config.name);
     valueLabel = new QLabel(QString("%1").arg(currentValue));
 
-    QVBoxLayout *layoutVertical = new QVBoxLayout;
-    layoutVertical->addWidget(nameLabel);
+    QGridLayout *grid = new QGridLayout;
+    grid->addWidget(nameLabel, 0, 0, 1, 1);
+    grid->addWidget(slider, 1, 0, 1, 1);
+    grid->addWidget(valueLabel, 1, 1, 1, 1);
 
-    QSplitter *layoutHorizontal = new QSplitter;
-    layoutHorizontal->addWidget(slider);
-    layoutHorizontal->addWidget(valueLabel);
-
-
-    layoutVertical->addWidget(layoutHorizontal);
-    setLayout(layoutVertical);
+    setLayout(grid);
     setMaximumHeight(64);
 }
 

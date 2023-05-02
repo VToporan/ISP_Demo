@@ -3,28 +3,20 @@
 
 #include "genericFilter.hpp"
 
+#include <QHBoxLayout>
 #include <QSlider>
-#include <iostream>
 
-class Slider : public QSlider {
+class Slider : public QWidget {
+        Q_OBJECT;
+
     public:
-        Slider(parameterConfig config) {
-            setFixedHeight(50);
-            setOrientation(Qt::Horizontal);
-            setTickPosition(QSlider::TicksBelow);
-            setMinimum(config.minValue);
-            setMaximum(config.maxValue);
-            setTickInterval(config.step);
-            setSingleStep(config.step);
-            setValue(config.currentValue);
-
-            connect(this, &QSlider::valueChanged, this, [=]() {
-                config.setter(value());
-            });
-        }
+        Slider(parameterConfig config);
 
     private:
-        int currentValue = value();
+        QSlider *slider;
+        int currentValue;
+
+        void setConfig(parameterConfig config);
 };
 
 #endif

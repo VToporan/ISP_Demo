@@ -2,7 +2,7 @@
 #define DILATE_FILTER_H
 
 #include "genericFilter.hpp"
-#include <opencv2/core.hpp>
+#include <vector>
 
 class DilateFitlerWrapper : public GenericFilterWrapper {
     private:
@@ -14,6 +14,8 @@ class DilateFitlerWrapper : public GenericFilterWrapper {
         void applyFilter(cv::Mat &inframe);
 
         void setDilateDiameter(int newDilateDiameter);
+
+        std::vector<parameterConfig> allParameterConfigs();
 };
 
 #endif

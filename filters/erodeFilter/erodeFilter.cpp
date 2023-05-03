@@ -1,6 +1,4 @@
 #include "erodeFilter.hpp"
-#include <opencv2/imgproc.hpp>
-#include <stdio.h>
 
 ErodeFitlerWrapper::ErodeFitlerWrapper() { setErodeDiameter(3); }
 
@@ -13,10 +11,16 @@ void ErodeFitlerWrapper::applyFilter(cv::Mat &inframe) {
 }
 
 void ErodeFitlerWrapper::setErodeDiameter(int newErodeDiameter) {
-    if (erodeDiameter < 0) {
+    if (newErodeDiameter < 1) {
         erodeDiameter = 1;
         return;
     }
 
     erodeDiameter = newErodeDiameter;
+}
+
+std::vector<parameterConfig> ErodeFitlerWrapper::allParameterConfigs() {
+    std::vector<parameterConfig> configs;
+    configs.push_back({"Kernel size", erodeDiameter, 1, 49, 2, [this](int x) { setErodeDiameter(x); }});
+    return configs;
 }

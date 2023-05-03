@@ -2,7 +2,6 @@
 #define BILATERAL_FILTER_H
 
 #include "genericFilter.hpp"
-#include <opencv2/core.hpp>
 
 class BilateralFitlerWrapper : public GenericFilterWrapper {
     private:
@@ -20,6 +19,8 @@ class BilateralFitlerWrapper : public GenericFilterWrapper {
         void setDiameter(int newDiameter);
         void setSigmaColor(int newSigmaColor);
         void setSigmaSpace(int newSigmaSpace);
+
+        std::vector<parameterConfig> allParameterConfigs();
 };
 
 #endif

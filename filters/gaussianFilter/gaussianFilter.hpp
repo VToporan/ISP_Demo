@@ -3,6 +3,7 @@
 
 #include "genericFilter.hpp"
 #include <opencv2/core.hpp>
+#include <vector>
 
 class GaussianFitlerWrapper : public GenericFilterWrapper {
     private:
@@ -15,12 +16,13 @@ class GaussianFitlerWrapper : public GenericFilterWrapper {
         explicit GaussianFitlerWrapper(int initialKernelSize);
         explicit GaussianFitlerWrapper(int initialKernelSize, double initialSigma);
         explicit GaussianFitlerWrapper(int initialKernelSize, double initialSigmaX, double initialSigmaY);
+        void applyFilter(cv::Mat &inframe);
 
         void setKernelSize(int newKernelSize);
-        void setSigma(int newSigma);
-        void setSigmaX(int newSigmaX);
-        void setSigmaY(int newSigmaY);
-        void applyFilter(cv::Mat &inframe);
+        void setSigmaX(float newSigmaX);
+        void setSigmaY(float newSigmaY);
+
+        std::vector<parameterConfig> allParameterConfigs();
 };
 
 #endif

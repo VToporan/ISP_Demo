@@ -4,6 +4,7 @@ SobelFitlerWrapper::SobelFitlerWrapper() {
     setKernelSize(3);
     setDerivX(1);
     setDerivY(1);
+    setDisplayDirection(false);
 }
 SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize) {
     setKernelSize(initialKernelSize);

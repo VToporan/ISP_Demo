@@ -16,6 +16,6 @@ void MedianFitlerWrapper::setKernelSize(int newKernelSize) {
 
 std::vector<parameterConfig> MedianFitlerWrapper::allParameterConfigs() {
     std::vector<parameterConfig> configs;
-    configs.push_back({"Kernel size", kernelSize, 1, 49, 2, [this](int x) { setKernelSize(x); }});
+    configs.push_back({"Kernel size", kernelSize, 1, 79, 2, [this](int x) { setKernelSize(x); }});
     return configs;
 }

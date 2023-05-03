@@ -1,6 +1,4 @@
 #include "dilateFilter.hpp"
-#include <opencv2/imgproc.hpp>
-#include <stdio.h>
 
 DilateFitlerWrapper::DilateFitlerWrapper() { setDilateDiameter(3); }
 
@@ -13,10 +11,16 @@ void DilateFitlerWrapper::applyFilter(cv::Mat &inframe) {
 }
 
 void DilateFitlerWrapper::setDilateDiameter(int newDilateDiameter) {
-    if (dilateDiameter < 0) {
+    if (newDilateDiameter < 1) {
         dilateDiameter = 1;
         return;
     }
 
     dilateDiameter = newDilateDiameter;
+}
+
+std::vector<parameterConfig> DilateFitlerWrapper::allParameterConfigs() {
+    std::vector<parameterConfig> configs;
+    configs.push_back({"Kernel size", dilateDiameter, 1, 49, 2, [this](int x) { setDilateDiameter(x); }});
+    return configs;
 }

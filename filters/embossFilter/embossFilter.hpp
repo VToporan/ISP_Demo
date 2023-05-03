@@ -2,7 +2,6 @@
 #define EMBOSS_FILTER_H
 
 #include "genericFilter.hpp"
-#include <opencv2/core.hpp>
 
 enum EmbossDirection {
     EMBOSS_DIRECTION_UP,
@@ -24,6 +23,8 @@ class EmbossFitlerWrapper : public GenericFilterWrapper {
         void setEmbossDirection(EmbossDirection newDirection);
 
         void applyFilter(cv::Mat &inframe);
+
+        std::vector<parameterConfig> allParameterConfigs();
 };
 
 #endif

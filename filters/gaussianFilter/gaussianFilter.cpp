@@ -35,7 +35,7 @@ void GaussianFitlerWrapper::setKernelSize(int newKernelSize) {
     if (newKernelSize < 1) {
         kernelSize = 3;
         return;
-    } 
+    }
 
     if (newKernelSize % 2 == 0) {
         kernelSize = 3;
@@ -45,8 +45,8 @@ void GaussianFitlerWrapper::setKernelSize(int newKernelSize) {
     kernelSize = newKernelSize;
 }
 
-void GaussianFitlerWrapper::setSigmaX(int newSigmaX) {
-    if (newSigmaX < 1) {
+void GaussianFitlerWrapper::setSigmaX(float newSigmaX) {
+    if (newSigmaX < 0) {
         sigmaX = 0;
         return;
     }
@@ -54,11 +54,21 @@ void GaussianFitlerWrapper::setSigmaX(int newSigmaX) {
     sigmaX = newSigmaX;
 }
 
-void GaussianFitlerWrapper::setSigmaY(int newSigmaY) {
-    if (newSigmaY < 1) {
+void GaussianFitlerWrapper::setSigmaY(float newSigmaY) {
+    if (newSigmaY < 0) {
         sigmaY = 0;
         return;
     }
 
     sigmaY = newSigmaY;
+}
+
+std::vector<parameterConfig> GaussianFitlerWrapper::allParameterConfigs() {
+    std::vector<parameterConfig> configs;
+    configs.push_back({"Kernel size", kernelSize, 1, 79, 2, [this](int x) { setKernelSize(x); }});
+    configs.push_back(
+        {"Sigma value on X axis", (int)sigmaX * 10, 1, 101, 1, [this](int x) { setSigmaX((float)x / 10); }});
+    configs.push_back(
+        {"Sigma value on Y axis", (int)sigmaY * 10, 1, 101, 1, [this](int x) { setSigmaY((float)x / 10); }});
+    return configs;
 }

@@ -2,7 +2,6 @@
 #define SOBEL_FILTER_H
 
 #include "genericFilter.hpp"
-#include <opencv2/core.hpp>
 
 class SobelFitlerWrapper : public GenericFilterWrapper {
     private:

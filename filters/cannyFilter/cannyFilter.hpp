@@ -20,6 +20,8 @@ class CannyFitlerWrapper : public GenericFilterWrapper {
         void setKernelSize(int newKernelSize);
         void setLowTreshold(int newLowTreshold);
         void setHighTreshold(int newHighTreshold);
+
+        std::vector<parameterConfig> allParameterConfigs();
 };
 
 #endif

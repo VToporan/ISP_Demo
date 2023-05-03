@@ -2,7 +2,6 @@
 #define ERODE_FILTER_H
 
 #include "genericFilter.hpp"
-#include <opencv2/core.hpp>
 
 class ErodeFitlerWrapper : public GenericFilterWrapper {
     private:
@@ -14,6 +13,8 @@ class ErodeFitlerWrapper : public GenericFilterWrapper {
         void applyFilter(cv::Mat &inframe);
 
         void setErodeDiameter(int newErodeDiameter);
+
+        std::vector<parameterConfig> allParameterConfigs();
 };
 
 #endif

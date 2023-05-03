@@ -2,7 +2,6 @@
 #define BOX_FILTER_H
 
 #include "genericFilter.hpp"
-#include <opencv2/core.hpp>
 
 class BoxFitlerWrapper : public GenericFilterWrapper {
     private:
@@ -16,6 +15,8 @@ class BoxFitlerWrapper : public GenericFilterWrapper {
 
         void setKernelSizeX(int newKernelSize);
         void setKernelSizeY(int newKernelSize);
+
+        std::vector<parameterConfig> allParameterConfigs();
 };
 
 #endif

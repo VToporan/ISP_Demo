@@ -67,8 +67,8 @@ std::vector<parameterConfig> GaussianFitlerWrapper::allParameterConfigs() {
     std::vector<parameterConfig> configs;
     configs.push_back({"Kernel size", kernelSize, 1, 79, 2, [this](int x) { setKernelSize(x); }});
     configs.push_back(
-        {"Sigma value on X axis", (int)sigmaX * 10, 1, 101, 1, [this](int x) { setSigmaX((float)x / 10); }});
+        {"Sigma value on X axis", (int)(sigmaX * 10), 1, 101, 1, [this](int x) { setSigmaX((float)x / 10); }});
     configs.push_back(
-        {"Sigma value on Y axis", (int)sigmaY * 10, 1, 101, 1, [this](int x) { setSigmaY((float)x / 10); }});
+        {"Sigma value on Y axis", (int)(sigmaY * 10), 1, 101, 1, [this](int x) { setSigmaY((float)x / 10); }});
     return configs;
 }

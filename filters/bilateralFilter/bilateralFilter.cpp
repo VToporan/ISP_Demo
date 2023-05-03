@@ -62,8 +62,8 @@ std::vector<parameterConfig> BilateralFitlerWrapper::allParameterConfigs() {
     std::vector<parameterConfig> configs;
     configs.push_back({"Kernel size", diameter, 1, 11, 2, [this](int x) { setDiameter(x); }});
     configs.push_back(
-        {"Sigma color value", (int)sigmaColor * 1, 1, 101, 1, [this](int x) { setSigmaColor((float)x / 1); }});
+        {"Sigma color value", (int)(sigmaColor * 1), 1, 101, 1, [this](int x) { setSigmaColor((float)x / 1); }});
     configs.push_back(
-        {"Sigma space value", (int)sigmaSpace * 1, 1, 101, 1, [this](int x) { setSigmaSpace((float)x / 1); }});
+        {"Sigma space value", (int)(sigmaSpace * 1), 1, 101, 1, [this](int x) { setSigmaSpace((float)x / 1); }});
     return configs;
 }

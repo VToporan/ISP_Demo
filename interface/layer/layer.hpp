@@ -20,9 +20,13 @@ class Layer {
 
     private:
         std::vector<GenericFilterWrapper *> allFilters;
+        std::vector<Slider *> sliders;
         GenericFilterWrapper *currentFilter;
         Roi *roi;
         int currentIndex;
+
+        void setSliders();
+        void clearSliders();
 };
 
 #endif

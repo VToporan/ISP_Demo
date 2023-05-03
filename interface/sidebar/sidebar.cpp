@@ -8,11 +8,11 @@ Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers) 
     setMinimumSize(256, 0);
 
     layerSection = new QSplitter;
-    layerSection->setFixedSize(256, 256);
+    layerSection->setFixedSize(256, 226);
     layerSection->setOrientation(Qt::Vertical);
 
     filterSection = new QSplitter;
-    filterSection->setFixedSize(256, 256);
+    filterSection->setFixedSize(256, 286);
     filterSection->setOrientation(Qt::Vertical);
 
     toggleFreezeFrame = new QPushButton("Freeze Frame");

@@ -88,6 +88,7 @@ QVariant Roi::itemChange(GraphicsItemChange change, const QVariant &value) {
     return QGraphicsItem::itemChange(change, value);
 }
 
+#include <iostream>
 void Roi::setSelected(bool isSelected) {
     if (isSelected) {
         setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemSendsGeometryChanges);
@@ -95,6 +96,7 @@ void Roi::setSelected(bool isSelected) {
         for (Handlebar *handle : handles) {
             handle->setVisible(true);
         }
+        setZValue(1);
     } else {
         setFlag(QGraphicsItem::ItemIsMovable, false);
         setFlag(QGraphicsItem::ItemSendsGeometryChanges, false);
@@ -102,5 +104,6 @@ void Roi::setSelected(bool isSelected) {
         for (Handlebar *handle : handles) {
             handle->setVisible(false);
         }
+        setZValue(0);
     }
 }

@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
     view->setScene(scene);
     view->fitInView(0, 0, width, height, Qt::KeepAspectRatio);
 
-    layers.push_back(new Layer(10, scene));
+    layers.push_back(new Layer(2, scene));
     layers.push_back(new Layer(7, scene));
 
     sidebar = new Sidebar(&freezeFrame, &layers);

@@ -1,45 +1,32 @@
 #include "sidebar.hpp"
 #include "qobjectdefs.h"
 
+#include <QSplitter>
 Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers) {
     freezeFrame = initialFreezeFrame;
     layers = initialLayers;
-    combo = new QComboBox(this);
-    selectLayer(layers->front());
+    currentLayer = layers->front();
 
-    setOrientation(Qt::Vertical);
-    setMinimumSize(256, 0);
+    setFixedWidth(256);
+    layout = new QVBoxLayout(this);
+    setLayout(layout);
 
-    layerSection = new QSplitter;
-    layerSection->setFixedSize(256, 226);
-    layerSection->setOrientation(Qt::Vertical);
-
-    filterSection = new QSplitter;
-    filterSection->setFixedSize(256, 286);
-    filterSection->setOrientation(Qt::Vertical);
-
-    freezeFrameButton = new QPushButton("Freeze Frame");
-    connect(freezeFrameButton, &QPushButton::clicked, this, &Sidebar::toggleFreezeFrame);
-    layerSection->addWidget(freezeFrameButton);
+    setupFreezeFrame();
+    layout->addWidget(freezeFrameButton, 0, Qt::AlignTop);
 
     for (int i = 0; i < layers->size(); ++i) {
         QPushButton *newButton = new QPushButton(QString("Layer %1").arg(i));
+        newButton->setFixedHeight(60);
         connect(newButton, &QPushButton::clicked, this, [=]() { selectLayer((*layers)[i]); });
-        layerSection->addWidget(newButton);
+        layout->addWidget(newButton, 0, Qt::AlignTop);
     }
 
-    for (int i = 0; i < 10; ++i) {
-        combo->insertItem(i, QString("Filter %1").arg(i));
-    }
-    combo->setFixedHeight(25);
-    connect(combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int x) {
-        currentLayer->setIndex(x);
-        selectLayer(currentLayer);
-    });
-    layerSection->addWidget(combo);
+    setupFilterDropDown();
+    layout->addWidget(combo, 0, Qt::AlignTop);
 
-    addWidget(layerSection);
-    addWidget(filterSection);
+    setupLayout();
+    layout->addStretch();
+    selectLayer(currentLayer);
 }
 
 void Sidebar::toggleFreezeFrame() {
@@ -58,9 +45,32 @@ void Sidebar::selectLayer(Layer *selectedLayer) {
 
     selectedLayer->setSelected(true);
     for (Slider *slider : selectedLayer->getSliders()) {
-        filterSection->addWidget(slider);
+        layout->insertWidget(layout->count()- 1, slider);
     }
 
     currentLayer = selectedLayer;
     combo->setCurrentIndex(currentLayer->getIndex());
+}
+
+void Sidebar::setupFreezeFrame() {
+    freezeFrameButton = new QPushButton("Freeze Frame");
+    freezeFrameButton->setFixedHeight(40);
+    connect(freezeFrameButton, &QPushButton::clicked, this, &Sidebar::toggleFreezeFrame);
+}
+
+void Sidebar::setupFilterDropDown() {
+    combo = new QComboBox(this);
+    combo->setFixedHeight(35);
+    for (int i = 0; i < 10; ++i) {
+        combo->insertItem(i, QString("Filter %1").arg(i));
+    }
+    connect(combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int x) {
+        currentLayer->setIndex(x);
+        selectLayer(currentLayer);
+    });
+}
+
+void Sidebar::setupLayout() {
+    layout->setSpacing(5);
+    layout->setMargin(5);
 }

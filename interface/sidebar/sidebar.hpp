@@ -5,12 +5,11 @@
 
 #include <QComboBox>
 #include <QPushButton>
-#include <QSlider>
-#include <QSplitter>
+#include <QVBoxLayout>
 
 #include <vector>
 
-class Sidebar : public QSplitter {
+class Sidebar : public QWidget {
         Q_OBJECT;
 
     public:
@@ -24,10 +23,14 @@ class Sidebar : public QSplitter {
         bool *freezeFrame;
         std::vector<Layer *> *layers;
         Layer *currentLayer;
-        QSplitter *layerSection;
-        QSplitter *filterSection;
         QPushButton *freezeFrameButton;
         QComboBox *combo;
+        QVBoxLayout *layout;
+
+        void setupFreezeFrame();
+        void setupLayerButtons();
+        void setupFilterDropDown();
+        void setupLayout();
 };
 
 #endif

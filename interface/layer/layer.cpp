@@ -16,7 +16,7 @@
 Layer::Layer(int initialIndex, QGraphicsScene *scene) {
     setupFilters();
     currentIndex = initialIndex;
-    roi = new Roi(QRectF(10, 10, 100, 100));
+    roi = new Roi(QRectF(0, 0, 511, 511));
     scene->addItem(roi);
     setSelected(false);
 }

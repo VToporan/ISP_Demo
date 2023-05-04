@@ -3,9 +3,12 @@
 
 #include "genericFilter.hpp"
 
+#include <QFont>
+#include <QGridLayout>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QSlider>
+#include <QSplitter>
 #include <QVBoxLayout>
 
 class Slider : public QWidget {

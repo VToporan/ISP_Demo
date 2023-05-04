@@ -17,6 +17,7 @@ class BoxFitlerWrapper : public GenericFilterWrapper {
         void setKernelSizeY(int newKernelSize);
 
         std::vector<parameterConfig> allParameterConfigs();
+        const char* filterName();
 };
 
 #endif

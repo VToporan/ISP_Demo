@@ -21,6 +21,7 @@ class BilateralFitlerWrapper : public GenericFilterWrapper {
         void setSigmaSpace(int newSigmaSpace);
 
         std::vector<parameterConfig> allParameterConfigs();
+        const char* filterName();
 };
 
 #endif

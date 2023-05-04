@@ -75,3 +75,5 @@ void Layer::clearSliders() {
 }
 
 std::vector<Slider *> Layer::getSliders() { return sliders; }
+
+std::vector<GenericFilterWrapper *> Layer::getFilters() { return allFilters; }

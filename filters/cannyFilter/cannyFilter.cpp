@@ -60,3 +60,5 @@ std::vector<parameterConfig> CannyFitlerWrapper::allParameterConfigs() {
     configs.push_back({"High treshold", highTreshold, 0, 255, 1, [this](int x) { setHighTreshold(x); }});
     return configs;
 }
+
+const char *CannyFitlerWrapper::filterName() { return "Canny Filter"; }

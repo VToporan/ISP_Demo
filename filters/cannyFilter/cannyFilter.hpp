@@ -22,6 +22,7 @@ class CannyFitlerWrapper : public GenericFilterWrapper {
         void setHighTreshold(int newHighTreshold);
 
         std::vector<parameterConfig> allParameterConfigs();
+        const char* filterName();
 };
 
 #endif

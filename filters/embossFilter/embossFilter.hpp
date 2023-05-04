@@ -25,6 +25,7 @@ class EmbossFitlerWrapper : public GenericFilterWrapper {
         void applyFilter(cv::Mat &inframe);
 
         std::vector<parameterConfig> allParameterConfigs();
+        const char* filterName();
 };
 
 #endif

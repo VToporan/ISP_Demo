@@ -32,3 +32,5 @@ std::vector<parameterConfig> EmbossFitlerWrapper::allParameterConfigs() {
     configs.push_back({"Emboss direction", (int)currentDirection, 0, 3, 1, [this](int x) { setEmbossDirection((EmbossDirection)x); }});
     return configs;
 }
+
+const char *EmbossFitlerWrapper::filterName() { return "Emboss Filter"; }

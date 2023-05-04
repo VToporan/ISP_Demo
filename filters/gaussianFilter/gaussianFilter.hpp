@@ -23,6 +23,7 @@ class GaussianFitlerWrapper : public GenericFilterWrapper {
         void setSigmaY(float newSigmaY);
 
         std::vector<parameterConfig> allParameterConfigs();
+        const char* filterName();
 };
 
 #endif

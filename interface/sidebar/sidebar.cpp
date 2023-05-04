@@ -61,8 +61,9 @@ void Sidebar::setupFreezeFrame() {
 void Sidebar::setupFilterDropDown() {
     combo = new QComboBox(this);
     combo->setFixedHeight(35);
-    for (int i = 0; i < 10; ++i) {
-        combo->insertItem(i, QString("Filter %1").arg(i));
+    std::vector<GenericFilterWrapper *> filters = currentLayer->getFilters();
+    for (int i = 0; i < filters.size(); ++i) {
+        combo->insertItem(i, QString(filters[i]->filterName()));
     }
     connect(combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int x) {
         currentLayer->setIndex(x);

@@ -62,3 +62,5 @@ std::vector<parameterConfig> LensFitlerWrapper::allParameterConfigs() {
     configs.push_back({"Distortion radius", distortionRadius, 0, 500, 1, [this](int x) { setDistortionRadius(x); }});
     return configs;
 }
+
+const char *LensFitlerWrapper::filterName() { return "Lens Distortion"; }

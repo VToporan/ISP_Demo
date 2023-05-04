@@ -16,6 +16,7 @@ class DilateFitlerWrapper : public GenericFilterWrapper {
         void setDilateDiameter(int newDilateDiameter);
 
         std::vector<parameterConfig> allParameterConfigs();
+        const char* filterName();
 };
 
 #endif

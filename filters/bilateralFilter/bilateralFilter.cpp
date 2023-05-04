@@ -67,3 +67,5 @@ std::vector<parameterConfig> BilateralFitlerWrapper::allParameterConfigs() {
         {"Sigma space value", (int)(sigmaSpace * 1), 1, 101, 1, [this](int x) { setSigmaSpace((float)x / 1); }});
     return configs;
 }
+
+const char *BilateralFitlerWrapper::filterName() { return "Bilateral Correction"; }

@@ -24,3 +24,5 @@ std::vector<parameterConfig> ErodeFitlerWrapper::allParameterConfigs() {
     configs.push_back({"Kernel size", erodeDiameter, 1, 49, 2, [this](int x) { setErodeDiameter(x); }});
     return configs;
 }
+
+const char *ErodeFitlerWrapper::filterName() { return "Erode Filter"; }

@@ -19,3 +19,5 @@ std::vector<parameterConfig> MedianFitlerWrapper::allParameterConfigs() {
     configs.push_back({"Kernel size", kernelSize, 1, 79, 2, [this](int x) { setKernelSize(x); }});
     return configs;
 }
+
+const char *MedianFitlerWrapper::filterName() { return "Median Filter"; }

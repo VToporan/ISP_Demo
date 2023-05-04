@@ -9,6 +9,7 @@ class EmptyFitlerWrapper : public GenericFilterWrapper {
         explicit EmptyFitlerWrapper();
         void applyFilter(cv::Mat &inframe);
         std::vector<parameterConfig> allParameterConfigs();
+        const char* filterName();
 };
 
 #endif

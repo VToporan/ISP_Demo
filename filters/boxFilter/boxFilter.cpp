@@ -40,3 +40,5 @@ std::vector<parameterConfig> BoxFitlerWrapper::allParameterConfigs() {
     configs.push_back({"Kernel size Y axis", kernelSizeY, 1, 79, 2, [this](int x) { setKernelSizeY(x); }});
     return configs;
 }
+
+const char *BoxFitlerWrapper::filterName() { return "Box Filter"; }

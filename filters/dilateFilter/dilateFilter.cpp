@@ -24,3 +24,5 @@ std::vector<parameterConfig> DilateFitlerWrapper::allParameterConfigs() {
     configs.push_back({"Kernel size", dilateDiameter, 1, 49, 2, [this](int x) { setDilateDiameter(x); }});
     return configs;
 }
+
+const char *DilateFitlerWrapper::filterName() { return "Dilate Filter"; }

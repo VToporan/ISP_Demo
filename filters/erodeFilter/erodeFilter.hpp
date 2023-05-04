@@ -15,6 +15,7 @@ class ErodeFitlerWrapper : public GenericFilterWrapper {
         void setErodeDiameter(int newErodeDiameter);
 
         std::vector<parameterConfig> allParameterConfigs();
+        const char* filterName();
 };
 
 #endif

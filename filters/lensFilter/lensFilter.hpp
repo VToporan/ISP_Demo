@@ -17,6 +17,7 @@ class LensFitlerWrapper : public GenericFilterWrapper {
         void setDistortionRadius(int newRadius);
 
         std::vector<parameterConfig> allParameterConfigs();
+        const char* filterName();
 };
 
 #endif

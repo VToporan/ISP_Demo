@@ -19,6 +19,7 @@ class Layer {
         void setIndex(int newIndex);
         int getIndex();
         std::vector<Slider *> getSliders();
+        std::vector<GenericFilterWrapper *> getFilters();
 
     private:
         std::vector<GenericFilterWrapper *> allFilters;

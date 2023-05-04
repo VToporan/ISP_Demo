@@ -20,6 +20,7 @@ class GenericFilterWrapper {
     public:
         virtual void applyFilter(cv::Mat &inframe) = 0;
         virtual std::vector<parameterConfig> allParameterConfigs() = 0;
+        virtual const char *filterName() = 0;
 };
 
 #endif

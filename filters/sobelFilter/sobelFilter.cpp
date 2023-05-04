@@ -103,3 +103,5 @@ std::vector<parameterConfig> SobelFitlerWrapper::allParameterConfigs() {
     configs.push_back({"Derivative on Y axis", derivY, 1, 3, 1, [this](int x) { setDerivY(x); }});
     return configs;
 }
+
+const char *SobelFitlerWrapper::filterName() { return "Sobel Fitler"; }

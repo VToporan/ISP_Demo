@@ -14,3 +14,5 @@ std::vector<parameterConfig> EmptyFitlerWrapper::allParameterConfigs() {
     std::vector<parameterConfig> configs;
     return configs;
 }
+
+const char *EmptyFitlerWrapper::filterName() { return "No filter"; }

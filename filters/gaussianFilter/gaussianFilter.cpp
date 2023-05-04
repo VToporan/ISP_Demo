@@ -72,3 +72,5 @@ std::vector<parameterConfig> GaussianFitlerWrapper::allParameterConfigs() {
         {"Sigma value on Y axis", (int)(sigmaY * 10), 1, 101, 1, [this](int x) { setSigmaY((float)x / 10); }});
     return configs;
 }
+
+const char *GaussianFitlerWrapper::filterName() { return "Gaussian Filter"; }

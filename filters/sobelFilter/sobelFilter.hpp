@@ -23,6 +23,7 @@ class SobelFitlerWrapper : public GenericFilterWrapper {
         void setDisplayDirection(int isSet);
 
         std::vector<parameterConfig> allParameterConfigs();
+        const char* filterName();
 };
 
 #endif

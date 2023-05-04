@@ -16,6 +16,8 @@ class Layer {
         void setupFilters();
         void applyFilter(cv::Mat &inframe);
         void setSelected(bool isSelected);
+        void setIndex(int newIndex);
+        int getIndex();
         std::vector<Slider *> getSliders();
 
     private:

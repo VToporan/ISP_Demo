@@ -1,8 +1,11 @@
 #include "sidebar.hpp"
+#include "qobjectdefs.h"
 
 Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers) {
     freezeFrame = initialFreezeFrame;
     layers = initialLayers;
+    combo = new QComboBox(this);
+    selectLayer(layers->front());
 
     setOrientation(Qt::Vertical);
     setMinimumSize(256, 0);
@@ -15,30 +18,40 @@ Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers) 
     filterSection->setFixedSize(256, 286);
     filterSection->setOrientation(Qt::Vertical);
 
-    toggleFreezeFrame = new QPushButton("Freeze Frame");
-    connect(toggleFreezeFrame, &QPushButton::clicked, this, &Sidebar::handleFreezeFrame);
-    layerSection->addWidget(toggleFreezeFrame);
+    freezeFrameButton = new QPushButton("Freeze Frame");
+    connect(freezeFrameButton, &QPushButton::clicked, this, &Sidebar::toggleFreezeFrame);
+    layerSection->addWidget(freezeFrameButton);
 
     for (int i = 0; i < layers->size(); ++i) {
         QPushButton *newButton = new QPushButton(QString("Layer %1").arg(i));
-        connect(newButton, &QPushButton::clicked, this, [=]() { handleLayerSelect((*layers)[i]); });
+        connect(newButton, &QPushButton::clicked, this, [=]() { selectLayer((*layers)[i]); });
         layerSection->addWidget(newButton);
     }
+
+    for (int i = 0; i < 10; ++i) {
+        combo->insertItem(i, QString("Filter %1").arg(i));
+    }
+    combo->setFixedHeight(25);
+    connect(combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int x) {
+        currentLayer->setIndex(x);
+        selectLayer(currentLayer);
+    });
+    layerSection->addWidget(combo);
 
     addWidget(layerSection);
     addWidget(filterSection);
 }
 
-void Sidebar::handleFreezeFrame() {
+void Sidebar::toggleFreezeFrame() {
     *freezeFrame = !(*freezeFrame);
     if (*freezeFrame) {
-        toggleFreezeFrame->setText("Unfreeze Frame");
+        freezeFrameButton->setText("Unfreeze Frame");
     } else {
-        toggleFreezeFrame->setText("Freeze Frame");
+        freezeFrameButton->setText("Freeze Frame");
     }
 }
 
-void Sidebar::handleLayerSelect(Layer *selectedLayer) {
+void Sidebar::selectLayer(Layer *selectedLayer) {
     for (Layer *layer : *layers) {
         layer->setSelected(false);
     }
@@ -47,4 +60,7 @@ void Sidebar::handleLayerSelect(Layer *selectedLayer) {
     for (Slider *slider : selectedLayer->getSliders()) {
         filterSection->addWidget(slider);
     }
+
+    currentLayer = selectedLayer;
+    combo->setCurrentIndex(currentLayer->getIndex());
 }

@@ -1,6 +1,4 @@
 #include "window.hpp"
-#include "opencv2/imgproc.hpp"
-#include "sidebar/sidebar.hpp"
 
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
     openCapture();
@@ -16,8 +14,8 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
     view->setScene(scene);
     view->fitInView(0, 0, width, height, Qt::KeepAspectRatio);
 
-    layers.push_back(new Layer(2, scene));
-    layers.push_back(new Layer(7, scene));
+    layers.push_back(new Layer(0, scene));
+    layers.push_back(new Layer(0, scene));
 
     sidebar = new Sidebar(&freezeFrame, &layers);
 
@@ -26,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
     layout->addWidget(view);
     setLayout(layout);
 
+    setWindowTitle("Image Processing Demo");
     show();
 }
 

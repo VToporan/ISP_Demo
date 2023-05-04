@@ -2,11 +2,11 @@
 #define SIDEBAR_H
 
 #include "layer/layer.hpp"
-#include "slider/slider.hpp"
 
+#include <QComboBox>
 #include <QPushButton>
-#include <QSplitter>
 #include <QSlider>
+#include <QSplitter>
 
 #include <vector>
 
@@ -17,15 +17,17 @@ class Sidebar : public QSplitter {
         Sidebar(bool *freezeFrame, std::vector<Layer *> *layers);
 
     public slots:
-        void handleFreezeFrame();
-        void handleLayerSelect(Layer *layer);
+        void toggleFreezeFrame();
+        void selectLayer(Layer *layer);
 
     private:
         bool *freezeFrame;
         std::vector<Layer *> *layers;
+        Layer *currentLayer;
         QSplitter *layerSection;
         QSplitter *filterSection;
-        QPushButton *toggleFreezeFrame;
+        QPushButton *freezeFrameButton;
+        QComboBox *combo;
 };
 
 #endif

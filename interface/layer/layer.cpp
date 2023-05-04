@@ -54,12 +54,12 @@ void Layer::applyFilter(cv::Mat &inframe) {
 
 void Layer::setSelected(bool isSelected) {
     roi->setSelected(isSelected);
-    if (isSelected) {
-        setSliders();
-    } else {
-        clearSliders();
-    }
+    (isSelected) ? setSliders() : clearSliders();
 }
+
+void Layer::setIndex(int newIndex) { currentIndex = newIndex; }
+
+int Layer::getIndex() { return currentIndex; }
 
 void Layer::setSliders() {
     for (parameterConfig config : allFilters[currentIndex]->allParameterConfigs()) {

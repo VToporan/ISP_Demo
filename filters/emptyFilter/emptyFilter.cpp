@@ -10,3 +10,7 @@ void EmptyFitlerWrapper::applyFilter(cv::Mat &inframe) {
     return;
 }
 
+std::vector<parameterConfig> EmptyFitlerWrapper::allParameterConfigs() {
+    std::vector<parameterConfig> configs;
+    return configs;
+}

@@ -52,12 +52,12 @@ void Layer::applyFilter(cv::Mat &inframe) {
     outframe.copyTo(inframe(roi));
 }
 
-void Layer::setSelected(bool isSelected) {
-    roi->setSelected(isSelected);
-}
+void Layer::setSelected(bool isSelected) { roi->setSelected(isSelected); }
 
 void Layer::setIndex(int newIndex) { currentIndex = newIndex; }
 
 int Layer::getIndex() { return currentIndex; }
 
 std::vector<GenericFilterWrapper *> Layer::getFilters() { return allFilters; }
+
+GenericFilterWrapper *Layer::getCurrentFilter() { return allFilters[currentIndex]; }

@@ -5,7 +5,6 @@
 #include "roi/roi.hpp"
 
 #include <QGraphicsScene>
-#include <opencv2/opencv.hpp>
 #include <vector>
 
 class Layer {
@@ -17,11 +16,11 @@ class Layer {
         void setSelected(bool isSelected);
         void setIndex(int newIndex);
         int getIndex();
+        GenericFilterWrapper* getCurrentFilter();
         std::vector<GenericFilterWrapper *> getFilters();
 
     private:
         std::vector<GenericFilterWrapper *> allFilters;
-        GenericFilterWrapper *currentFilter;
         Roi *roi;
         int currentIndex;
 };

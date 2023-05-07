@@ -2,6 +2,7 @@
 #define SIDEBAR_H
 
 #include "layer/layer.hpp"
+#include "slider/slider.hpp"
 
 #include <QComboBox>
 #include <QPushButton>
@@ -15,22 +16,30 @@ class Sidebar : public QWidget {
     public:
         Sidebar(bool *freezeFrame, std::vector<Layer *> *layers);
 
-    public slots:
-        void toggleFreezeFrame();
-        void selectLayer(Layer *layer);
-
     private:
         bool *freezeFrame;
+        int currentLayerIndex;
         std::vector<Layer *> *layers;
-        Layer *currentLayer;
-        QPushButton *freezeFrameButton;
-        QComboBox *combo;
-        QVBoxLayout *layout;
+        std::vector<Slider *> currentFilterSliders;
+        std::vector<QPushButton *> layerSelectButtons;
 
-        void setupFreezeFrame();
-        void setupLayerButtons();
-        void setupFilterDropDown();
-        void setupLayout();
+        QComboBox *filterSelectBox;
+        QVBoxLayout *mainLayout;
+        QVBoxLayout *miscLayout;
+        QVBoxLayout *layerSelectLayout;
+        QVBoxLayout *filterSelectLayout;
+        QVBoxLayout *sliderLayout;
+
+        void setupMainLayout();
+        void setupMiscLayout();
+        void setupLayerLayout();
+        void setupSliderLayout();
+        void setupFilterSelectLayout();
+
+        void createLayerSelectButtons();
+        void destroyLayerSelectButtons();
+        void createFilterSliders();
+        void destroyFilterSliders();
 };
 
 #endif

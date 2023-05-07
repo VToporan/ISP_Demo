@@ -1,5 +1,4 @@
 #include "sidebar.hpp"
-#include "qobjectdefs.h"
 
 #include <QSplitter>
 Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers) {
@@ -9,9 +8,11 @@ Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers) 
 
     setFixedWidth(256);
     layout = new QVBoxLayout(this);
+    setupLayout();
     setLayout(layout);
 
     setupFreezeFrame();
+    freezeFrameButton->setDisabled(true);
     layout->addWidget(freezeFrameButton, 0, Qt::AlignTop);
 
     for (int i = 0; i < layers->size(); ++i) {
@@ -24,7 +25,6 @@ Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers) 
     setupFilterDropDown();
     layout->addWidget(combo, 0, Qt::AlignTop);
 
-    setupLayout();
     layout->addStretch();
     selectLayer(currentLayer);
 }
@@ -41,11 +41,6 @@ void Sidebar::toggleFreezeFrame() {
 void Sidebar::selectLayer(Layer *selectedLayer) {
     for (Layer *layer : *layers) {
         layer->setSelected(false);
-    }
-
-    selectedLayer->setSelected(true);
-    for (Slider *slider : selectedLayer->getSliders()) {
-        layout->insertWidget(layout->count()- 1, slider);
     }
 
     currentLayer = selectedLayer;
@@ -73,5 +68,5 @@ void Sidebar::setupFilterDropDown() {
 
 void Sidebar::setupLayout() {
     layout->setSpacing(5);
-    layout->setMargin(5);
+    layout->setMargin(0);
 }

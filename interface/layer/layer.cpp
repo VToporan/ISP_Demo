@@ -54,26 +54,10 @@ void Layer::applyFilter(cv::Mat &inframe) {
 
 void Layer::setSelected(bool isSelected) {
     roi->setSelected(isSelected);
-    (isSelected) ? setSliders() : clearSliders();
 }
 
 void Layer::setIndex(int newIndex) { currentIndex = newIndex; }
 
 int Layer::getIndex() { return currentIndex; }
-
-void Layer::setSliders() {
-    for (parameterConfig config : allFilters[currentIndex]->allParameterConfigs()) {
-        sliders.push_back(new Slider(config));
-    }
-}
-
-void Layer::clearSliders() {
-    for (Slider *slider : sliders) {
-        delete slider;
-    }
-    sliders.clear();
-}
-
-std::vector<Slider *> Layer::getSliders() { return sliders; }
 
 std::vector<GenericFilterWrapper *> Layer::getFilters() { return allFilters; }

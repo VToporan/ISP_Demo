@@ -3,7 +3,6 @@
 
 #include "genericFilter.hpp"
 #include "roi/roi.hpp"
-#include "slider/slider.hpp"
 
 #include <QGraphicsScene>
 #include <opencv2/opencv.hpp>
@@ -18,18 +17,13 @@ class Layer {
         void setSelected(bool isSelected);
         void setIndex(int newIndex);
         int getIndex();
-        std::vector<Slider *> getSliders();
         std::vector<GenericFilterWrapper *> getFilters();
 
     private:
         std::vector<GenericFilterWrapper *> allFilters;
-        std::vector<Slider *> sliders;
         GenericFilterWrapper *currentFilter;
         Roi *roi;
         int currentIndex;
-
-        void setSliders();
-        void clearSliders();
 };
 
 #endif

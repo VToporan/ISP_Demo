@@ -1,36 +1,30 @@
 #include "sobelFilter.hpp"
-#include "genericFilter.hpp"
-#include "opencv2/core.hpp"
-#include "opencv2/core/matx.hpp"
-#include "opencv2/imgproc.hpp"
-#include <cmath>
-#include <iostream>
-#include <stdio.h>
 
 SobelFitlerWrapper::SobelFitlerWrapper() {
     setKernelSize(3);
     setDerivX(1);
     setDerivY(1);
+    setDisplayDirection(false);
 }
 SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize) {
     setKernelSize(initialKernelSize);
     setDerivX(1);
     setDerivY(1);
-    displayDirection = false;
+    setDisplayDirection(false);
 }
 
 SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize, int initialDerivate) {
     setKernelSize(initialKernelSize);
     setDerivX(initialDerivate);
     setDerivY(initialDerivate);
-    displayDirection = false;
+    setDisplayDirection(false);
 }
 
 SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize, int initialDerivateX, int initialDerivateY) {
     setKernelSize(initialKernelSize);
     setDerivX(initialDerivateX);
     setDerivY(initialDerivateY);
-    displayDirection = false;
+    setDisplayDirection(false);
 }
 
 void SobelFitlerWrapper::applyFilter(cv::Mat &inframe) {
@@ -85,8 +79,29 @@ void SobelFitlerWrapper::setKernelSize(int newKernelSize) {
     kernelSize = newKernelSize;
 }
 
-void SobelFitlerWrapper::setDerivX(int newDerivX) { derivX = newDerivX; }
+void SobelFitlerWrapper::setDerivX(int newDerivX) {
+    if (newDerivX < 1 || newDerivX > 3 || newDerivX >= kernelSize) {
+        return;
+    }
+    derivX = newDerivX;
+}
 
-void SobelFitlerWrapper::setDerivY(int newDerivY) { derivY = newDerivY; }
+void SobelFitlerWrapper::setDerivY(int newDerivY) {
+    if (newDerivY < 1 || newDerivY > 3 || newDerivY >= kernelSize) {
+        return;
+    }
+    derivY = newDerivY;
+}
 
-void SobelFitlerWrapper::toggleDisplayDirection() { displayDirection = !displayDirection; }
+void SobelFitlerWrapper::setDisplayDirection(int isSet) { displayDirection = isSet; }
+
+std::vector<parameterConfig> SobelFitlerWrapper::allParameterConfigs() {
+    std::vector<parameterConfig> configs;
+    configs.push_back({"Display direction", displayDirection, 0, 1, 1, [this](int x) { setDisplayDirection(x); }});
+    configs.push_back({"Kernel size", kernelSize, 1, 7, 2, [this](int x) { setKernelSize(x); }});
+    configs.push_back({"Derivative on X axis", derivX, 1, 3, 1, [this](int x) { setDerivX(x); }});
+    configs.push_back({"Derivative on Y axis", derivY, 1, 3, 1, [this](int x) { setDerivY(x); }});
+    return configs;
+}
+
+const char *SobelFitlerWrapper::filterName() { return "Sobel Fitler"; }

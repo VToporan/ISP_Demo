@@ -1,8 +1,5 @@
 #include "bilateralFilter.hpp"
 
-#include <opencv2/imgproc.hpp>
-#include <stdio.h>
-
 BilateralFitlerWrapper::BilateralFitlerWrapper() {
     setDiameter(3);
     setSigmaColor(0);
@@ -44,7 +41,7 @@ void BilateralFitlerWrapper::setDiameter(int newDiameter) {
 }
 
 void BilateralFitlerWrapper::setSigmaColor(int newSigmaColor) {
-    if (newSigmaColor < 1) {
+    if (newSigmaColor < 0) {
         sigmaColor = 0;
         return;
     }
@@ -53,10 +50,22 @@ void BilateralFitlerWrapper::setSigmaColor(int newSigmaColor) {
 }
 
 void BilateralFitlerWrapper::setSigmaSpace(int newSigmaSpace) {
-    if (newSigmaSpace < 1) {
+    if (newSigmaSpace < 0) {
         sigmaSpace = 0;
         return;
     }
 
     sigmaSpace = newSigmaSpace;
 }
+
+std::vector<parameterConfig> BilateralFitlerWrapper::allParameterConfigs() {
+    std::vector<parameterConfig> configs;
+    configs.push_back({"Kernel size", diameter, 1, 11, 2, [this](int x) { setDiameter(x); }});
+    configs.push_back(
+        {"Sigma color value", (int)(sigmaColor * 1), 1, 101, 1, [this](int x) { setSigmaColor((float)x / 1); }});
+    configs.push_back(
+        {"Sigma space value", (int)(sigmaSpace * 1), 1, 101, 1, [this](int x) { setSigmaSpace((float)x / 1); }});
+    return configs;
+}
+
+const char *BilateralFitlerWrapper::filterName() { return "Bilateral Correction"; }

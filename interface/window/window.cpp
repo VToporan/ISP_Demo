@@ -1,7 +1,6 @@
 #include "window.hpp"
-#include "opencv2/imgproc.hpp"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
+MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
     openCapture();
     startTimer();
 
@@ -15,8 +14,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     view->setScene(scene);
     view->fitInView(0, 0, width, height, Qt::KeepAspectRatio);
 
-    layers.push_back(new Layer(10, scene));
-    layers.push_back(new Layer(7, scene));
+    layers.push_back(new Layer(0, scene));
+    layers.push_back(new Layer(0, scene));
+
+    sidebar = new Sidebar(&freezeFrame, &layers);
+
+    layout = new QHBoxLayout;
+    layout->addWidget(sidebar);
+    layout->addWidget(view);
+    setLayout(layout);
+
+    setWindowTitle("Image Processing Demo");
+    show();
 }
 
 // https://asmaloney.com/2013/11/code/converting-between-cvmat-and-qimage-or-qpixmap
@@ -62,21 +71,33 @@ void MainWindow::openCapture() {
         std::cerr << "ERROR! Unable to open camera\n";
         exit(-1);
     }
+
+    freezeFrame = false;
+    captureFrame();
+}
+
+void MainWindow::captureFrame() {
+    if (freezeFrame) {
+        return;
+    }
+
+    videoCap.read(liveImage);
+    if (liveImage.empty()) {
+        std::cerr << "ERROR! blank frame grabbed\n";
+        exit(1);
+    }
 }
 
 void MainWindow::startTimer() {
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(Update()));
-    timer->start(10);
+    timer->start(50);
 }
 
 void MainWindow::Update() {
-    cv::Mat frame;
-    videoCap.read(frame);
-    if (frame.empty()) {
-        std::cerr << "ERROR! blank frame grabbed\n";
-        exit(1);
-    }
+    captureFrame();
+    cv::Mat frame = cv::Mat(liveImage.size(), liveImage.type());
+    liveImage.copyTo(frame);
 
     int width = 512;
     int height = 512;
@@ -86,6 +107,4 @@ void MainWindow::Update() {
     }
     image = cvMatToQImage(frame);
     pixmap->setPixmap(QPixmap::fromImage(image));
-
-    view->show();
 }

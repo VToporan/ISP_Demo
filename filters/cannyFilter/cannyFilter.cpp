@@ -52,3 +52,13 @@ void CannyFitlerWrapper::setKernelSize(int newKernelSize) {
 void CannyFitlerWrapper::setLowTreshold(int newLowTreshold) { lowTreshold = newLowTreshold; }
 
 void CannyFitlerWrapper::setHighTreshold(int newHighTreshold) { highTreshold = newHighTreshold; }
+
+std::vector<parameterConfig> CannyFitlerWrapper::allParameterConfigs() {
+    std::vector<parameterConfig> configs;
+    configs.push_back({"Kernel size", kernelSize, 3, 7, 2, [this](int x) { setKernelSize(x); }});
+    configs.push_back({"Low treshold", lowTreshold, 0, 255, 1, [this](int x) { setLowTreshold(x); }});
+    configs.push_back({"High treshold", highTreshold, 0, 255, 1, [this](int x) { setHighTreshold(x); }});
+    return configs;
+}
+
+const char *CannyFitlerWrapper::filterName() { return "Canny Filter"; }

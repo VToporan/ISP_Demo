@@ -2,7 +2,6 @@
 #define SOBEL_FILTER_H
 
 #include "genericFilter.hpp"
-#include <opencv2/core.hpp>
 
 class SobelFitlerWrapper : public GenericFilterWrapper {
     private:
@@ -21,7 +20,10 @@ class SobelFitlerWrapper : public GenericFilterWrapper {
         void setKernelSize(int newKernelSize);
         void setDerivX(int newDerivX);
         void setDerivY(int newDerivY);
-        void toggleDisplayDirection();
+        void setDisplayDirection(int isSet);
+
+        std::vector<parameterConfig> allParameterConfigs();
+        const char* filterName();
 };
 
 #endif

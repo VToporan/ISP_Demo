@@ -16,8 +16,9 @@
 Layer::Layer(int initialIndex, QGraphicsScene *scene) {
     setupFilters();
     currentIndex = initialIndex;
-    roi = new Roi(QRectF(10, 10, 100, 100));
+    roi = new Roi(QRectF(0, 0, 511, 511));
     scene->addItem(roi);
+    setSelected(false);
 }
 
 Layer::~Layer() { allFilters.clear(); }
@@ -41,8 +42,8 @@ void Layer::applyFilter(cv::Mat &inframe) {
     qreal x = 0, y = 0, width = 0, height = 0;
     x = origin.x();
     y = origin.y();
-    width = roi->rect().width();
-    height = roi->rect().height();
+    width = roi->rect().width() + 1;
+    height = roi->rect().height() + 1;
 
     cv::Rect roi(x, y, width, height);
     cv::Mat outframe = inframe(roi);
@@ -50,3 +51,29 @@ void Layer::applyFilter(cv::Mat &inframe) {
     allFilters[currentIndex]->applyFilter(outframe);
     outframe.copyTo(inframe(roi));
 }
+
+void Layer::setSelected(bool isSelected) {
+    roi->setSelected(isSelected);
+    (isSelected) ? setSliders() : clearSliders();
+}
+
+void Layer::setIndex(int newIndex) { currentIndex = newIndex; }
+
+int Layer::getIndex() { return currentIndex; }
+
+void Layer::setSliders() {
+    for (parameterConfig config : allFilters[currentIndex]->allParameterConfigs()) {
+        sliders.push_back(new Slider(config));
+    }
+}
+
+void Layer::clearSliders() {
+    for (Slider *slider : sliders) {
+        delete slider;
+    }
+    sliders.clear();
+}
+
+std::vector<Slider *> Layer::getSliders() { return sliders; }
+
+std::vector<GenericFilterWrapper *> Layer::getFilters() { return allFilters; }

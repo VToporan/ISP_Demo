@@ -13,6 +13,9 @@ class MedianFitlerWrapper : virtual public GenericFilterWrapper {
         explicit MedianFitlerWrapper(int initialKernelSize);
         void setKernelSize(int newKernelSize);
         void applyFilter(cv::Mat &inframe);
+
+        std::vector<parameterConfig> allParameterConfigs();
+        const char* filterName();
 };
 
 #endif

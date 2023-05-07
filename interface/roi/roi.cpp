@@ -2,10 +2,9 @@
 #include "resizable/resizable.hpp"
 
 Roi::Roi(const QRectF &rect, QGraphicsItem *parent) : Resizable(rect, parent) {
-    setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemSendsGeometryChanges);
-
     for (int i = 0; i < TOTAL_ANCHORS; ++i) {
         handles.push_back(new Handlebar(this, (AnchorPosition)i));
+        handles[i]->setBrush(Qt::red);
     }
 
     setupHandles();
@@ -87,4 +86,23 @@ QVariant Roi::itemChange(GraphicsItemChange change, const QVariant &value) {
     }
 
     return QGraphicsItem::itemChange(change, value);
+}
+
+void Roi::setSelected(bool isSelected) {
+    if (isSelected) {
+        setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemSendsGeometryChanges);
+        setPen(QPen(Qt::red, 2));
+        for (Handlebar *handle : handles) {
+            handle->setVisible(true);
+        }
+        setZValue(1);
+    } else {
+        setFlag(QGraphicsItem::ItemIsMovable, false);
+        setFlag(QGraphicsItem::ItemSendsGeometryChanges, false);
+        setPen(QPen(Qt::black, 2));
+        for (Handlebar *handle : handles) {
+            handle->setVisible(false);
+        }
+        setZValue(0);
+    }
 }

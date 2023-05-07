@@ -1,5 +1,4 @@
 #include "boxFilter.hpp"
-#include <opencv2/imgproc.hpp>
 
 BoxFitlerWrapper::BoxFitlerWrapper() {
     setKernelSizeX(3);
@@ -34,3 +33,12 @@ void BoxFitlerWrapper::setKernelSizeY(int newKernelSize) {
         kernelSizeY = newKernelSize;
     }
 }
+
+std::vector<parameterConfig> BoxFitlerWrapper::allParameterConfigs() {
+    std::vector<parameterConfig> configs;
+    configs.push_back({"Kernel size X axis", kernelSizeX, 1, 79, 2, [this](int x) { setKernelSizeX(x); }});
+    configs.push_back({"Kernel size Y axis", kernelSizeY, 1, 79, 2, [this](int x) { setKernelSizeY(x); }});
+    return configs;
+}
+
+const char *BoxFitlerWrapper::filterName() { return "Box Filter"; }

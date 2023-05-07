@@ -17,6 +17,8 @@ add_subdirectory( layer )
 add_subdirectory( roi )
 add_subdirectory( handlebar )
 add_subdirectory( resizable )
+add_subdirectory( sidebar )
+add_subdirectory( slider )
 
 target_link_libraries(interface
   PRIVATE 
@@ -25,5 +27,7 @@ target_link_libraries(interface
     roi
     handlebar
     resizable
+    sidebar
+    slider
   )
 

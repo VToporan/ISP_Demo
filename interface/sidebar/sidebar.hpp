@@ -7,14 +7,18 @@
 #include <QComboBox>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QGraphicsScene>
 
 #include <vector>
+#include <algorithm>
+#include <iostream>
+
+#define MAX_LAYERS (3)
 
 class Sidebar : public QWidget {
-        Q_OBJECT;
-
     public:
-        Sidebar(bool *freezeFrame, std::vector<Layer *> *layers);
+        Sidebar(bool *freezeFrame, std::vector<Layer *> *layers, QGraphicsScene *scene);
 
     private:
         bool *freezeFrame;
@@ -22,24 +26,31 @@ class Sidebar : public QWidget {
         std::vector<Layer *> *layers;
         std::vector<Slider *> currentFilterSliders;
         std::vector<QPushButton *> layerSelectButtons;
+        std::vector<QPushButton *> layerManagementButtons;
 
         QComboBox *filterSelectBox;
         QVBoxLayout *mainLayout;
         QVBoxLayout *miscLayout;
         QVBoxLayout *layerSelectLayout;
-        QVBoxLayout *filterSelectLayout;
+        QHBoxLayout *layerManagementLayout;
+        QHBoxLayout *filterSelectLayout;
         QVBoxLayout *sliderLayout;
+        QGraphicsScene *layerScene;
 
+        void setupAllLayouts();
         void setupMainLayout();
         void setupMiscLayout();
-        void setupLayerLayout();
+        void setupLayerSelectLayout();
+        void setupLayerManagementLayout();
         void setupSliderLayout();
         void setupFilterSelectLayout();
 
+        void createLayouts();
         void createLayerSelectButtons();
         void destroyLayerSelectButtons();
         void createFilterSliders();
         void destroyFilterSliders();
+        void updateLayerManagement();
 };
 
 #endif

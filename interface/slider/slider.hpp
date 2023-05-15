@@ -12,8 +12,6 @@
 #include <QVBoxLayout>
 
 class Slider : public QWidget {
-        Q_OBJECT;
-
     public:
         Slider(parameterConfig config);
 

@@ -15,9 +15,8 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
     view->fitInView(0, 0, width, height, Qt::KeepAspectRatio);
 
     layers.push_back(new Layer(0, scene));
-    layers.push_back(new Layer(0, scene));
 
-    sidebar = new Sidebar(&freezeFrame, &layers);
+    sidebar = new Sidebar(&freezeFrame, &layers, scene);
 
     layout = new QHBoxLayout;
     layout->addWidget(sidebar);

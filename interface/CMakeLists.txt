@@ -1,10 +1,5 @@
 add_library( interface "" )
 
-# target_sources(interface
-#   PUBLIC
-#   ${CMAKE_CURRENT_LIST_DIR}/*.hpp
-#   )
-
 include_directories(BEFORE ${CMAKE_CURRENT_LIST_DIR}/../filters)
 
 target_include_directories(interface

@@ -20,7 +20,6 @@ Slider::Slider(parameterConfig config) {
     setMaximumHeight(64);
 }
 
-#include <iostream>
 void Slider::setConfig(parameterConfig config) {
     slider->setOrientation(Qt::Horizontal);
     slider->setTickPosition(QSlider::TicksBelow);

@@ -15,7 +15,8 @@
 #include <vector>
 
 class MainWindow : QWidget {
-        Q_OBJECT
+        Q_OBJECT;
+
     public:
         MainWindow(QWidget *parent);
         ~MainWindow(){};

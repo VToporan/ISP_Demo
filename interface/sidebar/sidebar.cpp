@@ -77,8 +77,11 @@ void Sidebar::setupLayerManagementLayout() {
         if (layers->size() <= 1) {
             return;
         }
+
         layers->erase(layers->begin() + currentLayerIndex);
-        currentLayerIndex -= 1;
+        if (currentLayerIndex > 0) {
+            currentLayerIndex -= 1;
+        }
         setupLayerSelectLayout();
         updateLayerManagement();
     });

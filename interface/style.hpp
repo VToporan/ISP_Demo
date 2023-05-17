@@ -17,6 +17,6 @@
 #define FILTER_SELECT_HEIGHT (VIEWPORT_HEIGHT / 25)
 
 #define MAX_LAYERS (4)
-
+#define CURRENT_LAYER_COLOR ("#BABABA")
 
 #endif

@@ -168,7 +168,7 @@ void Sidebar::createLayerSelectButtons() {
     }
     layers->at(currentLayerIndex)->setSelected(true);
     layerSelectButtons.at(currentLayerIndex)->setDisabled(true);
-    layerSelectButtons.at(currentLayerIndex)->setPalette(QColor("#949494"));
+    layerSelectButtons.at(currentLayerIndex)->setPalette(QColor(CURRENT_LAYER_COLOR));
     filterSelectBox->setCurrentIndex(layers->at(currentLayerIndex)->getIndex());
 }
 

@@ -8,9 +8,6 @@ include_directories( ${OpenCV_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS})
 add_subdirectory(filters)
 add_subdirectory(interface)
 
-SET(CMAKE_AUTOMOC ON)
-SET(CMAKE_AUTOUIC ON)
-SET(CMAKE_AUTORCC ON)
 SET(CMAKE_EXPORT_COMPILE_COMMAND ON)
 
 add_executable( IspDemo.exe main.cpp )

@@ -14,3 +14,4 @@ target_include_directories(window
   )
 
 target_compile_options(window PRIVATE -fPIC)
+target_link_libraries(window PRIVATE ${OpenCV_LIBS})

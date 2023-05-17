@@ -88,8 +88,8 @@ void MainWindow::captureFrame() {
 }
 
 void MainWindow::startTimer() {
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(Update()));
+    QTimer *timer = new QTimer();
+    connect(timer, &QTimer::timeout, this, [=](){Update();});
     timer->start(15);
 }
 

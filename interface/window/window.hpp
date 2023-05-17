@@ -1,9 +1,9 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include "style.hpp"
 #include "layer/layer.hpp"
 #include "sidebar/sidebar.hpp"
+#include "style.hpp"
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -16,17 +16,14 @@
 #include <vector>
 
 class MainWindow : QWidget {
-        Q_OBJECT;
 
     public:
         MainWindow(QWidget *parent);
-        ~MainWindow(){};
 
         void startTimer();
         void openCapture();
         void captureFrame();
 
-    public slots:
         void Update();
 
     private:

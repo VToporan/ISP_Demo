@@ -16,7 +16,7 @@
 Layer::Layer(int initialIndex, QGraphicsScene *scene) {
     setupFilters();
     currentIndex = initialIndex;
-    roi = new Roi(QRectF(0, 0, 511, 511));
+    roi = new Roi(QRectF(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
     scene->addItem(roi);
     setSelected(false);
 }
@@ -42,8 +42,8 @@ void Layer::applyFilter(cv::Mat &inframe) {
     qreal x = 0, y = 0, width = 0, height = 0;
     x = origin.x();
     y = origin.y();
-    width = roi->rect().width() + 1;
-    height = roi->rect().height() + 1;
+    width = roi->rect().width();
+    height = roi->rect().height();
 
     cv::Rect roi(x, y, width, height);
     cv::Mat outframe = inframe(roi);

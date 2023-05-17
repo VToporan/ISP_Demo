@@ -1,6 +1,7 @@
 #ifndef SLIDER_H
 #define SLIDER_H
 
+#include "style.hpp"
 #include "genericFilter.hpp"
 
 #include <QFont>

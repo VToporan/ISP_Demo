@@ -1,6 +1,7 @@
 #ifndef HANDLEAR_H
 #define HANDLEAR_H
 
+#include "style.hpp"
 #include "resizable/resizable.hpp"
 
 #include <QGraphicsItem>

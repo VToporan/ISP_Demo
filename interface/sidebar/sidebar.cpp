@@ -11,7 +11,7 @@ Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers, 
     setupAllLayouts();
 
     setLayout(mainLayout);
-    setFixedWidth(256);
+    setFixedWidth(SIDEBAR_WIDTH);
 }
 
 void Sidebar::setupAllLayouts() {
@@ -39,7 +39,7 @@ void Sidebar::setupMainLayout() {
 
 void Sidebar::setupMiscLayout() {
     QPushButton *freezeFrameButton = new QPushButton(*freezeFrame ? "Unfreeze Frame" : "Freeze frame");
-    freezeFrameButton->setFixedHeight(30);
+    freezeFrameButton->setFixedHeight(MISC_BUTTON_HEIGHT);
     connect(freezeFrameButton, &QPushButton::clicked, this, [=]() {
         *freezeFrame = !(*freezeFrame);
         freezeFrameButton->setText(*freezeFrame ? "Unfreeze Frame" : "Freeze frame");
@@ -107,7 +107,7 @@ void Sidebar::setupLayerManagementLayout() {
     });
 
     for (QPushButton *button : layerManagementButtons) {
-        button->setFixedHeight(30);
+        button->setFixedHeight(MISC_BUTTON_HEIGHT);
         layerManagementLayout->addWidget(button);
     }
     updateLayerManagement();
@@ -115,7 +115,7 @@ void Sidebar::setupLayerManagementLayout() {
 
 void Sidebar::setupFilterSelectLayout() {
     filterSelectBox = new QComboBox;
-    filterSelectBox->setFixedHeight(25);
+    filterSelectBox->setFixedHeight(FILTER_SELECT_HEIGHT);
     std::vector<GenericFilterWrapper *> filters = layers->at(currentLayerIndex)->getFilters();
 
     for (int i = 0; i < filters.size(); ++i) {
@@ -158,16 +158,18 @@ void Sidebar::createLayerSelectButtons() {
         layers->at(layerIndex)->setSelected(false);
         const char *currentFilterName = layers->at(layerIndex)->getCurrentFilter()->filterName();
         QPushButton *layerButton = new QPushButton(QString("Filter %1 - %2").arg(layerIndex).arg(currentFilterName));
-        layerButton->setFixedHeight(45);
+        layerButton->setFixedHeight(LAYER_BUTTON_HEIGHT);
         connect(layerButton, &QPushButton::clicked, this, [=]() {
             currentLayerIndex = layerIndex;
             setupLayerSelectLayout();
             setupSliderLayout();
+        updateLayerManagement();
         });
         layerSelectButtons.push_back(layerButton);
     }
     layers->at(currentLayerIndex)->setSelected(true);
     layerSelectButtons.at(currentLayerIndex)->setDisabled(true);
+    layerSelectButtons.at(currentLayerIndex)->setPalette(QColor("#949494"));
     filterSelectBox->setCurrentIndex(layers->at(currentLayerIndex)->getIndex());
 }
 

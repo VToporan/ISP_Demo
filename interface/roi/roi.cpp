@@ -5,6 +5,7 @@ Roi::Roi(const QRectF &rect, QGraphicsItem *parent) : Resizable(rect, parent) {
     for (int i = 0; i < TOTAL_ANCHORS; ++i) {
         handles.push_back(new Handlebar(this, (AnchorPosition)i));
         handles[i]->setBrush(Qt::red);
+        handles[i]->setPen(Qt::NoPen);
     }
 
     setupHandles();
@@ -78,9 +79,9 @@ QVariant Roi::itemChange(GraphicsItemChange change, const QVariant &value) {
         QPointF newPos = value.toPointF();
         QRectF sceneRect = scene()->sceneRect();
         QRectF itemRect = rect();
-        newPos.setX(qMin(sceneRect.right() - rect().x() - itemRect.width() - 1,
+        newPos.setX(qMin(sceneRect.right() - rect().x() - itemRect.width(),
                          qMax(newPos.x(), sceneRect.left() - rect().x())));
-        newPos.setY(qMin(sceneRect.bottom() - rect().y() - itemRect.height() - 1,
+        newPos.setY(qMin(sceneRect.bottom() - rect().y() - itemRect.height(),
                          qMax(newPos.y(), sceneRect.top() - rect().y())));
         return newPos;
     }
@@ -91,7 +92,7 @@ QVariant Roi::itemChange(GraphicsItemChange change, const QVariant &value) {
 void Roi::setSelected(bool isSelected) {
     if (isSelected) {
         setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemSendsGeometryChanges);
-        setPen(QPen(Qt::red, 2));
+        setPen(QPen(Qt::red, BORDER_SIZE));
         for (Handlebar *handle : handles) {
             handle->setVisible(true);
         }

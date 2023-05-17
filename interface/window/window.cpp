@@ -4,15 +4,15 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
     openCapture();
     startTimer();
 
-    int width = 512;
-    int height = 512;
     view = new QGraphicsView;
     scene = new QGraphicsScene;
     pixmap = scene->addPixmap(QPixmap::fromImage(image));
-    scene->setSceneRect(0, 0, width, height);
-    view->setFixedSize(width, height);
+    scene->setSceneRect(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+    view->setFixedSize(VIEWPORT_WIDTH + 2 * ANCHOR_SIZE, VIEWPORT_HEIGHT + 2 * ANCHOR_SIZE);
     view->setScene(scene);
-    view->fitInView(0, 0, width, height, Qt::KeepAspectRatio);
+    view->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatioByExpanding);
+    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     layers.push_back(new Layer(0, scene));
 
@@ -90,7 +90,7 @@ void MainWindow::captureFrame() {
 void MainWindow::startTimer() {
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(Update()));
-    timer->start(50);
+    timer->start(15);
 }
 
 void MainWindow::Update() {
@@ -98,9 +98,7 @@ void MainWindow::Update() {
     cv::Mat frame = cv::Mat(liveImage.size(), liveImage.type());
     liveImage.copyTo(frame);
 
-    int width = 512;
-    int height = 512;
-    cv::resize(frame, frame, cv::Size(height, width));
+    cv::resize(frame, frame, cv::Size(VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
     for (Layer *layer : layers) {
         layer->applyFilter(frame);
     }

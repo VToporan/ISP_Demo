@@ -1,6 +1,7 @@
 #ifndef SIDEBAR_H
 #define SIDEBAR_H
 
+#include "style.hpp"
 #include "layer/layer.hpp"
 #include "slider/slider.hpp"
 
@@ -13,8 +14,6 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
-
-#define MAX_LAYERS (3)
 
 class Sidebar : public QWidget {
     public:

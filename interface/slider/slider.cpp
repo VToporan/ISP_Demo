@@ -5,7 +5,7 @@ Slider::Slider(parameterConfig config) {
     slider = new QSlider;
     setConfig(config);
 
-    QFont font = QFont("Courier New", 10);
+    QFont font = QFont("Courier New", SLIDER_FONT_SIZE);
     nameLabel = new QLabel(config.name);
     nameLabel->setFont(font);
     valueLabel = new QLabel(QString("%1").arg(currentValue, 3));
@@ -17,7 +17,7 @@ Slider::Slider(parameterConfig config) {
     grid->addWidget(valueLabel, 1, 1, 1, 1);
 
     setLayout(grid);
-    setMaximumHeight(64);
+    setFixedHeight(SLIDER_HEIGHT);
 }
 
 void Slider::setConfig(parameterConfig config) {
@@ -28,6 +28,7 @@ void Slider::setConfig(parameterConfig config) {
     slider->setTickInterval(config.step);
     slider->setSingleStep(config.step);
     slider->setValue(config.currentValue);
+    slider->setFixedHeight(SLIDER_WIDTH);
 
     int tickAmount = (config.maxValue - config.minValue) / config.step;
     if (tickAmount >= 50) {

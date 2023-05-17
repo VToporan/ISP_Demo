@@ -1,6 +1,7 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include "style.hpp"
 #include "layer/layer.hpp"
 #include "sidebar/sidebar.hpp"
 

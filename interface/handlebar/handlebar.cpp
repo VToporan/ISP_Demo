@@ -2,7 +2,7 @@
 
 #include <QGraphicsScene>
 
-Handlebar::Handlebar(Resizable *parent, AnchorPosition position) : QGraphicsRectItem(QRectF(0, 0, 10, 10), parent) {
+Handlebar::Handlebar(Resizable *parent, AnchorPosition position) : QGraphicsRectItem(QRectF(0, 0, ANCHOR_SIZE, ANCHOR_SIZE), parent) {
     setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemSendsGeometryChanges);
     setBrush(QBrush(Qt::red));
     setPosition(position);

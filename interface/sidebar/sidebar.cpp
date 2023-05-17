@@ -1,5 +1,4 @@
 #include "sidebar.hpp"
-#include <algorithm>
 
 Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers, QGraphicsScene *scene) {
     freezeFrame = initialFreezeFrame;

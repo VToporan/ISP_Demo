@@ -5,6 +5,7 @@
 #include "resizable/resizable.hpp"
 
 #include <QGraphicsItem>
+#include <QGraphicsScene>
 #include <QGraphicsRectItem>
 
 class Handlebar : public QGraphicsRectItem {

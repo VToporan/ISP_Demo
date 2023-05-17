@@ -1,5 +1,4 @@
 #include "roi.hpp"
-#include "resizable/resizable.hpp"
 
 Roi::Roi(const QRectF &rect, QGraphicsItem *parent) : Resizable(rect, parent) {
     for (int i = 0; i < TOTAL_ANCHORS; ++i) {

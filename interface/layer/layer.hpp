@@ -2,6 +2,7 @@
 #define LAYER_H
 
 #include "genericFilter.hpp"
+#include "style.hpp"
 #include "roi/roi.hpp"
 
 #include <QGraphicsScene>

@@ -1,8 +1,6 @@
 #include "handlebar.hpp"
 
-#include <QGraphicsScene>
-
-Handlebar::Handlebar(Resizable *parent, AnchorPosition position) : QGraphicsRectItem(QRectF(0, 0, 10, 10), parent) {
+Handlebar::Handlebar(Resizable *parent, AnchorPosition position) : QGraphicsRectItem(QRectF(0, 0, ANCHOR_SIZE, ANCHOR_SIZE), parent) {
     setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemSendsGeometryChanges);
     setBrush(QBrush(Qt::red));
     setPosition(position);
@@ -18,10 +16,10 @@ QVariant Handlebar::itemChange(GraphicsItemChange change, const QVariant &value)
         QPointF newPos = value.toPointF();
         QRectF sceneRect = parent->sceneRect();
         QRectF itemRect = rect();
-        qreal rightMargin = sceneRect.right() - parent->x() - itemRect.width() / 2 - 1;
-        qreal leftMargin = sceneRect.left() - parent->x() - itemRect.width() / 2 + 1;
-        qreal bottomMargin = sceneRect.bottom() - parent->y() - itemRect.height() / 2 - 1;
-        qreal topMargin = sceneRect.top() - parent->y() - itemRect.height() / 2 + 1;
+        qreal rightMargin = sceneRect.right() - parent->x() - itemRect.width() / 2;
+        qreal leftMargin = sceneRect.left() - parent->x() - itemRect.width() / 2;
+        qreal bottomMargin = sceneRect.bottom() - parent->y() - itemRect.height() / 2;
+        qreal topMargin = sceneRect.top() - parent->y() - itemRect.height() / 2;
 
         newPos.setX(qMin(rightMargin, qMax(newPos.x(), leftMargin)));
         newPos.setY(qMin(bottomMargin, qMax(newPos.y(), topMargin)));

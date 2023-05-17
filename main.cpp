@@ -8,5 +8,3 @@ int main(int argc, char *argv[]) {
     MainWindow *window = new MainWindow(nullptr);
     return app.exec();
 }
-
-#include "main.moc"

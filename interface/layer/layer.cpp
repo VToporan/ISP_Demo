@@ -21,7 +21,10 @@ Layer::Layer(int initialIndex, QGraphicsScene *scene) {
     setSelected(false);
 }
 
-Layer::~Layer() { allFilters.clear(); }
+Layer::~Layer() {
+    allFilters.clear();
+    delete roi;
+}
 
 void Layer::setupFilters() {
     allFilters.push_back(new EmptyFitlerWrapper());

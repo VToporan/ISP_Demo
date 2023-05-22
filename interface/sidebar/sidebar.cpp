@@ -77,6 +77,7 @@ void Sidebar::setupLayerManagementLayout() {
             return;
         }
 
+        delete layers->at(currentLayerIndex);
         layers->erase(layers->begin() + currentLayerIndex);
         if (currentLayerIndex > 0) {
             currentLayerIndex -= 1;

@@ -98,7 +98,7 @@ void SobelFitlerWrapper::setDisplayDirection(int isSet) { displayDirection = isS
 std::vector<parameterConfig> SobelFitlerWrapper::allParameterConfigs() {
     std::vector<parameterConfig> configs;
     configs.push_back({"Display direction", displayDirection, 0, 1, 1, [this](int x) { setDisplayDirection(x); }});
-    configs.push_back({"Kernel size", kernelSize, 1, 7, 2, [this](int x) { setKernelSize(x); }});
+    configs.push_back({"Kernel size", kernelSize, 3, 7, 2, [this](int x) { setKernelSize(x); }});
     configs.push_back({"Derivative on X axis", derivX, 1, 3, 1, [this](int x) { setDerivX(x); }});
     configs.push_back({"Derivative on Y axis", derivY, 1, 3, 1, [this](int x) { setDerivY(x); }});
     return configs;

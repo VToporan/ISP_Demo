@@ -1,6 +1,6 @@
 #include "medianFilter.hpp"
 
-MedianFitlerWrapper::MedianFitlerWrapper() { setKernelSize(1); }
+MedianFitlerWrapper::MedianFitlerWrapper() { setKernelSize(3); }
 
 MedianFitlerWrapper::MedianFitlerWrapper(int initialKernelSize) { setKernelSize(initialKernelSize); }
 
@@ -16,7 +16,7 @@ void MedianFitlerWrapper::setKernelSize(int newKernelSize) {
 
 std::vector<parameterConfig> MedianFitlerWrapper::allParameterConfigs() {
     std::vector<parameterConfig> configs;
-    configs.push_back({"Kernel size", kernelSize, 1, 79, 2, [this](int x) { setKernelSize(x); }});
+    configs.push_back({"Kernel size", kernelSize, 3, 79, 2, [this](int x) { setKernelSize(x); }});
     return configs;
 }
 

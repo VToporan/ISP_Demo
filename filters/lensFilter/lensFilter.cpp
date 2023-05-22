@@ -2,12 +2,12 @@
 #include "opencv2/core/mat.hpp"
 
 LensFitlerWrapper::LensFitlerWrapper() {
-    setDistortionRadius(100.0);
+    setDistortionRadius(0.0);
     setDistortionAmount(0.0);
 }
 
 LensFitlerWrapper::LensFitlerWrapper(float initialAmount) {
-    setDistortionRadius(100);
+    setDistortionRadius(0.0);
     setDistortionAmount(initialAmount);
 }
 
@@ -59,7 +59,7 @@ std::vector<parameterConfig> LensFitlerWrapper::allParameterConfigs() {
     std::vector<parameterConfig> configs;
     configs.push_back({"Distortion amount", (int)(distortionAmount * 100), -100, 100, 1,
                        [this](int x) { setDistortionAmount((float)x / 100); }});
-    configs.push_back({"Distortion radius", distortionRadius, 0, 500, 1, [this](int x) { setDistortionRadius(x); }});
+    configs.push_back({"Distortion radius", distortionRadius, 0, 800, 1, [this](int x) { setDistortionRadius(x); }});
     return configs;
 }
 

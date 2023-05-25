@@ -10,6 +10,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGraphicsScene>
+#include <QToolTip>
 
 #include <vector>
 #include <algorithm>
@@ -27,6 +28,7 @@ class Sidebar : public QWidget {
         std::vector<QPushButton *> layerSelectButtons;
         std::vector<QPushButton *> layerManagementButtons;
 
+        QString infoText;
         QComboBox *filterSelectBox;
         QVBoxLayout *mainLayout;
         QVBoxLayout *miscLayout;
@@ -50,6 +52,7 @@ class Sidebar : public QWidget {
         void createFilterSliders();
         void destroyFilterSliders();
         void updateLayerManagement();
+        void createInfoText();
 };
 
 #endif

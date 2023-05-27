@@ -3,8 +3,10 @@
 Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers, QGraphicsScene *scene) {
     freezeFrame = initialFreezeFrame;
     layers = initialLayers;
-    currentLayerIndex = 0;
     layerScene = scene;
+    currentLayerIndex = 0;
+    selectEnabled = new bool;
+    *selectEnabled = true;
 
     createLayouts();
     setupAllLayouts();
@@ -37,14 +39,23 @@ void Sidebar::setupMainLayout() {
 }
 
 void Sidebar::setupMiscLayout() {
-    QPushButton *freezeFrameButton = new QPushButton(*freezeFrame ? "Unfreeze Frame" : "Freeze frame");
-    freezeFrameButton->setFixedHeight(MISC_BUTTON_HEIGHT);
-    connect(freezeFrameButton, &QPushButton::clicked, this, [=]() {
+    QPushButton *toggleFreezeFrameButton = new QPushButton(*freezeFrame ? "Unfreeze Frame" : "Freeze frame");
+    toggleFreezeFrameButton->setFixedHeight(MISC_BUTTON_HEIGHT);
+    connect(toggleFreezeFrameButton, &QPushButton::clicked, this, [=]() {
         *freezeFrame = !(*freezeFrame);
-        freezeFrameButton->setText(*freezeFrame ? "Unfreeze Frame" : "Freeze frame");
+        toggleFreezeFrameButton->setText(*freezeFrame ? "Unfreeze Frame" : "Freeze frame");
     });
 
-    miscLayout->addWidget(freezeFrameButton);
+    QPushButton *toggleSelectionButton = new QPushButton(*selectEnabled ? "Disable Selection" : "Enable Selection");
+    toggleSelectionButton->setFixedHeight(MISC_BUTTON_HEIGHT);
+    connect(toggleSelectionButton, &QPushButton::clicked, this, [=]() {
+        *selectEnabled = !(*selectEnabled);
+        layers->at(currentLayerIndex)->setSelected(*selectEnabled);
+        toggleSelectionButton->setText(*selectEnabled ? "Disable Selection" : "Enable Selection");
+    });
+
+    miscLayout->addWidget(toggleFreezeFrameButton);
+    miscLayout->addWidget(toggleSelectionButton);
 }
 
 void Sidebar::setupLayerSelectLayout() {
@@ -132,7 +143,14 @@ void Sidebar::setupFilterSelectLayout() {
         setupSliderLayout();
     });
 
+    QPushButton *infoButton = new QPushButton("i");
+    infoButton->setFixedSize(FILTER_SELECT_HEIGHT, FILTER_SELECT_HEIGHT);
+
+    connect(infoButton, &QPushButton::pressed, this,
+            [=]() { QToolTip::showText(infoButton->mapToGlobal(QPoint()), infoText, infoButton); });
+
     filterSelectLayout->addWidget(filterSelectBox);
+    filterSelectLayout->addWidget(infoButton);
 }
 
 void Sidebar::setupSliderLayout() {
@@ -141,11 +159,12 @@ void Sidebar::setupSliderLayout() {
     for (Slider *slider : currentFilterSliders) {
         sliderLayout->addWidget(slider);
     }
+    createInfoText();
 }
 
 void Sidebar::createLayouts() {
     filterSelectBox = new QComboBox;
-    miscLayout = new QVBoxLayout;
+    miscLayout = new QHBoxLayout;
     layerSelectLayout = new QVBoxLayout;
     layerManagementLayout = new QHBoxLayout;
     filterSelectLayout = new QHBoxLayout;
@@ -163,7 +182,7 @@ void Sidebar::createLayerSelectButtons() {
             currentLayerIndex = layerIndex;
             setupLayerSelectLayout();
             setupSliderLayout();
-        updateLayerManagement();
+            updateLayerManagement();
         });
         layerSelectButtons.push_back(layerButton);
     }
@@ -202,4 +221,22 @@ void Sidebar::updateLayerManagement() {
     layerManagementButtons.at(2)->setDisabled(currentLayerIndex <= 0);
     layerManagementButtons.at(1)->setDisabled(layers->size() <= 1);
     layerManagementButtons.at(0)->setDisabled(layers->size() >= MAX_LAYERS);
+}
+
+void Sidebar::createInfoText() {
+    infoText = "";
+    infoText.append("<b>Info</b><br>");
+
+    GenericFilterWrapper *currentFilter = layers->at(currentLayerIndex)->getCurrentFilter();
+    infoText.append(currentFilter->filterName());
+    infoText.append("<br><br>");
+
+    std::vector<parameterConfig> configs = currentFilter->allParameterConfigs();
+    for (parameterConfig config : configs) {
+        infoText.append("<b>");
+        infoText.append(config.name);
+        infoText.append("</b> - ");
+        infoText.append(config.description);
+        infoText.append("<br>");
+    }
 }

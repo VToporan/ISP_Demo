@@ -21,7 +21,7 @@ void ErodeFitlerWrapper::setErodeDiameter(int newErodeDiameter) {
 
 std::vector<parameterConfig> ErodeFitlerWrapper::allParameterConfigs() {
     std::vector<parameterConfig> configs;
-    configs.push_back({"Kernel size", erodeDiameter, 3, 49, 2, [this](int x) { setErodeDiameter(x); }});
+    configs.push_back({"Kernel size", "Changes the widh and height of the erosion", erodeDiameter, 3, 49, 2, [this](int x) { setErodeDiameter(x); }});
     return configs;
 }
 

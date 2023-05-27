@@ -10,6 +10,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGraphicsScene>
+#include <QToolTip>
 
 #include <vector>
 #include <algorithm>
@@ -21,15 +22,17 @@ class Sidebar : public QWidget {
 
     private:
         bool *freezeFrame;
+        bool *selectEnabled;
         int currentLayerIndex;
         std::vector<Layer *> *layers;
         std::vector<Slider *> currentFilterSliders;
         std::vector<QPushButton *> layerSelectButtons;
         std::vector<QPushButton *> layerManagementButtons;
 
+        QString infoText;
         QComboBox *filterSelectBox;
         QVBoxLayout *mainLayout;
-        QVBoxLayout *miscLayout;
+        QHBoxLayout *miscLayout;
         QVBoxLayout *layerSelectLayout;
         QHBoxLayout *layerManagementLayout;
         QHBoxLayout *filterSelectLayout;
@@ -50,6 +53,7 @@ class Sidebar : public QWidget {
         void createFilterSliders();
         void destroyFilterSliders();
         void updateLayerManagement();
+        void createInfoText();
 };
 
 #endif

@@ -29,7 +29,7 @@ void EmbossFitlerWrapper::setEmbossDirection(EmbossDirection newDirection) { cur
 
 std::vector<parameterConfig> EmbossFitlerWrapper::allParameterConfigs() {
     std::vector<parameterConfig> configs;
-    configs.push_back({"Emboss direction", (int)currentDirection, 0, 3, 1, [this](int x) { setEmbossDirection((EmbossDirection)x); }});
+    configs.push_back({"Emboss direction", "Changes the Emboss direction by 90°", (int)currentDirection, 0, 3, 1, [this](int x) { setEmbossDirection((EmbossDirection)x); }});
     return configs;
 }
 

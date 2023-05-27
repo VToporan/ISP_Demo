@@ -21,7 +21,7 @@ void DilateFitlerWrapper::setDilateDiameter(int newDilateDiameter) {
 
 std::vector<parameterConfig> DilateFitlerWrapper::allParameterConfigs() {
     std::vector<parameterConfig> configs;
-    configs.push_back({"Kernel size", dilateDiameter, 3, 49, 2, [this](int x) { setDilateDiameter(x); }});
+    configs.push_back({"Kernel size",  "Changes the widh and height of the dilation", dilateDiameter, 3, 49, 2, [this](int x) { setDilateDiameter(x); }});
     return configs;
 }
 

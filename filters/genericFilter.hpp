@@ -9,6 +9,7 @@
 
 typedef struct _parameterConfig {
     const char* name;
+    const char* description;
     int currentValue;
     int minValue;
     int maxValue;

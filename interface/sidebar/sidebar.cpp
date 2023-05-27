@@ -3,8 +3,10 @@
 Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers, QGraphicsScene *scene) {
     freezeFrame = initialFreezeFrame;
     layers = initialLayers;
-    currentLayerIndex = 0;
     layerScene = scene;
+    currentLayerIndex = 0;
+    selectEnabled = new bool;
+    *selectEnabled = true;
 
     createLayouts();
     setupAllLayouts();
@@ -37,14 +39,23 @@ void Sidebar::setupMainLayout() {
 }
 
 void Sidebar::setupMiscLayout() {
-    QPushButton *freezeFrameButton = new QPushButton(*freezeFrame ? "Unfreeze Frame" : "Freeze frame");
-    freezeFrameButton->setFixedHeight(MISC_BUTTON_HEIGHT);
-    connect(freezeFrameButton, &QPushButton::clicked, this, [=]() {
+    QPushButton *toggleFreezeFrameButton = new QPushButton(*freezeFrame ? "Unfreeze Frame" : "Freeze frame");
+    toggleFreezeFrameButton->setFixedHeight(MISC_BUTTON_HEIGHT);
+    connect(toggleFreezeFrameButton, &QPushButton::clicked, this, [=]() {
         *freezeFrame = !(*freezeFrame);
-        freezeFrameButton->setText(*freezeFrame ? "Unfreeze Frame" : "Freeze frame");
+        toggleFreezeFrameButton->setText(*freezeFrame ? "Unfreeze Frame" : "Freeze frame");
     });
 
-    miscLayout->addWidget(freezeFrameButton);
+    QPushButton *toggleSelectionButton = new QPushButton(*selectEnabled ? "Disable Selection" : "Enable Selection");
+    toggleSelectionButton->setFixedHeight(MISC_BUTTON_HEIGHT);
+    connect(toggleSelectionButton, &QPushButton::clicked, this, [=]() {
+        *selectEnabled = !(*selectEnabled);
+        layers->at(currentLayerIndex)->setSelected(*selectEnabled);
+        toggleSelectionButton->setText(*selectEnabled ? "Disable Selection" : "Enable Selection");
+    });
+
+    miscLayout->addWidget(toggleFreezeFrameButton);
+    miscLayout->addWidget(toggleSelectionButton);
 }
 
 void Sidebar::setupLayerSelectLayout() {
@@ -153,7 +164,7 @@ void Sidebar::setupSliderLayout() {
 
 void Sidebar::createLayouts() {
     filterSelectBox = new QComboBox;
-    miscLayout = new QVBoxLayout;
+    miscLayout = new QHBoxLayout;
     layerSelectLayout = new QVBoxLayout;
     layerManagementLayout = new QHBoxLayout;
     filterSelectLayout = new QHBoxLayout;
@@ -225,7 +236,7 @@ void Sidebar::createInfoText() {
         infoText.append("<b>");
         infoText.append(config.name);
         infoText.append("</b> - ");
-        infoText.append("Description");
+        infoText.append(config.description);
         infoText.append("<br>");
     }
 }

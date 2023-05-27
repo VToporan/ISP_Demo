@@ -22,6 +22,7 @@ class Sidebar : public QWidget {
 
     private:
         bool *freezeFrame;
+        bool *selectEnabled;
         int currentLayerIndex;
         std::vector<Layer *> *layers;
         std::vector<Slider *> currentFilterSliders;
@@ -31,7 +32,7 @@ class Sidebar : public QWidget {
         QString infoText;
         QComboBox *filterSelectBox;
         QVBoxLayout *mainLayout;
-        QVBoxLayout *miscLayout;
+        QHBoxLayout *miscLayout;
         QVBoxLayout *layerSelectLayout;
         QHBoxLayout *layerManagementLayout;
         QHBoxLayout *filterSelectLayout;

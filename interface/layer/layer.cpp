@@ -48,6 +48,10 @@ void Layer::applyFilter(cv::Mat &inframe) {
     width = roi->rect().width();
     height = roi->rect().height();
 
+    if (height == 0 || width == 0) {
+        return;
+    }
+
     cv::Rect roi(x, y, width, height);
     cv::Mat outframe = inframe(roi);
 

@@ -4,6 +4,7 @@
 #include "style.hpp"
 #include "layer/layer.hpp"
 #include "slider/slider.hpp"
+#include "button/button.hpp"
 
 #include <QComboBox>
 #include <QPushButton>
@@ -29,6 +30,9 @@ class Sidebar : public QWidget {
         std::vector<QPushButton *> layerSelectButtons;
         std::vector<QPushButton *> layerManagementButtons;
 
+        QFont miscButtonFont;
+        QFont layerButtonFont;
+        QFont selectButtonFont;
         QString infoText;
         QComboBox *filterSelectBox;
         QVBoxLayout *mainLayout;

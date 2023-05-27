@@ -1,22 +1,32 @@
 #ifndef STYLE_H
 #define STYLE_H
 
-#define VIEWPORT_HEIGHT (800)
-#define VIEWPORT_WIDTH (800)
-#define SIDEBAR_WIDTH (VIEWPORT_WIDTH / 2)
+#define VIEWPORT_HEIGHT (450)
+#define VIEWPORT_WIDTH (450)
 
 #define BORDER_SIZE (2)
-#define ANCHOR_SIZE (10)
+#define ANCHOR_SIZE (8)
 
-#define SLIDER_HEIGHT (VIEWPORT_HEIGHT / 10)
+#define SLIDER_HEIGHT (50)
 #define SLIDER_WIDTH (SLIDER_HEIGHT / 2)
-#define SLIDER_FONT_SIZE (SLIDER_HEIGHT / 5)
 
-#define MISC_BUTTON_HEIGHT (VIEWPORT_HEIGHT / 20)
-#define LAYER_BUTTON_HEIGHT (VIEWPORT_HEIGHT / 12)
-#define FILTER_SELECT_HEIGHT (VIEWPORT_HEIGHT / 25)
+#define SIDEBAR_WIDTH (VIEWPORT_WIDTH * 3 / 5)
+#define SLIDER_FONT_TYPE_FACE ("FiraMono Nerd Font Mono")
+#define SLIDER_FONT_SIZE (8)
 
-#define MAX_LAYERS (4)
+#define MISC_BUTTON_HEIGHT (25)
+#define MISC_FONT_TYPE_FACE ("FiraMono Nerd Font Mono")
+#define MISC_FONT_SIZE (9)
+
+#define LAYER_BUTTON_HEIGHT (35)
+#define LAYER_FONT_TYPE_FACE ("FiraMono Nerd Font Mono")
+#define LAYER_FONT_SIZE (13)
+
+#define SELECT_BUTTON_HEIGHT (25)
+#define SELECT_FONT_TYPE_FACE ("FiraMono Nerd Font Mono")
+#define SELECT_FONT_SIZE (12)
+
+#define MAX_LAYERS (3)
 #define CURRENT_LAYER_COLOR ("#BABABA")
 
 #endif

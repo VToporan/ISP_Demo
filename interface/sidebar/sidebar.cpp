@@ -7,6 +7,9 @@ Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers, 
     currentLayerIndex = 0;
     selectEnabled = new bool;
     *selectEnabled = true;
+    miscButtonFont = QFont(MISC_FONT_TYPE_FACE, MISC_FONT_SIZE);
+    layerButtonFont = QFont(LAYER_FONT_TYPE_FACE, LAYER_FONT_SIZE);
+    selectButtonFont = QFont(SELECT_FONT_TYPE_FACE, SELECT_FONT_SIZE);
 
     createLayouts();
     setupAllLayouts();
@@ -39,15 +42,15 @@ void Sidebar::setupMainLayout() {
 }
 
 void Sidebar::setupMiscLayout() {
-    QPushButton *toggleFreezeFrameButton = new QPushButton(*freezeFrame ? "Unfreeze Frame" : "Freeze frame");
-    toggleFreezeFrameButton->setFixedHeight(MISC_BUTTON_HEIGHT);
+    Button *toggleFreezeFrameButton =
+        new Button(*freezeFrame ? "Unfreeze Frame" : "Freeze frame", MISC_BUTTON_HEIGHT, miscButtonFont);
     connect(toggleFreezeFrameButton, &QPushButton::clicked, this, [=]() {
         *freezeFrame = !(*freezeFrame);
         toggleFreezeFrameButton->setText(*freezeFrame ? "Unfreeze Frame" : "Freeze frame");
     });
 
-    QPushButton *toggleSelectionButton = new QPushButton(*selectEnabled ? "Disable Selection" : "Enable Selection");
-    toggleSelectionButton->setFixedHeight(MISC_BUTTON_HEIGHT);
+    Button *toggleSelectionButton =
+        new Button(*selectEnabled ? "Disable Selection" : "Enable Selection", MISC_BUTTON_HEIGHT, miscButtonFont);
     connect(toggleSelectionButton, &QPushButton::clicked, this, [=]() {
         *selectEnabled = !(*selectEnabled);
         layers->at(currentLayerIndex)->setSelected(*selectEnabled);
@@ -68,11 +71,7 @@ void Sidebar::setupLayerSelectLayout() {
 }
 
 void Sidebar::setupLayerManagementLayout() {
-    layerManagementButtons.push_back(new QPushButton("Add"));
-    layerManagementButtons.push_back(new QPushButton("Del"));
-    layerManagementButtons.push_back(new QPushButton("⬆"));
-    layerManagementButtons.push_back(new QPushButton("⬇"));
-
+    layerManagementButtons.push_back(new Button("Add", MISC_BUTTON_HEIGHT, miscButtonFont));
     connect(layerManagementButtons.at(0), &QPushButton::clicked, this, [=]() {
         if (layers->size() == MAX_LAYERS) {
             return;
@@ -83,6 +82,7 @@ void Sidebar::setupLayerManagementLayout() {
         updateLayerManagement();
     });
 
+    layerManagementButtons.push_back(new Button("Del", MISC_BUTTON_HEIGHT, miscButtonFont));
     connect(layerManagementButtons.at(1), &QPushButton::clicked, this, [=]() {
         if (layers->size() <= 1) {
             return;
@@ -97,6 +97,7 @@ void Sidebar::setupLayerManagementLayout() {
         updateLayerManagement();
     });
 
+    layerManagementButtons.push_back(new Button("⬆", MISC_BUTTON_HEIGHT, miscButtonFont));
     connect(layerManagementButtons.at(2), &QPushButton::clicked, this, [=]() {
         if (currentLayerIndex == 0) {
             return;
@@ -107,6 +108,7 @@ void Sidebar::setupLayerManagementLayout() {
         updateLayerManagement();
     });
 
+    layerManagementButtons.push_back(new Button("⬇", MISC_BUTTON_HEIGHT, miscButtonFont));
     connect(layerManagementButtons.at(3), &QPushButton::clicked, this, [=]() {
         if (currentLayerIndex >= layers->size() - 1) {
             return;
@@ -118,7 +120,6 @@ void Sidebar::setupLayerManagementLayout() {
     });
 
     for (QPushButton *button : layerManagementButtons) {
-        button->setFixedHeight(MISC_BUTTON_HEIGHT);
         layerManagementLayout->addWidget(button);
     }
     updateLayerManagement();
@@ -126,7 +127,8 @@ void Sidebar::setupLayerManagementLayout() {
 
 void Sidebar::setupFilterSelectLayout() {
     filterSelectBox = new QComboBox;
-    filterSelectBox->setFixedHeight(FILTER_SELECT_HEIGHT);
+    filterSelectBox->setFixedHeight(SELECT_BUTTON_HEIGHT);
+    filterSelectBox->setFont(selectButtonFont);
     std::vector<GenericFilterWrapper *> filters = layers->at(currentLayerIndex)->getFilters();
 
     for (int i = 0; i < filters.size(); ++i) {
@@ -143,11 +145,12 @@ void Sidebar::setupFilterSelectLayout() {
         setupSliderLayout();
     });
 
-    QPushButton *infoButton = new QPushButton("i");
-    infoButton->setFixedSize(FILTER_SELECT_HEIGHT, FILTER_SELECT_HEIGHT);
-
-    connect(infoButton, &QPushButton::pressed, this,
-            [=]() { QToolTip::showText(infoButton->mapToGlobal(QPoint()), infoText, infoButton); });
+    Button *infoButton = new Button("i", SELECT_BUTTON_HEIGHT, selectButtonFont);
+    infoButton->setFixedWidth(SELECT_BUTTON_HEIGHT);
+    connect(infoButton, &QPushButton::pressed, this, [=]() {
+        QToolTip::setFont(selectButtonFont);
+        QToolTip::showText(infoButton->mapToGlobal(QPoint()), infoText, infoButton);
+    });
 
     filterSelectLayout->addWidget(filterSelectBox);
     filterSelectLayout->addWidget(infoButton);
@@ -176,8 +179,9 @@ void Sidebar::createLayerSelectButtons() {
     for (int layerIndex = 0; layerIndex < layers->size(); ++layerIndex) {
         layers->at(layerIndex)->setSelected(false);
         const char *currentFilterName = layers->at(layerIndex)->getCurrentFilter()->filterName();
-        QPushButton *layerButton = new QPushButton(QString("Filter %1 - %2").arg(layerIndex).arg(currentFilterName));
-        layerButton->setFixedHeight(LAYER_BUTTON_HEIGHT);
+        Button *layerButton =
+            new Button(QString("Filter %1 - %2").arg(layerIndex).arg(currentFilterName).toLocal8Bit().data(),
+                       LAYER_BUTTON_HEIGHT, layerButtonFont);
         connect(layerButton, &QPushButton::clicked, this, [=]() {
             currentLayerIndex = layerIndex;
             setupLayerSelectLayout();
@@ -186,7 +190,7 @@ void Sidebar::createLayerSelectButtons() {
         });
         layerSelectButtons.push_back(layerButton);
     }
-    layers->at(currentLayerIndex)->setSelected(true);
+    layers->at(currentLayerIndex)->setSelected(*selectEnabled);
     layerSelectButtons.at(currentLayerIndex)->setDisabled(true);
     layerSelectButtons.at(currentLayerIndex)->setPalette(QColor(CURRENT_LAYER_COLOR));
     filterSelectBox->setCurrentIndex(layers->at(currentLayerIndex)->getIndex());
@@ -217,7 +221,7 @@ void Sidebar::updateLayerManagement() {
         button->setDisabled(false);
     }
 
-    layerManagementButtons.at(3)->setDisabled(currentLayerIndex >= layers->size() - 1);
+    layerManagementButtons.at(3)->setDisabled(currentLayerIndex >= (layers->size() - 1));
     layerManagementButtons.at(2)->setDisabled(currentLayerIndex <= 0);
     layerManagementButtons.at(1)->setDisabled(layers->size() <= 1);
     layerManagementButtons.at(0)->setDisabled(layers->size() >= MAX_LAYERS);
@@ -237,6 +241,7 @@ void Sidebar::createInfoText() {
         infoText.append(config.name);
         infoText.append("</b> - ");
         infoText.append(config.description);
+        infoText.append("<br>");
         infoText.append("<br>");
     }
 }

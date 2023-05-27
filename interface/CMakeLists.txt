@@ -14,6 +14,7 @@ add_subdirectory( handlebar )
 add_subdirectory( resizable )
 add_subdirectory( sidebar )
 add_subdirectory( slider )
+add_subdirectory( button )
 
 target_link_libraries(interface
   PRIVATE 
@@ -24,5 +25,6 @@ target_link_libraries(interface
     resizable
     sidebar
     slider
+    button
   )
 

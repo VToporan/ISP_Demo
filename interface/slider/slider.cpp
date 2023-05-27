@@ -5,7 +5,7 @@ Slider::Slider(parameterConfig config) {
     slider = new QSlider;
     setConfig(config);
 
-    QFont font = QFont("Courier New", SLIDER_FONT_SIZE);
+    QFont font = QFont(SLIDER_FONT_TYPE_FACE, SLIDER_FONT_SIZE);
     nameLabel = new QLabel(config.name);
     nameLabel->setFont(font);
     valueLabel = new QLabel(QString("%1").arg(currentValue, 3));

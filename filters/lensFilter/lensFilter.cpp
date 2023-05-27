@@ -60,7 +60,7 @@ std::vector<parameterConfig> LensFitlerWrapper::allParameterConfigs() {
                        (int)(distortionAmount * 100), -100, 100, 1,
                        [this](int x) { setDistortionAmount((float)x / 100); }});
     configs.push_back({"Distortion radius", "Changes the distance from the center where the distortion is applied",
-                       distortionRadius, 0, 800, 1, [this](int x) { setDistortionRadius(x); }});
+                       distortionRadius, 0, 450, 1, [this](int x) { setDistortionRadius(x); }});
     return configs;
 }
 

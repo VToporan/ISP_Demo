@@ -36,8 +36,8 @@ void BoxFitlerWrapper::setKernelSizeY(int newKernelSize) {
 
 std::vector<parameterConfig> BoxFitlerWrapper::allParameterConfigs() {
     std::vector<parameterConfig> configs;
-    configs.push_back({"Kernel size X axis", kernelSizeX, 3, 79, 2, [this](int x) { setKernelSizeX(x); }});
-    configs.push_back({"Kernel size Y axis", kernelSizeY, 3, 79, 2, [this](int x) { setKernelSizeY(x); }});
+    configs.push_back({"Kernel size X axis", "Changes the width of the Box Kernel", kernelSizeX, 3, 79, 2, [this](int x) { setKernelSizeX(x); }});
+    configs.push_back({"Kernel size Y axis", "Changes the height of the Box Kernel", kernelSizeY, 3, 79, 2, [this](int x) { setKernelSizeY(x); }});
     return configs;
 }
 

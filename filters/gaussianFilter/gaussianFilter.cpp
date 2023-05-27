@@ -65,11 +65,12 @@ void GaussianFitlerWrapper::setSigmaY(float newSigmaY) {
 
 std::vector<parameterConfig> GaussianFitlerWrapper::allParameterConfigs() {
     std::vector<parameterConfig> configs;
-    configs.push_back({"Kernel size", kernelSize, 3, 79, 2, [this](int x) { setKernelSize(x); }});
-    configs.push_back(
-        {"Sigma value on X axis", (int)(sigmaX * 10), 1, 101, 1, [this](int x) { setSigmaX((float)x / 10); }});
-    configs.push_back(
-        {"Sigma value on Y axis", (int)(sigmaY * 10), 1, 101, 1, [this](int x) { setSigmaY((float)x / 10); }});
+    configs.push_back({"Kernel size", "Changes the size of the Gaussian Kernel", kernelSize, 3, 79, 2,
+                       [this](int x) { setKernelSize(x); }});
+    configs.push_back({"Sigma value on X axis", "Changes the severity of the blur on the X axis", (int)(sigmaX * 10), 1,
+                       101, 1, [this](int x) { setSigmaX((float)x / 10); }});
+    configs.push_back({"Sigma value on Y axis", "Changes the severity of the blur on the X axis", (int)(sigmaY * 10), 1,
+                       101, 1, [this](int x) { setSigmaY((float)x / 10); }});
     return configs;
 }
 

@@ -55,9 +55,12 @@ void CannyFitlerWrapper::setHighTreshold(int newHighTreshold) { highTreshold = n
 
 std::vector<parameterConfig> CannyFitlerWrapper::allParameterConfigs() {
     std::vector<parameterConfig> configs;
-    configs.push_back({"Kernel size", kernelSize, 3, 7, 2, [this](int x) { setKernelSize(x); }});
-    configs.push_back({"Low treshold", lowTreshold, 1, 255, 1, [this](int x) { setLowTreshold(x); }});
-    configs.push_back({"High treshold", highTreshold, 1, 255, 1, [this](int x) { setHighTreshold(x); }});
+    configs.push_back({"Kernel size", "Changes the size of the Sobel Kernel applied", kernelSize, 3, 7, 2,
+                       [this](int x) { setKernelSize(x); }});
+    configs.push_back({"Low treshold", "Changes the threshold that determines suppressed pixels", lowTreshold, 1, 255,
+                       1, [this](int x) { setLowTreshold(x); }});
+    configs.push_back({"High treshold", "Changes the threshold that determines edge pixels", highTreshold, 1, 255, 1,
+                       [this](int x) { setHighTreshold(x); }});
     return configs;
 }
 

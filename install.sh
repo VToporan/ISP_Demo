@@ -16,3 +16,6 @@ Type=Application
 Terminal=false
 Encoding=UTF-8
 " > $DESKTOP_SHORTCUT
+gio set $DESKTOP_SHORTCUT metadata::trusted true
+chmod a+x $DESKTOP_SHORTCUT 
+

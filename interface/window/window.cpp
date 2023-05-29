@@ -24,7 +24,8 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
     setLayout(layout);
 
     setWindowTitle("Image Processing Demo");
-    show();
+    setWindowIcon(QIcon("/home/vtoporan/ISP_Demo/resources/ISP_Demo_Shutter.png"));
+    showMaximized();
 }
 
 // https://asmaloney.com/2013/11/code/converting-between-cvmat-and-qimage-or-qpixmap

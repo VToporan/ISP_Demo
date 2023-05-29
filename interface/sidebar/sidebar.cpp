@@ -1,4 +1,5 @@
 #include "sidebar.hpp"
+#include <algorithm>
 
 Sidebar::Sidebar(bool *initialFreezeFrame, std::vector<Layer *> *initialLayers, QGraphicsScene *scene) {
     freezeFrame = initialFreezeFrame;
@@ -65,9 +66,8 @@ void Sidebar::setupLayerSelectLayout() {
     destroyLayerSelectButtons();
     createLayerSelectButtons();
 
-    for (QPushButton *button : layerSelectButtons) {
-        layerSelectLayout->addWidget(button);
-    }
+    std::for_each(layerSelectButtons.rbegin(), layerSelectButtons.rend(),
+                  [=](const auto &button) { layerSelectLayout->addWidget(button); });
 }
 
 void Sidebar::setupLayerManagementLayout() {
@@ -97,7 +97,7 @@ void Sidebar::setupLayerManagementLayout() {
         updateLayerManagement();
     });
 
-    layerManagementButtons.push_back(new Button("⬆", MISC_BUTTON_HEIGHT, miscButtonFont));
+    layerManagementButtons.push_back(new Button("⬇", MISC_BUTTON_HEIGHT, miscButtonFont));
     connect(layerManagementButtons.at(2), &QPushButton::clicked, this, [=]() {
         if (currentLayerIndex == 0) {
             return;
@@ -108,7 +108,7 @@ void Sidebar::setupLayerManagementLayout() {
         updateLayerManagement();
     });
 
-    layerManagementButtons.push_back(new Button("⬇", MISC_BUTTON_HEIGHT, miscButtonFont));
+    layerManagementButtons.push_back(new Button("⬆", MISC_BUTTON_HEIGHT, miscButtonFont));
     connect(layerManagementButtons.at(3), &QPushButton::clicked, this, [=]() {
         if (currentLayerIndex >= layers->size() - 1) {
             return;

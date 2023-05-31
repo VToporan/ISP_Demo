@@ -1,4 +1,5 @@
 \documentclass{article}
+
 \title{%
     Image Signal Processing\\
 \large Practical Demonstration}
@@ -8,11 +9,28 @@
 \setcounter{tocdepth}{5}
 \setcounter{secnumdepth}{5}
 
-\usepackage[backend=biber]{biblatex}
+\usepackage{float}
+\usepackage{graphicx}
+\graphicspath{{resources/}}
+
+\usepackage[backend=biber, style=ieee]{biblatex}
 \addbibresource{refferences.bib}
 
-\begin{document}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks   = true,
+  urlcolor     = black,
+  linkcolor    = black,
+  citecolor    = black
+}
 
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{12pt}
+
+\begin{document}
 \maketitle
 
 \tableofcontents
@@ -32,4 +50,5 @@
 \printbibliography
 
 \end{document}
+
 

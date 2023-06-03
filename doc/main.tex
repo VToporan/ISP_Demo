@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[a4paper, 12pt]{article}
 
 \title{%
     Image Signal Processing\\
@@ -25,12 +25,35 @@
 }
 
 \usepackage{chngcntr}
+\usepackage{times}
+
+\usepackage{listings}
+\lstdefinestyle{cppStyle}{
+    basicstyle=\fontfamily{pcr}\fontsize{10pt}{12pt}\selectfont,
+    frame=lines,
+    breakatwhitespace=true,        
+    breaklines=true,                
+    captionpos=t,                   
+    keepspaces=false,                
+    showspaces=false,               
+    showstringspaces=false,
+    showtabs=false,                 
+    tabsize=4,
+    % language=C++,
+}
+\lstset{style=cppStyle}
+
+\begin{document}
+
+\let\oldref\ref
+\renewcommand{\ref}[1]{(\oldref{#1})}
+
+\counterwithin{lstlisting}{section}
 \counterwithin{figure}{section}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{12pt}
 
-\begin{document}
 \maketitle
 
 \tableofcontents
@@ -43,12 +66,15 @@
 
 \include{implementation}
 
-\include{remaining}
+\include{future}
 
 \include{conclusion}
 
 \printbibliography
 
 \end{document}
+
+
+
 
 

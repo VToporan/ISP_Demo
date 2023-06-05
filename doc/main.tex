@@ -1,44 +1,6 @@
 \documentclass[12pt, english, a4paper]{report}
 \include{packages}
-\title{%
-    Image Signal Processing\\
-\large Practical Demonstration}
-
-\author {V.A.Topo}
-\date{June 2023}
-\setcounter{tocdepth}{5}
-\setcounter{secnumdepth}{5}
-
-\usepackage{float}
-\usepackage{graphicx}
 \graphicspath{{resources/}}
-
-\usepackage{hyperref}
-\hypersetup{
-  colorlinks   = true,
-  urlcolor     = black,
-  linkcolor    = black,
-  citecolor    = black
-}
-
-\usepackage{chngcntr}
-\usepackage{times}
-
-\usepackage{listings}
-\lstdefinestyle{cppStyle}{
-    basicstyle=\fontfamily{pcr}\fontsize{10pt}{12pt}\selectfont,
-    frame=lines,
-    breakatwhitespace=true,        
-    breaklines=true,                
-    captionpos=t,                   
-    keepspaces=false,                
-    showspaces=false,               
-    showstringspaces=false,
-    showtabs=false,                 
-    tabsize=4,
-    % language=C++,
-}
-\lstset{style=cppStyle}
 
 \begin{document}
 
@@ -51,7 +13,11 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{12pt}
 
+\pagenumbering{Alph}
 \include{title}
+\pagenumbering{arabic}
+
+\blankpage
 
 \tableofcontents
 
@@ -70,6 +36,7 @@
 \printbibliography
 
 \end{document}
+
 
 
 

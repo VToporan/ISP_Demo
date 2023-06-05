@@ -1,29 +1,35 @@
+\newcommand*{\blankpage}{
+	\null
+	\thispagestyle{empty}
+	\addtocounter{page}{-1}
+	\newpage
+}
 % set document margins
 \geometry{
- left=20mm,
- right=20mm,
- top=25mm,
- bottom=20mm,
- headheight=21mm,
- headsep=4mm
- }
- 
- % set Nimbus Sans as default font - it is similar to Arial and Helvetica
- % Arial is proprietary and it doesn't work with diacritics
+	left=20mm,
+	right=20mm,
+	top=25mm,
+	bottom=20mm,
+	headheight=21mm,
+	headsep=4mm
+}
+
+% set Nimbus Sans as default font - it is similar to Arial and Helvetica
+% Arial is proprietary and it doesn't work with diacritics
 \renewcommand*\familydefault{\sfdefault}
-\linespread{1.15} 
+\linespread{1.15}
 \setlength{\parindent}{1.5cm}
 
 % Link border style
 \hypersetup{
-  colorlinks   = true,
-  urlcolor     = black,
-  linkcolor    = black,
-  citecolor    = black
+	colorlinks   = true,
+	urlcolor     = black,
+	linkcolor    = black,
+	citecolor    = black
 }
 
 \lstset{
-	numbers=none, 
+	numbers=none,
 	belowcaptionskip=1\baselineskip,
 	breaklines=true,
 	frame=l,
@@ -37,7 +43,7 @@
 
 % Disable hyphenation
 \pretolerance=10000
-\tolerance=2000 
+\tolerance=2000
 \emergencystretch=10pt
 
 %\floatstyle{}
@@ -48,7 +54,7 @@
 \floatname{table}{Table}
 \floatname{code}{Code}
 
-\setlength{\intextsep }{12pt plus 1pt minus 1pt} 
+\setlength{\intextsep }{12pt plus 1pt minus 1pt}
 
 % Set citation names
 \crefname{code}{Snippet}{Snippet}
@@ -65,3 +71,6 @@
 \makeatletter
 \g@addto@macro\@floatboxreset\centering
 \makeatother
+
+
+

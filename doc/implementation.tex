@@ -1,10 +1,10 @@
-\section{Implenentation}
+\chapter{Implenentation}
 
 The project is separated in two main components - the filter wrapper library and the user interface library.
 Wrappers handle the application and parameters of each filter instance, while the UI handles the display
 and interaction functionalities.
 
-\subsection{Filter Wrapper Library}
+\section{Filter Wrapper Library}
 
 Based on OpenCV \verb|cv::Mat|, the library provides the means for applying a given filter on the input frame,
 as well as a possibility to tweak the filters inherent parameters. The amount of filters supported can be
@@ -54,29 +54,29 @@ user - usually, the graphical interface - the filter library can be extended ind
 the limitations imposed by the constructs defined in \ref{code:GenericFilterWrapper} and 
 \ref{code:parameterConfig} are adhered to.
 
-\subsubsection{Empty Filter}
+\subsection{Empty Filter}
 
 As the name implies, the empty filter does not affect the input frame in any way. Its purpose is to be
 used as a reference point, both when visualizing other filters, or when measuring filter delay.
 
-\subsubsection{Box Filter}
-\subsubsection{Median Filter}
-\subsubsection{Gaussian Filter}
-\subsubsection{Bilateral Correction}
-\subsubsection{Erode Filter}
-\subsubsection{Dilate Filter}
-\subsubsection{Sobbel Filter}
-\subsubsection{Canny Filter}
-\subsubsection{Emboss Filter}
-\subsubsection{Lens Distortion}
+\subsection{Box Filter}
+\subsection{Median Filter}
+\subsection{Gaussian Filter}
+\subsection{Bilateral Correction}
+\subsection{Erode Filter}
+\subsection{Dilate Filter}
+\subsection{Sobbel Filter}
+\subsection{Canny Filter}
+\subsection{Emboss Filter}
+\subsection{Lens Distortion}
 
-\subsection{User Interface}
+\section{User Interface}
 
-\subsubsection{Layer system}
+\subsection{Layer system}
 
-\subsubsection{Signals and Slots}
+\subsection{Signals and Slots}
 
-\subsubsection{Control pannel}
+\subsection{Control pannel}
 
 
 

@@ -10,8 +10,10 @@ Based on OpenCV \verb|cv::Mat|, the library provides the means for applying a gi
 as well as a possibility to tweak the filters inherent parameters. The amount of filters supported can be
 extended indefinitely, due to the use of a purely virtual abstract class, the \verb|GenericFilterWrapper| class.
 
-\begin{minipage}{\textwidth}
-\begin{lstlisting}[caption={Generic wrapper class definition}, label=code:GenericFilterWrapper]
+\begin{code}
+	\caption{Generic wrapper class definition}
+	\label{code:GenericFilterWrapper}
+	\begin{lstlisting}
 class GenericFilterWrapper {
     public:
         virtual void applyFilter(cv::Mat &inframe) = 0;
@@ -19,20 +21,22 @@ class GenericFilterWrapper {
         virtual const char *filterName() = 0;
         virtual const char *filterDescription() = 0;
 };
-\end{lstlisting}
-\end{minipage}
+    \end{lstlisting}
+\end{code}
 
-As seen in listing \ref{code:GenericFilterWrapper}, the abstract class provides access to the function 
-applying the filter, as well as all details that can be shown in the user interface. For this reason, 
-the filter library can be used by any high-level graphical interface library, as long as a valid 
-\verb|cv::Mat| is provided. Initial prototypes were realized using the OpenCV HighUI library, and later 
+As seen in \cref{code:GenericFilterWrapper}, the abstract class provides access to the function
+applying the filter, as well as all details that can be shown in the user interface. For this reason,
+the filter library can be used by any high-level graphical interface library, as long as a valid
+\verb|cv::Mat| is provided. Initial prototypes were realized using the OpenCV HighUI library, and later
 ported to the Qt Framework for the final product.
 
 The class also provides access to a list of parameter configurations, that can be used in the user
 interface to set up various tool-tips and interactive sliders.
 
-\begin{minipage}{\textwidth}
-\begin{lstlisting}[caption={Parameter configuration structure}, label=code:parameterConfig]
+\begin{code}
+	\caption{Parameter configuration structure}
+	\label{code:parameterConfig}
+	\begin{lstlisting}
 typedef struct _parameterConfig {
     const char* name;
     const char* description;
@@ -42,17 +46,17 @@ typedef struct _parameterConfig {
     int step;
     std::function<void(int)>setter;
 } parameterConfig;
-\end{lstlisting}
-\end{minipage}
+    \end{lstlisting}
+\end{code}
 
-Listing \ref{code:parameterConfig} presents the structure that is used to provide access to a parameter
+\cref{code:parameterConfig} presents the structure that is used to provide access to a parameter
 configuration. The setter function is defined for each filter parameter individually, resulting in an
 additional abstraction layer.
 
 Because internal functionality is handled by each wrapper, without exposing any of it to the end
 user - usually, the graphical interface - the filter library can be extended indefinitely, as long as
-the limitations imposed by the constructs defined in \ref{code:GenericFilterWrapper} and 
-\ref{code:parameterConfig} are adhered to.
+the limitations imposed by the constructs defined in \cref{code:GenericFilterWrapper} and
+\cref{code:parameterConfig} are adhered to.
 
 \subsection{Empty Filter}
 
@@ -80,14 +84,6 @@ Gaussian blur refference - \cite{gaussian}
 \subsection{Signals and Slots}
 
 \subsection{Control pannel}
-
-
-
-
-
-
-
-
 
 
 

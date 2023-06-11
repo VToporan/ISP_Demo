@@ -47,7 +47,14 @@
 \emergencystretch=10pt
 
 %\floatstyle{}
-\newfloat{code}{h}{loc}[chapter]
+% \newfloat{code}{ht}{loc}[chapter]
+\DeclareFloatingEnvironment[
+listname={List of Code},
+name=Code,
+placement=H,
+within=chapter,
+chapterlistsgaps=off,
+]{code}
 
 % Set caption names
 \floatname{figure}{Figure}

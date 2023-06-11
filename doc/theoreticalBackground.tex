@@ -10,19 +10,50 @@
 
 \section{OpenCV Library}
 
-General description - \cite{opencvAbout}
+The ``Open Source Computer Vision Library`` provides specific infrastructure for computer Vision and
+machine learning, as well as general image processing algorithms and utilities. Boasting over ``2500
+optimised algorithms`` and a community of ``more than 47 thousand people``, the library was chosen
+due to its versatility, extensive documentation and abundance of community made resources. \cite{opencvAbout}
+
+The main OpenCV functionalities that this project makes use of are the video capture module, used
+to interface with the systems default camera, and the image processing module, used extensively in
+order to exchange and modify image data throughout all the levels of the application.
 
 \subsection{Video Capture}
 
-Info about VideoCapture - \cite{opencvVideoCapture}
+The \verb|VideoCapture| class ``provides C++ API for capturing video from cameras or for reading video 
+files and image sequences``. It allows for opening video streams based on camera index and desired 
+``Capture API backends``, as well as easy access to each recorded frame. On top of this, it provides
+functionality for programmatically tweaking the parameters of the API and verification functions 
+for the proper opening and closing of the capture target, as well as the successful grab of each frame.
+\cite{opencvVideoCapture}
+
+In order to ensure the optimal user experience, all operations done one each frame have to fall within
+the video captures sampling period. If this cannot be achieved, the framerate can be adjusted in order
+to ensure minimal delays in grabbing and processing the following frame.
 
 \subsection{Image Processing}
 
-Info about ImProc - \cite{opencvImproc}
+Provided in the module \verb|imgproc| are tools ``used to perform various linear or non-linear filtering 
+operations on 2D images`` stored as 2-dimensional \verb|cv::Mat| - data array ``compatible with the 
+majority of dense array types from the standard toolkits and SDKs``.  It represents one of the core 
+pillars of the project, as most operations provided are used in the generation of images with high 
+visual impact. \cite{opencvImproc}
 
 \section{QT Framework}
-General information - \cite{qtAbout}
+
+Developed as ``cross-platform application development framework for desktop, embedded and mobile``, the
+Qt project provides a means for designing and building graphical user interfaces using C++. It was chosen 
+due to its compatibility with OpenCV, as well as its similarity to other high-level frameworks for 
+developing cross-platform applications. The main component used in this project is the ``Widgets module``,
+which allows for hierarchical GUI elements to be ``written directly in C++``.\cite{qtAbout}
 
 \section{CMake}
-General information - \cite{cmakeAbout}
+
+Used for complex C++ projects, CMake ``manages the build process in an operating system and in a 
+compiler-independent manner``. Due to the external dependencies, as well as the project structure being 
+broken down into two distinct libraries, CMake was chosen because it was ``designed to support complex 
+directory hierarchies and applications dependent on several libraries``. Another significant factor in the
+decision to use this particular build system was the innate compatibility with OpenCV as well as QT.
+\cite{cmakeAbout}
 

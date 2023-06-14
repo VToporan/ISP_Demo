@@ -8,24 +8,24 @@ parameters \(x\) and \(y\) denoting the planar coordinates of a given point, and
 representing the intensity of the light in that particular point. The common nomenclature for the points
 are ``picture elements, image elements, pels, and pixels``, with the pixel being most used in order
 to refer to such elements. Due to having a physical representation, the pixels and, subsequently,
-their coordinates, are finite. \cite{dspBook}
+their coordinates, are finite. \cite{dipBook}
 
 Each pixel value and position can be modified by different operators, which can be classified into ``linear``
 or ``non-linear``. A given operator \(h\), that gives a given output when applied on a certain input
-\[h[f(x, y)] = g(x, y) \text{ \cite{dspBook}}\] is considered linear if it satisfies the following condition:
+\[h[f(x, y)] = g(x, y) \text{ \cite{dipBook}}\] is considered linear if it satisfies the following condition:
 \[h[a f_1(x, y) + b f_2(x, y)] = a h[f_1(x, y)] + b h[f_2(x, y)] =
-	a g_1(x, y) + b g_2(x, y) \text{ \cite{dspBook}}\]
+	a g_1(x, y) + b g_2(x, y) \text{ \cite{dipBook}}\]
 
 Another classification criterion is the amount of data required to apply a certain operand, as well as the
 resulting effect on the final image. Based on this, operand that only affect the intensity value of a pixel
 can be considered ``single-pixel operations``, if they only account for the current pixel value when computing
 a new value, and ``neighborhood operations``, when an area around the current point is relevand in determining
 the output. If the operator instead affects the position of the current pixel in the resulting image, it is
-considered a ``geometric transformation``. \cite{dspBook}
+considered a ``geometric transformation``. \cite{dipBook}
 
 \subsection{Color Manipulation}
 
-For gray-scale images, single-pixel operations, defined as \[s = T(z) \text{ \cite{dspBook}}\], where \(z\)
+For gray-scale images, single-pixel operations, defined as \[s = T(z) \text{ \cite{dipBook}}\], where \(z\)
 represents the current value, \(T\) denotes the applied transformation and \(s\) represents the output
 result, linearly change the intensity of the pixel. In most systems, the pixel values are encoded on 8 bits,
 meaning that both the input and the output will be in the range 0-255.
@@ -70,12 +70,12 @@ borrowed from classical DSP. This is because a spatial filter ``modifies an imag
 of each pixel by a function of the values of the pixel and its neighbors``. This is accomplished by computing
 the multiplication between a pixel neighborhood and a matrix of the same size as the area of interest. Such
 matrices are formally known as ``kernels``, and their coefficients denote the type of filter being applied.
-\cite{dspBook}
+\cite{dipBook}
 
 Because the kernel acts as a ``floating window``, it can easily be assimilated to the convolution operation
-from 1-dimensional signal processing \[g(x) = \sum_{s=-a}^{a} w(s)f(x+s) \text{ \cite{dspBook}}\] from which
+from 1-dimensional signal processing \[g(x) = \sum_{s=-a}^{a} w(s)f(x+s) \text{ \cite{dipBook}}\] from which
 the formula for the 2-dimensional convolution operation can be extrapolated \[(w*f)(x, y) = \sum_{s=-a}^{a}
-	\sum_{t=-b}^{b} w(s, t)f(x + s, y + t)\text{ \cite{dspBook}}\] This, in turn, has to account for the kernel
+	\sum_{t=-b}^{b} w(s, t)f(x + s, y + t)\text{ \cite{dipBook}}\] This, in turn, has to account for the kernel
 traversing the entire image, meaning that the picture will need to be padded with additional data, in order to
 ensure the edge pixels are covered by the convolution.
 
@@ -103,7 +103,7 @@ placement errors. Such an operation can be denoted as:
 		x \\
 		y \\
 	\end{bmatrix}
-	\text{ \cite{dspBook}}
+	\text{ \cite{dipBook}}
 \]
 where \(x'\) and \(y'\) represent the new pixel coordinates. While this model can be used to compute the
 operations of rotation, scaling and sheering, it cannot be used for translation. In order to accommodate
@@ -132,7 +132,7 @@ all ``affine transformations``, a 3x3 model was proposed:
 		y \\
 		1 \\
 	\end{bmatrix}
-	\text{ \cite{dspBook}}
+	\text{ \cite{dipBook}}
 \]
 
 Each type of transformation is implemented and showcased in the application, with the help of the

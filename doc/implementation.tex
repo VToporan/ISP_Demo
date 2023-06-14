@@ -64,14 +64,90 @@ As the name implies, the empty filter does not affect the input frame in any way
 used as a reference point, both when visualizing other filters, or when measuring filter delay.
 
 \subsection{Box Filter}
+
+Also known as box blur, this filters inherent result is a diffuse copy of the original. This effect is
+achieved through averaging the pixel neighborhood situated under the kernel. A basic 3x3 implementation
+of the convolution mask is:
+\begin{equation}
+	h = 1/9
+	\begin{bmatrix}
+		1 & 1 & 1 \\
+		1 & 1 & 1 \\
+		1 & 1 & 1 \\
+	\end{bmatrix}
+	\text{ \cite{ispBook}}
+\end{equation}
+
+The kernel can be generalized as follows:
+\begin{equation}
+	\label{eq:boxFilterFormula}
+	h = \alpha
+	\begin{bmatrix}
+		1 & 1 & 1 & \dots & 1 \\
+		1 & 1 & 1 & \dots & 1 \\
+		\dots                 \\
+		1 & 1 & 1 & \dots & 1 \\
+	\end{bmatrix}
+	\text{, where }
+	\alpha =
+	\begin{cases}
+		1 / width * height & \text{, if normalized} \\
+		1                  & \text{, otherwise}     \\
+	\end{cases}
+	\text{ \cite{opencvImproc}}
+\end{equation}
+
+OpenCV provides the implementation of \cref{eq:boxFilterFormula} in the form of the \verb|boxFilter| function.
+The parameters provided to it are the kernel width and height, both of which can be set independently. The
+result is a basic smoothing tool that accounts for the desired blur axis.
+
 \subsection{Median Filter}
-\subsection{Gaussian Filter}
 
-Gaussian blur refference - \cite{gaussian}
+Similar to the box filter, median blurring also provides smoothing, however, it does so by replacing the
+current pixel value with the median value inside its neighborhood. This is done in order to attenuate points
+with intensity greatly different from those around it, points that would otherwise disproportionately affect
+any other kind of smoothing operation. Those elements, formally known as ``salt and pepper`` noise have the
+potential of hindering the functionality of other operators, so the median filter is an essential step in
+ensuring image quality. \cite{fipBerkley}
 
-\subsection{Bilateral Correction}
+It can be observed that for certain image functions \(f_1\) and \(f_2\), the following is true:
+\[median(f_1(x, y) + f_2(x, y)) \neq median(f_1(x, y) + f_2(x, y))\]
+For this reason, it can be concluded that the median filter is non-linear. In addition, due to the lack of
+possibility for streamlining the finding of the median value, this smoothing technique is significantly more
+computationally expensive than other methods, reason for which the kernel size must be significantly lower.
+
+This is another filter provided in the image processing module, by the \verb|medianBlur| function, and is
+solely characterized by the kernel size - parameter with little flexibility, due to the aforementioned
+computational limitations.
+
 \subsection{Erode Filter}
+
+Erosion is a ``morphological expression`` defined by a set of pixels \(A\) and a ``structuring element \(B\)
+as follows: \[A \ominus B = \{z | (B)_z \subseteq A\}\text{ \cite{dipBook}}\] and refers to the notion that
+``the erosion of \(A\) by \(B\) is the set of all points \(z\) such that \(B\), translated by z, is contained
+in A``. \cite{dipBook}
+
+In practice, as provided by the \verb|erode| function, the computation of the erosion is done by finding a
+local minimum in each kernel, provided by a structuring element.
+\[erode(x, y) = \min\limits_{(x', y'): element(x', y') \neq 0} f(x + x', y + y')\text{ \cite{opencvImproc}}\]
+Although an entire structuring element can be given as a parameter, for the purpose of this application only
+the diameter of a square structuring element can be provided.
+
 \subsection{Dilate Filter}
+
+The dilation expression directly opposes the erosion, being defined on the same set of pixels \(A\) and
+structuring element \(B\) as follows: 
+\[A \oplus B = \{z | (\hat{B}) \cap A \neq \emptyset\}\text{ \cite{dipBook}}\]
+
+Also provided by OpenCV via the \verb|dilate| function, it achieves the opposite effect to the erosion,
+computing instead the maximum value within the given structuring element and providing it to the current
+pixel. 
+\[dilate(x, y) = \max\limits_{(x', y'): element(x', y') \neq 0} f(x + x', y + y')\text{ \cite{opencvImproc}}\]
+Also similar to the erode filter, dilation permits as a parameter the entire structuring element, however
+only the kernel diameter is used.
+
+\subsection{Gaussian Filter}
+\subsection{Bilateral Correction}
 \subsection{Sobbel Filter}
 \subsection{Canny Filter}
 \subsection{Emboss Filter}
@@ -84,6 +160,7 @@ Gaussian blur refference - \cite{gaussian}
 \subsection{Signals and Slots}
 
 \subsection{Control pannel}
+
 
 
 

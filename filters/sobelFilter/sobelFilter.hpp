@@ -8,6 +8,7 @@ class SobelFitlerWrapper : public GenericFilterWrapper {
         int kernelSize;
         int derivX;
         int derivY;
+        int minValue;
         bool displayDirection;
 
     public:
@@ -20,6 +21,7 @@ class SobelFitlerWrapper : public GenericFilterWrapper {
         void setKernelSize(int newKernelSize);
         void setDerivX(int newDerivX);
         void setDerivY(int newDerivY);
+        void setMinValue(int newMinValue);
         void setDisplayDirection(int isSet);
 
         std::vector<parameterConfig> allParameterConfigs();

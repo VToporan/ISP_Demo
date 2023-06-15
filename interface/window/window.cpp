@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 
     setWindowTitle("Image Processing Demo");
     setWindowIcon(QIcon("/home/vtoporan/ISP_Demo/resources/ISP_Demo_Shutter.png"));
-    showMaximized();
+    show();
 }
 
 // https://asmaloney.com/2013/11/code/converting-between-cvmat-and-qimage-or-qpixmap
@@ -63,7 +63,7 @@ static inline QImage cvMatToQImage(const cv::Mat &inMat) {
 }
 
 void MainWindow::openCapture() {
-    int deviceID = 0;
+    int deviceID = 2;
     int apiID = cv::CAP_ANY;
 
     videoCap.open(deviceID, apiID);

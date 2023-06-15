@@ -4,12 +4,14 @@ SobelFitlerWrapper::SobelFitlerWrapper() {
     setKernelSize(3);
     setDerivX(1);
     setDerivY(1);
+    setMinValue(1);
     setDisplayDirection(false);
 }
 SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize) {
     setKernelSize(initialKernelSize);
     setDerivX(1);
     setDerivY(1);
+    setMinValue(1);
     setDisplayDirection(false);
 }
 
@@ -17,6 +19,7 @@ SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize, int initialDerivat
     setKernelSize(initialKernelSize);
     setDerivX(initialDerivate);
     setDerivY(initialDerivate);
+    setMinValue(1);
     setDisplayDirection(false);
 }
 
@@ -24,9 +27,11 @@ SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize, int initialDerivat
     setKernelSize(initialKernelSize);
     setDerivX(initialDerivateX);
     setDerivY(initialDerivateY);
+    setMinValue(1);
     setDisplayDirection(false);
 }
 
+#include <iostream>
 void SobelFitlerWrapper::applyFilter(cv::Mat &inframe) {
     cv::Mat grayscale, gradX, gradY;
     cv::cvtColor(inframe, grayscale, cv::COLOR_BGR2GRAY);
@@ -39,6 +44,7 @@ void SobelFitlerWrapper::applyFilter(cv::Mat &inframe) {
         cv::convertScaleAbs(gradX, gradX);
         cv::convertScaleAbs(gradY, gradY);
         cv::addWeighted(gradX, 0.5, gradY, 0.5, 0, inframe);
+        inframe = ((inframe * (255 - 2 * minValue)) / 255) + 2 * minValue;
         cv::cvtColor(inframe, inframe, cv::COLOR_GRAY2BGR);
 
     } else {
@@ -54,6 +60,7 @@ void SobelFitlerWrapper::applyFilter(cv::Mat &inframe) {
                 elementY = gradY.at<double>(i, j);
                 theta = std::atan2(elementX, elementY);
                 magnitude = std::sqrt((elementX * elementX) + (elementY * elementY));
+                magnitude = ((magnitude * (127 - minValue)) / 127) + minValue;
 
                 channels[2] = magnitude * (1 - std::cos(theta));
                 channels[1] = magnitude * (1 - std::cos(theta + (M_PI * 2) / 3));
@@ -93,6 +100,14 @@ void SobelFitlerWrapper::setDerivY(int newDerivY) {
     derivY = newDerivY;
 }
 
+void SobelFitlerWrapper::setMinValue(int newMinValue) {
+    if (newMinValue < 0 || newMinValue > 127) {
+        return;
+    }
+
+    minValue = newMinValue;
+}
+
 void SobelFitlerWrapper::setDisplayDirection(int isSet) { displayDirection = isSet; }
 
 std::vector<parameterConfig> SobelFitlerWrapper::allParameterConfigs() {
@@ -101,10 +116,14 @@ std::vector<parameterConfig> SobelFitlerWrapper::allParameterConfigs() {
                        1, [this](int x) { setDisplayDirection(x); }});
     configs.push_back({"Kernel size", "Changes the width and heigt of the Sobel Kernel", kernelSize, 3, 7, 2,
                        [this](int x) { setKernelSize(x); }});
-    configs.push_back({"Derivative on X axis", "Changes the amount of times the derivative is computed on the X axis",
-                       derivX, 1, 3, 1, [this](int x) { setDerivX(x); }});
-    configs.push_back({"Derivative on Y axis", "Changes the amount of times the derivative is computed on the Y axis",
-                       derivY, 1, 3, 1, [this](int x) { setDerivY(x); }});
+    configs.push_back(
+        {"Derivative order", "Changes the amount of times the derivative is computed", derivX, 1, 3, 1, [this](int x) {
+             setDerivX(x);
+             setDerivY(x);
+         }});
+
+    configs.push_back({"Minimum intensity", "Changes minimum display intensity for each pixel", minValue, 1, 127, 1,
+                       [this](int x) { setMinValue(x); }});
     return configs;
 }
 

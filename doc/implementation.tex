@@ -64,6 +64,11 @@ the limitations imposed by the constructs defined in \cref{code:GenericFilterWra
 As the name implies, the empty filter does not affect the input frame in any way. Its purpose is to be
 used as a reference point, both when visualizing other filters, or when measuring filter delay.
 
+\begin{figure}[H]
+    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Empty_4.png}
+    \caption{Empty Filter Result}
+\end{figure}
+
 \subsection{Box Filter}
 
 Also known as box blur, this filters inherent result is a diffuse copy of the original. This effect is
@@ -102,6 +107,11 @@ OpenCV provides the implementation of \cref{eq:boxFilterFormula} in the form of 
 The parameters provided to it are the kernel width and height, both of which can be set independently. The
 result is a basic smoothing tool that accounts for the desired blur axis.
 
+\begin{figure}[H]
+    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Box_2.png}
+    \caption{Box Filter Result}
+\end{figure}
+
 \subsection{Median Filter}
 
 Similar to the box filter, median blurring also provides smoothing, however, it does so by replacing the
@@ -121,6 +131,11 @@ This is another filter provided in the image processing module, by the \verb|med
 solely characterized by the kernel size - parameter with little flexibility, due to the aforementioned
 computational limitations.
 
+\begin{figure}[H]
+    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Median_2.png}
+    \caption{Median Filter Result}
+\end{figure}
+
 \subsection{Erode Filter}
 
 Erosion is a ``morphological expression`` defined by a set of pixels \(A\) and a ``structuring element \(B\)
@@ -134,6 +149,11 @@ local minimum in each kernel, provided by a structuring element.
 Although an entire structuring element can be given as a parameter, for the purpose of this application only
 the diameter of a square structuring element can be provided.
 
+\begin{figure}[H]
+    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Erode_2.png}
+    \caption{Erode Filter Result}
+\end{figure}
+
 \subsection{Dilate Filter}
 
 The dilation expression directly opposes the erosion, being defined on the same set of pixels \(A\) and
@@ -146,6 +166,11 @@ pixel.
 \[dilate(x, y) = \max\limits_{(x', y'): element(x', y') \neq 0} f(x + x', y + y')\text{ \cite{opencvImproc}}\]
 Also similar to the erode filter, dilation permits as a parameter the entire structuring element, however
 only the kernel diameter is used.
+
+\begin{figure}[H]
+    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Dilate_2.png}
+    \caption{Dilate Filter Result}
+\end{figure}
 
 \subsection{Gaussian Filter}
 
@@ -184,6 +209,11 @@ filter wrapper, however, only accounts for a single size parameter, that is dist
 confiding the shape of the kernel in order to emphasize the effects of tweaking the \(\sigma\) value for
 each direction.
 
+\begin{figure}[H]
+    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Gaussian_2.png}
+    \caption{Gaussian Filter Result}
+\end{figure}
+
 \subsection{Bilateral Correction}
 
 As the last smoothing technique demonstrated in this application, bilateral filtering is also the most
@@ -207,6 +237,11 @@ Due to the use of color disparity, filter application leads to extended regions 
 do not intersect. The end result is a severely smoothed image, with great loss of minute detail. Object edges,
 however, are entirely unaffected, causing for the shape of each macro element in the picture to be more easily
 identifiable.
+
+\begin{figure}[H]
+    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Bilateral_2.png}
+    \caption{Bilateral Filter Result}
+\end{figure}
 
 \subsection{Sobel Filter}
 
@@ -280,12 +315,17 @@ is scaled between the minimum value provided and a fixed maximum
 	\label{eq:sobelScaling}
 	f(x, y) = {f(x, y)(c_{max} - c_{min})\over{c_{max}}} + c_{min}
 \end{equation}
-where \(c_{min}\) denotes the specified minimum value, and \(c_{max}\) being either 255, in case of the flat
-computation, where the magnitude is computed using the second approach from \cref{eq:sobelMagnitude}, or 127,
+where \(c_{min}\) denotes the specified minimum value, and \(c_{max}\) being either \(255\), in case of the flat
+computation, where the magnitude is computed using the second approach from \cref{eq:sobelMagnitude}, or \(127\),
 for the directional display, in which case the first approach for determining the pixel intensity provides
 more accurate measurements. The value is different to the type of the \verb|cv::Mat| being changed from
 unsigned integer to signed float when computing the magnitude, change that also provides greater accuracy when
 computing the \(\theta\) angle value.
+
+\begin{figure}[H]
+    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Sobel_2.png}
+    \caption{Sobel Filter Result - Non-directional}
+\end{figure}
 
 For the case of the non-directional edge detection, the image can be displayed once each pixel intensity is
 computed. However, if the directional approach is desired, each color channel in the resulting image is used
@@ -301,13 +341,26 @@ to encode the angle as follows:
 where the phase \(\phi\) can be adjusted in order to increase or decrease the range of colors available, and
 is set to \(2\pi\over3\), in order to map the greatest possible range.
 
+\begin{figure}[H]
+    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Sobel_6.png}
+    \caption{Sobel Filter Result - Directional}
+\end{figure}
+
+In this case, maximizing the lower intensity boundary results in the enhancement of the object shapes within 
+the image, and creates an effect similar to that of a depth map.
+
+\begin{figure}[H]
+    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Sobel_4.png}
+    \caption{Sobel Filter Result - Directional Maximised}
+\end{figure}
+
 \subsection{Canny Filter}
 
 The Canny approach to edge detection takes into account three criteria in order to optimize result quality
 applied on images ``corrupted by white noise``. Those are ``detection``, referring to edge importance,
 ``localization``, referring to the distance between an edge and the position where it was detected, and the
 ``one response criterion``, referring to the removal of multiple hits for the same edge. This leads to the
-resulting image pixels having only two possible states: edge pixels, encoded with an intensity of 255, and
+resulting image pixels having only two possible states: edge pixels, encoded with an intensity of \(255\), and
 non-edge pixels, encoded as 0s.
 
 OpenCV provides the \verb|Canny| function, that achieves this result through the use of the Sobel operator
@@ -320,6 +373,11 @@ those values, the aforementioned criteria are applied in order to determine a ca
 The application allows for the tweaking of each threshold, leading to a more accurate edge detector, due to
 the noise resistance being adjustable. It is specifically useful for situations in which an initial smoothing
 step is undesirable or computationally expensive.
+
+\begin{figure}[H]
+    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Canny_2.png}
+    \caption{Canny Filter Result}
+\end{figure}
 
 \subsection{Emboss Filter}
 
@@ -354,6 +412,11 @@ filter wrapper being the rotational step of the initial kernel, with each increm
 rotation of the initial operator. After the convolution is computed, a fixed base value is added to the
 result, in order to flatten the output. The final image will represent a gray-scale version of the input,
 with intensity peaks where edges were detected, a result that resembles an embossed sheet of metal.
+
+\begin{figure}[H]
+    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Emboss_2.png}
+    \caption{Emboss Filter Result}
+\end{figure}
 
 \subsection{Lens Distortion}
 
@@ -403,15 +466,28 @@ with \(r_{max}\) denoting the maximum radius around the center that is affected 
 representing the distortion coefficient.
 
 The filter is capable of inducing both barrel and pincushion distortion, with the differentiation being done
-through the distortion coefficient. For positive values, barrel distortion will be applied, and for negative,
-pincushion aberration will be created. The magnitude of the coefficient represents the impact that the filter
+through the distortion coefficient. For positive values, barrel distortion will be applied, 
+
+\begin{figure}[H]
+    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Lens_2.png}
+    \caption{Lens Filter Result - Barell Distortion}
+\end{figure}
+
+and for negative, pincushion aberration will be created. 
+
+\begin{figure}[H]
+    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Lens_4.png}
+    \caption{Lens Filter Result - Pincushion Distortion}
+\end{figure}
+
+The magnitude of the coefficient represents the impact that the filter
 will have on the end result. The wrapper takes as parameters the maximum distortion radius and the distortion
 coefficient. It would also be possible to implement parameters for changing the position of the distortion
 center, however, due to the user interface implementation, it was not required.
 
 \section{User Interface}
 
-\subsection{Region on Interest}
+\subsection{Region of Interest}
 
 \subsection{Layer system}
 

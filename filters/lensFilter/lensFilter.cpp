@@ -11,6 +11,7 @@ LensFitlerWrapper::LensFitlerWrapper(float initialAmount) {
     setDistortionAmount(initialAmount);
 }
 
+// https://stackoverflow.com/questions/59776772/python-opencv-how-to-apply-radial-barrel-distortion
 void LensFitlerWrapper::applyFilter(cv::Mat &inframe) {
     int height = inframe.rows;
     int width = inframe.cols;

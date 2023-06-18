@@ -6,9 +6,10 @@ and interaction functionalities.
 
 \section{Filter Wrapper Library}
 
-Based on OpenCV \verb|cv::Mat|, the library provides the means for applying a given filter on the input frame,
-as well as a possibility to tweak the filters inherent parameters. The amount of filters supported can be
-extended indefinitely, due to the use of a purely virtual abstract class, the \verb|GenericFilterWrapper| class.
+Based on the OpenCV \verb|cv::Mat|, this library provides the means for applying a given filter on the input
+frame, as well as a possibility to tweak the filters inherent parameters. The amount of filters supported can
+be extended indefinitely, due to the use of a purely virtual abstract class, the \verb|GenericFilterWrapper|
+class.
 
 \begin{code}
 	\caption{Generic wrapper class definition}
@@ -136,32 +137,284 @@ the diameter of a square structuring element can be provided.
 \subsection{Dilate Filter}
 
 The dilation expression directly opposes the erosion, being defined on the same set of pixels \(A\) and
-structuring element \(B\) as follows: 
+structuring element \(B\) as follows:
 \[A \oplus B = \{z | (\hat{B}) \cap A \neq \emptyset\}\text{ \cite{dipBook}}\]
 
 Also provided by OpenCV via the \verb|dilate| function, it achieves the opposite effect to the erosion,
 computing instead the maximum value within the given structuring element and providing it to the current
-pixel. 
+pixel.
 \[dilate(x, y) = \max\limits_{(x', y'): element(x', y') \neq 0} f(x + x', y + y')\text{ \cite{opencvImproc}}\]
 Also similar to the erode filter, dilation permits as a parameter the entire structuring element, however
 only the kernel diameter is used.
 
 \subsection{Gaussian Filter}
+
+The Gaussian filter, also called Gaussian blur, is a smoothing filter that based on the
+Gaussian distribution function, defined in 2D space by the following:
+\begin{equation}
+	\label{eq:gaussianFormula}
+	G(x, y) = {1\over\pi \sigma^2}{e^{(x^2 + y^2) / 2\sigma^2}}
+	\text{ \cite{gaussian}}
+\end{equation}
+
+The curve defined in \cref{eq:gaussianFormula} can be visualized as:
+\begin{figure}[H]
+	\includegraphics[width=0.30\textwidth, height=0.30\textwidth]{resources/Gaussian_Distribution.png}
+	\caption{2D Gaussian distribution curve \cite{gaussian}}
+\end{figure}
+
+and approximated (for a \(\sigma\) value of \(1.4\)) with the following integer kernel:
+
+\begin{equation}
+	\label{eq:gaussianKernel}
+	{1\over115}
+	\begin{bmatrix}
+		2 & 4  & 5  & 4  & 2 \\
+		4 & 9  & 12 & 9  & 4 \\
+		5 & 12 & 15 & 12 & 5 \\
+		4 & 9  & 12 & 9  & 4 \\
+		2 & 4  & 5  & 4  & 2 \\
+	\end{bmatrix}
+	\text{ \cite{gaussian}}
+\end{equation}
+
+OpenCV provides the implementation in the form of the \verb|GaussianBlur| function, defined by the size of
+the Gaussian kernel applied, and the \(\sigma\) value for both the \(x\) and \(y\) axes. The associated
+filter wrapper, however, only accounts for a single size parameter, that is distributed across both axes,
+confiding the shape of the kernel in order to emphasize the effects of tweaking the \(\sigma\) value for
+each direction.
+
 \subsection{Bilateral Correction}
-\subsection{Sobbel Filter}
+
+As the last smoothing technique demonstrated in this application, bilateral filtering is also the most
+complex, accounting not only for the neighborhood of each given pixel, but for the color disparity within
+a given neighborhood. It can be represented by the following:
+\begin{equation}
+	\label{eq:bilateralFormula}
+	k(x) = \int_{-\infty}^{\infty} c(\xi, x) s(f(\xi), f(x))
+	\text{ \cite{bilateral}}
+\end{equation}
+where ``\(c(\xi, x)\) measures the geometric closeness`` and ``\(s(f(\xi), f(x))\) measures the photometric
+similarity`` between point \(x\), denoting the neighborhood center, and point \(\xi\), representing a point
+within the given neighborhood. \cite{bilateral}
+
+The practical application of \cref{eq:bilateralFormula} is implemented by OpenCV within the
+\verb|bilateralFilter| function, that takes into account the values for ``sigma color``, used to represent
+the photometric similarity, and ``sigma space``, denoting the geometric closeness. It also accounts for the
+kernel size, parameter that has the same functionality as ``sigma space``. \cite{opencvImproc}
+
+Due to the use of color disparity, filter application leads to extended regions of similar color, regions that
+do not intersect. The end result is a severely smoothed image, with great loss of minute detail. Object edges,
+however, are entirely unaffected, causing for the shape of each macro element in the picture to be more easily
+identifiable.
+
+\subsection{Sobel Filter}
+
+Another use for image filters is that of ``edge detection``. This refers to the application of operators
+capable  of computing gradient differences in pixel intensity and color, leading to the minute outlining of
+each distinct object present in the image.
+
+One such implementation is provided by OpenCV via the \verb|Sobel| function, which computes ``the first,
+second, third, or mixed image derivatives using an extended Sobel operator``.
+\begin{equation}
+	\label{eq:sobelDerivatives}
+	sobel(x, y) =
+	{{\partial^{x_{order}+y_{order}}f(x, y)}\over{\partial x^{x_{order}} \partial y^{y_{order}}}}
+	\text{ \cite{opencvImproc}}
+\end{equation}
+
+The practical implementation of \cref{eq:sobelDerivatives} is done through the ``Sobel operator``, an
+extensible operator, used to compute the \(n-th\) order derivative on each axis. The 3x3 shape of the
+first order derivative is represented for the \(x\) and \(y\) axes as:
+\begin{equation}
+	\label{eq:sobelOperators}
+	h_x =
+	\begin{bmatrix}
+		-1 & 0 & 1 \\
+		-2 & 0 & 2 \\
+		-1 & 0 & 1 \\
+	\end{bmatrix}
+	,
+	h_y =
+	\begin{bmatrix}
+		1  & 2  & 1  \\
+		0  & 0  & 0  \\
+		-1 & -2 & -1 \\
+	\end{bmatrix}
+	\text{ \cite{ispBook}}
+\end{equation}
+
+By computing the convolution of the initial image with the operators defined in \cref{eq:sobelOperators},
+two separate images are obtained, each holding a partial gradient with respect to an axis:
+\begin{equation}
+	\label{eq:sobelResults}
+	\begin{cases}
+		G_x(x, y) = (h_x * f)(x, y) \\
+		G_y(x, y) = (h_y * f)(x, y) \\
+	\end{cases}
+\end{equation}
+
+Using the partial results, the final image, providing data on edges detected on both axes, can be computed
+by calculating the ``magnitude`` of the pixel intensity for each location
+\begin{equation}
+	\label{eq:sobelMagnitude}
+	G(x, y) = \sqrt{G_x^2(x, y) + G_y^2(x, y)}
+	\text{ or }
+	G(x, y) = |G_x(x, y)| + |G_y(x, y)|
+	\text{ \cite{ispBook}}
+\end{equation}
+
+The magnitude on each axis obtained with \cref{eq:sobelResults} can also be used to determine the angle
+of the detected edge, through the following:
+\begin{equation}
+	\label{eq:sobelTheta}
+	\tan(\theta) = {G_y\over{G_x}} \Rightarrow \theta = \arctan({G_y\over{G_x}})
+	\text{ \cite{ispBook}}
+\end{equation}
+
+Implemented in the application, the wrapper for the Sobel filter takes several parameters, namely the size
+and derivative order for the Sobel operator, a minimum value that the final image will be scaled up to, and
+a flag that determines weather the flat or directional version is computed and displayed. The final result
+is scaled between the minimum value provided and a fixed maximum
+\begin{equation}
+	\label{eq:sobelScaling}
+	f(x, y) = {f(x, y)(c_{max} - c_{min})\over{c_{max}}} + c_{min}
+\end{equation}
+where \(c_{min}\) denotes the specified minimum value, and \(c_{max}\) being either 255, in case of the flat
+computation, where the magnitude is computed using the second approach from \cref{eq:sobelMagnitude}, or 127,
+for the directional display, in which case the first approach for determining the pixel intensity provides
+more accurate measurements. The value is different to the type of the \verb|cv::Mat| being changed from
+unsigned integer to signed float when computing the magnitude, change that also provides greater accuracy when
+computing the \(\theta\) angle value.
+
+For the case of the non-directional edge detection, the image can be displayed once each pixel intensity is
+computed. However, if the directional approach is desired, each color channel in the resulting image is used
+to encode the angle as follows:
+\begin{equation}
+	\label{eq:sobelRGB}
+	\begin{cases}
+		R = {1 - \cos(\theta)}           \\
+		G = {1 - \cos(\theta + \varphi)} \\
+		B = {1 - \cos(\theta - \varphi)} \\
+	\end{cases}
+\end{equation}
+where the phase \(\phi\) can be adjusted in order to increase or decrease the range of colors available, and
+is set to \(2\pi\over3\), in order to map the greatest possible range.
+
 \subsection{Canny Filter}
+
+The Canny approach to edge detection takes into account three criteria in order to optimize result quality
+applied on images ``corrupted by white noise``. Those are ``detection``, referring to edge importance,
+``localization``, referring to the distance between an edge and the position where it was detected, and the
+``one response criterion``, referring to the removal of multiple hits for the same edge. This leads to the
+resulting image pixels having only two possible states: edge pixels, encoded with an intensity of 255, and
+non-edge pixels, encoded as 0s.
+
+OpenCV provides the \verb|Canny| function, that achieves this result through the use of the Sobel operator
+in order to detect edge intensities, and two parameters, a low threshold and a high threshold, used to
+determine the weather a given pixel is part of an edge or not. After the Sobel operator is applied
+elements with values above the high threshold are considered part of ``strong edges``, while the pixels with
+magnitude under the low threshold are classified as not being part of an edge. For all intensities in between
+those values, the aforementioned criteria are applied in order to determine a category.
+
+The application allows for the tweaking of each threshold, leading to a more accurate edge detector, due to
+the noise resistance being adjustable. It is specifically useful for situations in which an initial smoothing
+step is undesirable or computationally expensive.
+
 \subsection{Emboss Filter}
+
+The aforementioned Sobel operator is able to detect an edge based only on the \(x\) and \(y\) axis, going from
+top to bottom and right to left, other kernels can be used in order to provide directional data within the end
+result. Such a kernel is the ``Prewitt operator``, a permutation of which was used for the purposes of this
+application:
+\begin{equation}
+	\mathop{
+		\begin{bmatrix}
+			-1 & 0 & 1 \\
+			-1 & 0 & 1 \\
+			-1 & 0 & 1 \\
+		\end{bmatrix}
+	}_{\textstyle \text{Prewitt operator}}
+	\Rightarrow
+	\mathop{
+		\begin{bmatrix}
+			-1 & -1 & 0 \\
+			-1 & 0  & 1 \\
+			0  & 1  & 1 \\
+		\end{bmatrix}
+    }_{\textstyle \text{Permutation}}
+	\text{ \cite{dipBook}}
+\end{equation}
+
+The generated operator can be used to detect transitions on a 45\textdegree offset from the main axis. This
+kernel can also be rotated, either by 45\textdegree or 90\textdegree, in order to achieve different results.
+
+For use in this application, each kernel rotation was manually generated, with the sole parameter of the
+filter wrapper being the rotational step of the initial kernel, with each increment denoting a 90\textdegree
+rotation of the initial operator. After the convolution is computed, a fixed base value is added to the
+result, in order to flatten the output. The final image will represent a gray-scale version of the input,
+with intensity peaks where edges were detected, a result that resembles an embossed sheet of metal.
+
 \subsection{Lens Distortion}
 
+A fairly common occurrence in photography, lens distortion appears as a result of light rays being diverged
+by complex lens arrays. It is defined by the curvature appeared in the image of lines that are, in reality,
+straight. For this reason it is also referred to as ``curvilinear`` distortion The phenomenon is directly
+linked to lens curvature and focal length, and ,depending on those factors, several types of aberrations
+can be noticed. \cite{lensImages}
+\begin{figure}[H]
+	\label{fig:distortionTypes}
+	\includegraphics[width=0.2\textwidth, height=0.2\textwidth]{resources/No-Distortion.png}
+	\includegraphics[width=0.2\textwidth, height=0.2\textwidth]{resources/Barrel-Distortion.png}
+	\includegraphics[width=0.2\textwidth, height=0.2\textwidth]{resources/Pincushion-Distortion.png}
+	\includegraphics[width=0.2\textwidth, height=0.2\textwidth]{resources/Wavy-Moustache-Distortion.png}
+	\caption{Distortion types \cite{lensImages}}
+\end{figure}
+
+The nomenclature used for each distortion type in \cref{fig:distortionTypes} is related to the aspect of each
+aberration. ``Barrel distortion`` refers to the outwards curvature of the lines, defining the shape of a
+barrel. In the case of ``Pincushion distortion``, the lines curve inwards, with the center being unaffected,
+thus resembling a pincushion. ``Wave distortion`` represents a combination of the aforementioned aberrations,
+with lines being curved outwards towards the center of distortion, and inwards around the edges and corners.
+For this reason, wave distortion is significantly more difficult to account for or later correct.
+
+Due to the physical nature of the distortion, with light rays hitting the image sensor in places that do not
+correspond with the real-life picture, the proposed solution does not affect the intensity values of each
+pixel, but modifies their geometric location. A general re-mapping implementation is as follows:
+\begin{equation}
+    \label{eq:lensFormula}
+    \begin{cases}
+        x_u = x_d(1 + \lambda_1r_d^2 + \lambda_2r_d^4 + \dots) \\
+        y_u = y_d(1 + \lambda_1r_d^2 + \lambda_2r_d^4 + \dots) \\
+    \end{cases}
+    \text{ \cite{lensFromula}}
+\end{equation}
+where \(x_d\) and \(y_d\) refer to the initial, distorted coordinates, \(x_u\) and \(y_u\) refer to the 
+undistorted output, and \(r_d\) refers to the distance of the current point from the center coordinates,
+usually \((0, 0)\), with \(r_d = \sqrt((x_d - x_0)^2 + (y_d - y_0)^2)\).
+
+For efficient computation and usability, only the first \(\lambda\) parameter is computed using the following:
+\begin{equation}
+    \label{eq:lensLambda}
+    \lambda_1 = (\sin({{\pi r_d}\over{2 r_{max}}}))^{d_c}
+    \text{ \cite{lensStack}}
+\end{equation}
+with \(r_{max}\) denoting the maximum radius around the center that is affected by the algorithm, and \(d_c\)
+representing the distortion coefficient.
+
+The filter is capable of inducing both barrel and pincushion distortion, with the differentiation being done
+through the distortion coefficient. For positive values, barrel distortion will be applied, and for negative,
+pincushion aberration will be created. The magnitude of the coefficient represents the impact that the filter
+will have on the end result. The wrapper takes as parameters the maximum distortion radius and the distortion
+coefficient. It would also be possible to implement parameters for changing the position of the distortion
+center, however, due to the user interface implementation, it was not required.
+
 \section{User Interface}
+
+\subsection{Region on Interest}
 
 \subsection{Layer system}
 
 \subsection{Signals and Slots}
 
-\subsection{Control pannel}
-
-
-
-
-
+\subsection{Control panel}

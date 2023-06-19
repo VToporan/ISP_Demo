@@ -59,10 +59,9 @@ user - usually, the graphical interface - the filter library can be extended ind
 the limitations imposed by the constructs defined in \cref{code:GenericFilterWrapper} and
 \cref{code:parameterConfig} are adhered to.
 
-\subsection{Empty Filter}
-
-As the name implies, the empty filter does not affect the input frame in any way. Its purpose is to be
-used as a reference point, both when visualizing other filters, or when measuring filter delay.
+The empty filter is the default filter wrapper, and it does not affect the input frame in any way. Its 
+purpose is to be used as a reference point, both when visualizing other filters, or when measuring filter 
+delay.
 
 \begin{figure}[H]
 	\includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Empty_4.png}
@@ -640,7 +639,7 @@ Signals and slots are used throughout the entire user interface in order to comm
 required updates, most important of which is the frame change functionality. Tied to the \verb|timeout|
 signal of a \verb|QTimer|, the \verb|Update| slot of the main window is responsible for the entire process
 of accessing the current frame, applying all the required filters and displaying the result in the scene.
-This function is triggered every \(33 ms\), leading to a potential frame rate of \(60 FPS\).
+This function is triggered every \(33 ms\), leading to a potential frame rate of \(30 FPS\).
 
 The other main functionality of this communication system is to control the aforementioned layers, regions
 of interest and filter parameters. Achieved through the use of buttons, sliders and combo boxes, this
@@ -693,7 +692,7 @@ that can show a \verb|QToolTip| on the current cursor position, tool-tip that pr
 filter and each of its parameters. \cite{qtDoc}
 
 \begin{figure}[H]
-	\includegraphics[width=0.7\textwidth, height=0.1\textwidth]{resources/Buttons_Selector.png}
+	\includegraphics[width=0.7\textwidth, height=0.09\textwidth]{resources/Buttons_Selector.png}
 	\caption{Filter select layout}
 \end{figure}
 

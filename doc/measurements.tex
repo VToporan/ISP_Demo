@@ -1,10 +1,31 @@
 \chapter{Measurements}
 
-\definecolor{row-gray}{HTML}{EFEFEF}
+\definecolor{row-gray}{HTML}{E0E0E0}
 \definecolor{row-white}{HTML}{FFFFFF}
 \rowcolors{1}{row-white}{row-gray}
 
+The motivation for measuring the compute time for each filter is to help calibrate the filter parameters,
+such that frame-rate drops are minimal. In most cases, this measurement is lower than \(33ms\), the timer
+set for updating each frame, leading to a mostly constant \(30FPS\). For some filter and parameter
+combinations however, this result cannot be achieved, and the user should be advised to run the application
+with the frame capture toggled off.
+
+Due to the potential of multi-platform builds, those measurements are also useful in determining system
+performance in relation to the processors used for the following computations. Those processors are, in
+order of presented measurements, an Intel x86, running at \(2.7GHz\), a Boardcom ARM Cortex-A7, running at
+\(900MHz\) on a Raspberry Pi 2B, and a Boardcom ARM Cortex-A72, running at \(1.5GHz\) on a Raspberry Pi 4B
+board. \cite{raspi2, raspi4}
+
+In order to compute the measurements, a \(400 \times 400\) image is used, so that it matches the size of
+the application viewport, and each parameter is taken as a minimum, median and maximum value. In order to
+ensure consistency between consecutive computations, the cache is cleared after each filter instance is
+applied.
+
 \section{Box Filter}
+
+The parameters for the box filter are the width and height of the applied kernel. As all parameter
+combinations are showcased, several measurements are similar, due to the kernel having the same area,
+oriented across a different axis.
 
 \begin{longtable}[H]{|p{4cm}|p{4cm}|>{\raggedleft\arraybackslash}p{4cm}|}
 	\hiderowcolors
@@ -109,7 +130,14 @@
 	79                 & 79                 & 2.58559                          \\
 \end{longtable}
 
+As presented, the compute time increases drastically with the kernel size. To be noted, however, is the
+significant increase of almost \(100\%\) when going from a \(3\times3\) kernel to a \(41\times41\), opposed
+to a less severe \(20\%\) increase between the \(41\times41\) and \(71\times71\) matrices.
+
 \section{Median Filter}
+
+The sole parameter for the median filter is the size of the kernel applied, leading to an increase in area
+covered by the computation proportional to the square of the input parameter.
 
 \begin{longtable}[H]{|p{4cm}|>{\raggedleft\arraybackslash}p{4cm}|}
 	\hiderowcolors
@@ -139,10 +167,9 @@
 	79          & 5.66467                                                \\
 \end{longtable}
 
-
 \begin{longtable}[H]{|p{4cm}|>{\raggedleft\arraybackslash}p{4cm}|}
 	\hiderowcolors
-	\caption{Median filter compute time - Raspberry Pi 2\label{tb:medianFilterRpi2}} \\
+	\caption{Median Filter Compute time - Raspberry Pi 2\label{tb:medianFilterRpi2}} \\
 	\hline
 	Kernel size & Compute time (ms)                                                  \\
 	\hline
@@ -170,7 +197,7 @@
 
 \begin{longtable}[H]{|p{4cm}|>{\raggedleft\arraybackslash}p{4cm}|}
 	\hiderowcolors
-	\caption{Median Filter Compute time - RaspberryPi 4\label{tb:medianFilterRpi4}} \\
+	\caption{Median Filter Compute time - Raspberry Pi 4\label{tb:medianFilterRpi4}} \\
 	\hline
 	Kernel size & Compute time (ms)                                                 \\
 	\hline
@@ -196,7 +223,15 @@
 	39          & 39.66373                                                          \\
 \end{longtable}
 
+Due to the significant increase in the amount of computations due to the larger coverage, the filter
+performance is greatly affected by high values for the kernel size. Because of this measurement, the
+maximum value for the size parameter has been severely reduced for the final version of the application.
+
 \section{Erode Filter}
+
+Similar to the median filter, the erode computation also takes the kernel size as the only input. The
+overall amount of operations is, however, drastically lower, due to the need to compute the minimum value
+withing the kernel area, as opposed to the median.
 
 \begin{longtable}[H]{|p{4cm}|>{\raggedleft\arraybackslash}p{4cm}|}
 	\hiderowcolors
@@ -282,7 +317,14 @@
 	47          & 3.29456                                                          \\
 \end{longtable}
 
+As expected, the overall compute time is significantly lower than in the case of the median filter. It can
+also be observed that, for the Raspberry Pi 2, the operation took an order of magnitude longer to complete.
+
 \section{Dilate Filter}
+
+The dilate filter, providing the exact opposite functionality to the erode filter, computing the maximum
+value with the structuring element instead of the minimum, also takes in as parameter the size of that
+specific structuring element.
 
 \begin{longtable}[H]{|p{4cm}|>{\raggedleft\arraybackslash}p{4cm}|}
 	\hiderowcolors
@@ -368,7 +410,13 @@
 	47          & 3.44228                                                            \\
 \end{longtable}
 
+Also due to being essentially identical, the compute time for both the erode and dilate filters are within
+a \(100-th\) of a millisecond apart.
+
 \section{Gaussian Filter}
+
+The Gaussian filter, in addition to the kernel size, is parameterized by the \(\sigma\) value for each of the
+axes. Those control the spread of the Gaussian distribution under the kernel.
 
 \begin{longtable}[H]{|p{3cm}|p{3cm}|p{3cm}|>{\raggedleft\arraybackslash}p{3cm}|}
 	\hiderowcolors
@@ -526,7 +574,15 @@
 	79          & 101                   & 101                   & 48.24783               \\
 \end{longtable}
 
+Due to the nature of the filter, an increase in \(\sigma\) value leads to an increase in the compute time.
+This is due to the Gaussian distribution accounting for more of the surrounding neighborhood, leading to
+more expensive computations.
+
 \section{Bilateral Correction}
+
+The parameters for the bilateral correction are the kernel size, \(\sigma_{color}\) and \(\sigma_{space}\)
+values. Both \(\sigma\) values denote how much of the surrounding neighborhood affects the current pixel
+value, both in terms of intensity, as well as in color.
 
 \begin{longtable}[H]{|p{3cm}|p{3cm}|p{3cm}|>{\raggedleft\arraybackslash}p{3cm}|}
 	\hiderowcolors
@@ -684,7 +740,17 @@
 	11          & 101               & 101               & 61.53334                             \\
 \end{longtable}
 
+The kernel size is the most relevant parameter, as it denotes the amount of surrounding pixels that need to
+be accounted for when performing the correction. Because of the specifically high compute time and the
+preference of using this filter in conjunction with an edge detection convolution, it is recommended, for
+best results, that this filter be used with the frame capture toggled off.
+
 \section{Sobel Filter}
+
+Used for edge detection, the Sobel filter computes frequency derivatives using the extended Sobel operators.
+The order of the derivative is specified with respect to each axis, and the kernel size denotes the breadth
+of the operator. Because the edge angle can also be computed, a boolean is also provided to the filter
+wrapper in order to toggle this functionality.
 
 \begin{longtable}[H]{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|>{\raggedleft\arraybackslash}p{2cm}|}
 	\hiderowcolors
@@ -923,20 +989,27 @@
 	1                 & 7           & 3                    & 3                    & 49.32263     \\
 \end{longtable}
 
+Due to the required trigonometric calculations that need to be done in order to provided the angle of each
+edge pixel, the boolean parameter holds most weight in the final compute time. It can be noted that the
+sharp increase in latency approaches and entire order of magnitude in the case of the Raspberry Pi 2.
+
 \section{Canny Filter}
+
+The Canny Filter is characterized by the size of the edge detection operator used, as well as the threshold
+values used to determine the validity of each edge pixel.
 
 \begin{longtable}[H]{|p{3cm}|p{3cm}|p{3cm}|>{\raggedleft\arraybackslash}p{3cm}|}
 	\hiderowcolors
 	\caption{Canny Filter Compute time - x86\label{tb:cannyFilterX86}}  \\
 	\hline
-	Kernel size & Low treshold & High treshold & Compute time (ms)      \\
+	Kernel size & Low threshold & High threshold & Compute time (ms)    \\
 	\hline
 	\endfirsthead
 
 	\hline
 	\multicolumn{4}{|c|}{Continuation of Table \ref{tb:cannyFilterX86}} \\
 	\hline
-	Kernel size & Low treshold & High treshold & Compute time (ms)      \\
+	Kernel size & Low threshold & High threshold & Compute time (ms)    \\
 	\hline
 	\endhead
 
@@ -948,47 +1021,47 @@
 	\showrowcolors
 
 	\hline
-	3           & 1            & 1             & 0.71960                \\
-	3           & 1            & 128           & 0.62787                \\
-	3           & 1            & 255           & 0.60039                \\
-	3           & 128          & 1             & 0.63347                \\
-	3           & 128          & 128           & 0.28640                \\
-	3           & 128          & 255           & 0.28764                \\
-	3           & 255          & 1             & 0.61720                \\
-	3           & 255          & 128           & 0.29893                \\
-	3           & 255          & 255           & 0.24847                \\
-	5           & 1            & 1             & 0.72255                \\
-	5           & 1            & 128           & 0.74121                \\
-	5           & 1            & 255           & 0.74525                \\
-	5           & 128          & 1             & 0.72502                \\
-	5           & 128          & 128           & 1.13251                \\
-	5           & 128          & 255           & 0.70411                \\
-	5           & 255          & 1             & 0.76140                \\
-	5           & 255          & 128           & 0.70322                \\
-	5           & 255          & 255           & 0.62618                \\
-	7           & 1            & 1             & 0.72043                \\
-	7           & 1            & 128           & 0.68408                \\
-	7           & 1            & 255           & 1.17086                \\
-	7           & 128          & 1             & 0.81389                \\
-	7           & 128          & 128           & 0.64493                \\
-	7           & 128          & 255           & 0.64008                \\
-	7           & 255          & 1             & 0.64543                \\
-	7           & 255          & 128           & 0.63445                \\
-	7           & 255          & 255           & 1.11517                \\
+	3           & 1             & 1              & 0.71960              \\
+	3           & 1             & 128            & 0.62787              \\
+	3           & 1             & 255            & 0.60039              \\
+	3           & 128           & 1              & 0.63347              \\
+	3           & 128           & 128            & 0.28640              \\
+	3           & 128           & 255            & 0.28764              \\
+	3           & 255           & 1              & 0.61720              \\
+	3           & 255           & 128            & 0.29893              \\
+	3           & 255           & 255            & 0.24847              \\
+	5           & 1             & 1              & 0.72255              \\
+	5           & 1             & 128            & 0.74121              \\
+	5           & 1             & 255            & 0.74525              \\
+	5           & 128           & 1              & 0.72502              \\
+	5           & 128           & 128            & 1.13251              \\
+	5           & 128           & 255            & 0.70411              \\
+	5           & 255           & 1              & 0.76140              \\
+	5           & 255           & 128            & 0.70322              \\
+	5           & 255           & 255            & 0.62618              \\
+	7           & 1             & 1              & 0.72043              \\
+	7           & 1             & 128            & 0.68408              \\
+	7           & 1             & 255            & 1.17086              \\
+	7           & 128           & 1              & 0.81389              \\
+	7           & 128           & 128            & 0.64493              \\
+	7           & 128           & 255            & 0.64008              \\
+	7           & 255           & 1              & 0.64543              \\
+	7           & 255           & 128            & 0.63445              \\
+	7           & 255           & 255            & 1.11517              \\
 \end{longtable}
 
 \begin{longtable}[H]{|p{3cm}|p{3cm}|p{3cm}|>{\raggedleft\arraybackslash}p{3cm}|}
 	\hiderowcolors
 	\caption{Canny Filter Compute time - Raspberry Pi 2\label{tb:cannyFilterRpi2}} \\
 	\hline
-	Kernel size & Low treshold & High treshold & Compute time (ms)                 \\
+	Kernel size & Low threshold & High threshold & Compute time (ms)               \\
 	\hline
 	\endfirsthead
 
 	\hline
 	\multicolumn{4}{|c|}{Continuation of Table \ref{tb:cannyFilterRpi2}}           \\
 	\hline
-	Kernel size & Low treshold & High treshold & Compute time (ms)                 \\
+	Kernel size & Low threshold & High threshold & Compute time (ms)               \\
 	\hline
 	\endhead
 
@@ -1000,47 +1073,47 @@
 	\showrowcolors
 
 	\hline
-	3           & 1            & 1             & 17.21609                          \\
-	3           & 1            & 128           & 5.45029                           \\
-	3           & 1            & 255           & 5.34795                           \\
-	3           & 128          & 1             & 5.28790                           \\
-	3           & 128          & 128           & 4.53686                           \\
-	3           & 128          & 255           & 4.31748                           \\
-	3           & 255          & 1             & 5.10243                           \\
-	3           & 255          & 128           & 4.29264                           \\
-	3           & 255          & 255           & 4.19155                           \\
-	5           & 1            & 1             & 6.13998                           \\
-	5           & 1            & 128           & 6.18727                           \\
-	5           & 1            & 255           & 6.08566                           \\
-	5           & 128          & 1             & 6.12805                           \\
-	5           & 128          & 128           & 6.18837                           \\
-	5           & 128          & 255           & 5.94191                           \\
-	5           & 255          & 1             & 6.08081                           \\
-	5           & 255          & 128           & 6.56852                           \\
-	5           & 255          & 255           & 6.00936                           \\
-	7           & 1            & 1             & 6.75237                           \\
-	7           & 1            & 128           & 6.92295                           \\
-	7           & 1            & 255           & 6.87727                           \\
-	7           & 128          & 1             & 7.51919                           \\
-	7           & 128          & 128           & 6.55920                           \\
-	7           & 128          & 255           & 6.75977                           \\
-	7           & 255          & 1             & 6.59071                           \\
-	7           & 255          & 128           & 6.60003                           \\
-	7           & 255          & 255           & 6.63279                           \\
+	3           & 1             & 1              & 17.21609                        \\
+	3           & 1             & 128            & 5.45029                         \\
+	3           & 1             & 255            & 5.34795                         \\
+	3           & 128           & 1              & 5.28790                         \\
+	3           & 128           & 128            & 4.53686                         \\
+	3           & 128           & 255            & 4.31748                         \\
+	3           & 255           & 1              & 5.10243                         \\
+	3           & 255           & 128            & 4.29264                         \\
+	3           & 255           & 255            & 4.19155                         \\
+	5           & 1             & 1              & 6.13998                         \\
+	5           & 1             & 128            & 6.18727                         \\
+	5           & 1             & 255            & 6.08566                         \\
+	5           & 128           & 1              & 6.12805                         \\
+	5           & 128           & 128            & 6.18837                         \\
+	5           & 128           & 255            & 5.94191                         \\
+	5           & 255           & 1              & 6.08081                         \\
+	5           & 255           & 128            & 6.56852                         \\
+	5           & 255           & 255            & 6.00936                         \\
+	7           & 1             & 1              & 6.75237                         \\
+	7           & 1             & 128            & 6.92295                         \\
+	7           & 1             & 255            & 6.87727                         \\
+	7           & 128           & 1              & 7.51919                         \\
+	7           & 128           & 128            & 6.55920                         \\
+	7           & 128           & 255            & 6.75977                         \\
+	7           & 255           & 1              & 6.59071                         \\
+	7           & 255           & 128            & 6.60003                         \\
+	7           & 255           & 255            & 6.63279                         \\
 \end{longtable}
 
 \begin{longtable}[H]{|p{3cm}|p{3cm}|p{3cm}|>{\raggedleft\arraybackslash}p{3cm}|}
 	\hiderowcolors
 	\caption{Canny Filter Compute time - Raspberry Pi 4\label{tb:cannyFilterRpi4}} \\
 	\hline
-	Kernel size & Low treshold & High treshold & Compute time (ms)                 \\
+	Kernel size & Low threshold & High threshold & Compute time (ms)               \\
 	\hline
 	\endfirsthead
 
 	\hline
 	\multicolumn{4}{|c|}{Continuation of Table \ref{tb:cannyFilterRpi4}}           \\
 	\hline
-	Kernel size & Low treshold & High treshold & Compute time (ms)                 \\
+	Kernel size & Low threshold & High threshold & Compute time (ms)               \\
 	\hline
 	\endhead
 
@@ -1052,36 +1125,44 @@
 	\showrowcolors
 
 	\hline
-	3           & 1            & 1             & 3.91920                           \\
-	3           & 1            & 128           & 3.96462                           \\
-	3           & 1            & 255           & 3.78351                           \\
-	3           & 128          & 1             & 3.55139                           \\
-	3           & 128          & 128           & 1.84840                           \\
-	3           & 128          & 255           & 1.89323                           \\
-	3           & 255          & 1             & 3.79779                           \\
-	3           & 255          & 128           & 1.85127                           \\
-	3           & 255          & 255           & 1.57631                           \\
-	5           & 1            & 1             & 3.67142                           \\
-	5           & 1            & 128           & 3.78001                           \\
-	5           & 1            & 255           & 3.76327                           \\
-	5           & 128          & 1             & 6.36851                           \\
-	5           & 128          & 128           & 3.74161                           \\
-	5           & 128          & 255           & 3.74274                           \\
-	5           & 255          & 1             & 3.80138                           \\
-	5           & 255          & 128           & 3.70994                           \\
-	5           & 255          & 255           & 3.54885                           \\
-	7           & 1            & 1             & 3.92899                           \\
-	7           & 1            & 128           & 3.88425                           \\
-	7           & 1            & 255           & 3.88001                           \\
-	7           & 128          & 1             & 3.80114                           \\
-	7           & 128          & 128           & 3.87479                           \\
-	7           & 128          & 255           & 3.73985                           \\
-	7           & 255          & 1             & 4.02729                           \\
-	7           & 255          & 128           & 3.72961                           \\
-	7           & 255          & 255           & 3.84431                           \\
+	3           & 1             & 1              & 3.91920                         \\
+	3           & 1             & 128            & 3.96462                         \\
+	3           & 1             & 255            & 3.78351                         \\
+	3           & 128           & 1              & 3.55139                         \\
+	3           & 128           & 128            & 1.84840                         \\
+	3           & 128           & 255            & 1.89323                         \\
+	3           & 255           & 1              & 3.79779                         \\
+	3           & 255           & 128            & 1.85127                         \\
+	3           & 255           & 255            & 1.57631                         \\
+	5           & 1             & 1              & 3.67142                         \\
+	5           & 1             & 128            & 3.78001                         \\
+	5           & 1             & 255            & 3.76327                         \\
+	5           & 128           & 1              & 6.36851                         \\
+	5           & 128           & 128            & 3.74161                         \\
+	5           & 128           & 255            & 3.74274                         \\
+	5           & 255           & 1              & 3.80138                         \\
+	5           & 255           & 128            & 3.70994                         \\
+	5           & 255           & 255            & 3.54885                         \\
+	7           & 1             & 1              & 3.92899                         \\
+	7           & 1             & 128            & 3.88425                         \\
+	7           & 1             & 255            & 3.88001                         \\
+	7           & 128           & 1              & 3.80114                         \\
+	7           & 128           & 128            & 3.87479                         \\
+	7           & 128           & 255            & 3.73985                         \\
+	7           & 255           & 1              & 4.02729                         \\
+	7           & 255           & 128            & 3.72961                         \\
+	7           & 255           & 255            & 3.84431                         \\
 \end{longtable}
 
+It can be seen that the compute times are relatively constant, regardless of the kernel size of threshold
+values, so they can be tweaked into any combination, without affecting the end result. It can also be noted
+that, while the x86 is significantly more performant, the difference between the Raspberry Pi version is
+greatly attenuated for in the case of this filter.
+
 \section{Emboss Filter}
+
+The only parameter for the emboss filter wrapper is the kernel direction, which denotes the amount of
+\(90\textdegree\) rotation that are applied to the kernel matrix.
 
 \begin{longtable}[H]{|p{4cm}|>{\raggedleft\arraybackslash}p{4cm}|}
 	\hiderowcolors
@@ -1140,16 +1221,16 @@
 
 \begin{longtable}[H]{|p{4cm}|>{\raggedleft\arraybackslash}p{4cm}|}
 	\hiderowcolors
-	\caption{Emboss Filter Compute time - RaspberryPi 4\label{tb:embossFilterRpi4}} \\
+	\caption{Emboss Filter Compute time - Raspberry Pi 4\label{tb:embossFilterRpi4}} \\
 	\hline
-	Emboss direction & Compute time (ms)                                            \\
+	Emboss direction & Compute time (ms)                                             \\
 	\hline
 	\endfirsthead
 
 	\hline
-	\multicolumn{2}{|c|}{Continuation of Table \ref{tb:embossFilterRpi4}}           \\
+	\multicolumn{2}{|c|}{Continuation of Table \ref{tb:embossFilterRpi4}}            \\
 	\hline
-	Emboss direction & Compute time (ms)                                            \\
+	Emboss direction & Compute time (ms)                                             \\
 	\hline
 	\endhead
 
@@ -1161,11 +1242,20 @@
 	\showrowcolors
 
 	\hline
-	0                & 1.70153                                                      \\
-	2                & 1.58994                                                      \\
+	0                & 1.70153                                                       \\
+	2                & 1.58994                                                       \\
 \end{longtable}
 
+As expected, the computed values are nearly identical, due to the emboss direction having purely visual
+effects. It can be noted, however, that the compute time is much lower than the \(3\times3\) implementation
+of the Sobel filter, leading to the conclusion that the manual filter application is more optimized than the
+version handled by OpenCV.
+
 \section{Lens Distortion}
+
+The parameters for the lens distortion are the amount of distortion that is computed, with negative
+values resulting in pincushion distortion, and positive ones leading to barrel distortion, and the radius
+around the center that is affected by the distortion.
 
 \begin{longtable}[H]{|p{4cm}|p{4cm}|>{\raggedleft\arraybackslash}p{4cm}|}
 	\hiderowcolors
@@ -1272,8 +1362,7 @@
 	100               & 450               & 28.13514                                 \\
 \end{longtable}
 
-
-
-
+The distortion amount, presented in percentile points, has almost no effect on the end result. The filter
+radius, however, can lead an \(100\%\) increase in compute time.
 
 

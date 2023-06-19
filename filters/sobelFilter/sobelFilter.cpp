@@ -31,7 +31,6 @@ SobelFitlerWrapper::SobelFitlerWrapper(int initialKernelSize, int initialDerivat
     setDisplayDirection(false);
 }
 
-#include <iostream>
 void SobelFitlerWrapper::applyFilter(cv::Mat &inframe) {
     cv::Mat grayscale, gradX, gradY;
     cv::cvtColor(inframe, grayscale, cv::COLOR_BGR2GRAY);

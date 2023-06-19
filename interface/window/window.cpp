@@ -91,7 +91,7 @@ void MainWindow::captureFrame() {
 void MainWindow::startTimer() {
     QTimer *timer = new QTimer();
     connect(timer, &QTimer::timeout, this, [=](){Update();});
-    timer->start(15);
+    timer->start(33);
 }
 
 void MainWindow::Update() {

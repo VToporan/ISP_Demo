@@ -65,8 +65,8 @@ As the name implies, the empty filter does not affect the input frame in any way
 used as a reference point, both when visualizing other filters, or when measuring filter delay.
 
 \begin{figure}[H]
-    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Empty_4.png}
-    \caption{Empty Filter Result}
+	\includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Empty_4.png}
+	\caption{Empty Filter Result}
 \end{figure}
 
 \subsection{Box Filter}
@@ -108,8 +108,8 @@ The parameters provided to it are the kernel width and height, both of which can
 result is a basic smoothing tool that accounts for the desired blur axis.
 
 \begin{figure}[H]
-    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Box_2.png}
-    \caption{Box Filter Result}
+	\includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Box_2.png}
+	\caption{Box Filter Result}
 \end{figure}
 
 \subsection{Median Filter}
@@ -132,8 +132,8 @@ solely characterized by the kernel size - parameter with little flexibility, due
 computational limitations.
 
 \begin{figure}[H]
-    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Median_2.png}
-    \caption{Median Filter Result}
+	\includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Median_2.png}
+	\caption{Median Filter Result}
 \end{figure}
 
 \subsection{Erode Filter}
@@ -150,8 +150,8 @@ Although an entire structuring element can be given as a parameter, for the purp
 the diameter of a square structuring element can be provided.
 
 \begin{figure}[H]
-    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Erode_2.png}
-    \caption{Erode Filter Result}
+	\includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Erode_2.png}
+	\caption{Erode Filter Result}
 \end{figure}
 
 \subsection{Dilate Filter}
@@ -168,8 +168,8 @@ Also similar to the erode filter, dilation permits as a parameter the entire str
 only the kernel diameter is used.
 
 \begin{figure}[H]
-    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Dilate_2.png}
-    \caption{Dilate Filter Result}
+	\includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Dilate_2.png}
+	\caption{Dilate Filter Result}
 \end{figure}
 
 \subsection{Gaussian Filter}
@@ -210,8 +210,8 @@ confiding the shape of the kernel in order to emphasize the effects of tweaking 
 each direction.
 
 \begin{figure}[H]
-    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Gaussian_2.png}
-    \caption{Gaussian Filter Result}
+	\includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Gaussian_2.png}
+	\caption{Gaussian Filter Result}
 \end{figure}
 
 \subsection{Bilateral Correction}
@@ -239,8 +239,8 @@ however, are entirely unaffected, causing for the shape of each macro element in
 identifiable.
 
 \begin{figure}[H]
-    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Bilateral_2.png}
-    \caption{Bilateral Filter Result}
+	\includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Bilateral_2.png}
+	\caption{Bilateral Filter Result}
 \end{figure}
 
 \subsection{Sobel Filter}
@@ -308,9 +308,9 @@ of the detected edge, through the following:
 \end{equation}
 
 Implemented in the application, the wrapper for the Sobel filter takes several parameters, namely the size
-and derivative order for the Sobel operator, a minimum value that the final image will be scaled up to, and
-a flag that determines weather the flat or directional version is computed and displayed. The final result
-is scaled between the minimum value provided and a fixed maximum
+and derivative order for the Sobel operator, a minimum value that the final image intensity can be scaled
+up from, and a flag that determines weather the flat or directional version is computed and displayed.
+The final result is scaled between the minimum value provided and a fixed maximum
 \begin{equation}
 	\label{eq:sobelScaling}
 	f(x, y) = {f(x, y)(c_{max} - c_{min})\over{c_{max}}} + c_{min}
@@ -323,8 +323,8 @@ unsigned integer to signed float when computing the magnitude, change that also 
 computing the \(\theta\) angle value.
 
 \begin{figure}[H]
-    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Sobel_2.png}
-    \caption{Sobel Filter Result - Non-directional}
+	\includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Sobel_2.png}
+	\caption{Sobel Filter Result - Non-directional}
 \end{figure}
 
 For the case of the non-directional edge detection, the image can be displayed once each pixel intensity is
@@ -342,16 +342,16 @@ where the phase \(\phi\) can be adjusted in order to increase or decrease the ra
 is set to \(2\pi\over3\), in order to map the greatest possible range.
 
 \begin{figure}[H]
-    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Sobel_6.png}
-    \caption{Sobel Filter Result - Directional}
+	\includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Sobel_6.png}
+	\caption{Sobel Filter Result - Directional}
 \end{figure}
 
-In this case, maximizing the lower intensity boundary results in the enhancement of the object shapes within 
+In this case, maximizing the lower intensity boundary results in the enhancement of the object shapes within
 the image, and creates an effect similar to that of a depth map.
 
 \begin{figure}[H]
-    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Sobel_4.png}
-    \caption{Sobel Filter Result - Directional Maximised}
+	\includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Sobel_4.png}
+	\caption{Sobel Filter Result - Directional Maximised}
 \end{figure}
 
 \subsection{Canny Filter}
@@ -375,8 +375,8 @@ the noise resistance being adjustable. It is specifically useful for situations 
 step is undesirable or computationally expensive.
 
 \begin{figure}[H]
-    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Canny_2.png}
-    \caption{Canny Filter Result}
+	\includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Canny_2.png}
+	\caption{Canny Filter Result}
 \end{figure}
 
 \subsection{Emboss Filter}
@@ -400,7 +400,7 @@ application:
 			-1 & 0  & 1 \\
 			0  & 1  & 1 \\
 		\end{bmatrix}
-    }_{\textstyle \text{Permutation}}
+	}_{\textstyle \text{Permutation}}
 	\text{ \cite{dipBook}}
 \end{equation}
 
@@ -414,8 +414,8 @@ result, in order to flatten the output. The final image will represent a gray-sc
 with intensity peaks where edges were detected, a result that resembles an embossed sheet of metal.
 
 \begin{figure}[H]
-    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Emboss_2.png}
-    \caption{Emboss Filter Result}
+	\includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Emboss_2.png}
+	\caption{Emboss Filter Result}
 \end{figure}
 
 \subsection{Lens Distortion}
@@ -445,39 +445,39 @@ Due to the physical nature of the distortion, with light rays hitting the image 
 correspond with the real-life picture, the proposed solution does not affect the intensity values of each
 pixel, but modifies their geometric location. A general re-mapping implementation is as follows:
 \begin{equation}
-    \label{eq:lensFormula}
-    \begin{cases}
-        x_u = x_d(1 + \lambda_1r_d^2 + \lambda_2r_d^4 + \dots) \\
-        y_u = y_d(1 + \lambda_1r_d^2 + \lambda_2r_d^4 + \dots) \\
-    \end{cases}
-    \text{ \cite{lensFromula}}
+	\label{eq:lensFormula}
+	\begin{cases}
+		x_u = x_d(1 + \lambda_1r_d^2 + \lambda_2r_d^4 + \dots) \\
+		y_u = y_d(1 + \lambda_1r_d^2 + \lambda_2r_d^4 + \dots) \\
+	\end{cases}
+	\text{ \cite{lensFromula}}
 \end{equation}
-where \(x_d\) and \(y_d\) refer to the initial, distorted coordinates, \(x_u\) and \(y_u\) refer to the 
+where \(x_d\) and \(y_d\) refer to the initial, distorted coordinates, \(x_u\) and \(y_u\) refer to the
 undistorted output, and \(r_d\) refers to the distance of the current point from the center coordinates,
 usually \((0, 0)\), with \(r_d = \sqrt((x_d - x_0)^2 + (y_d - y_0)^2)\).
 
 For efficient computation and usability, only the first \(\lambda\) parameter is computed using the following:
 \begin{equation}
-    \label{eq:lensLambda}
-    \lambda_1 = (\sin({{\pi r_d}\over{2 r_{max}}}))^{d_c}
-    \text{ \cite{lensStack}}
+	\label{eq:lensLambda}
+	\lambda_1 = (\sin({{\pi r_d}\over{2 r_{max}}}))^{d_c}
+	\text{ \cite{lensStack}}
 \end{equation}
 with \(r_{max}\) denoting the maximum radius around the center that is affected by the algorithm, and \(d_c\)
 representing the distortion coefficient.
 
 The filter is capable of inducing both barrel and pincushion distortion, with the differentiation being done
-through the distortion coefficient. For positive values, barrel distortion will be applied, 
+through the distortion coefficient. For positive values, barrel distortion will be applied,
 
 \begin{figure}[H]
-    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Lens_2.png}
-    \caption{Lens Filter Result - Barell Distortion}
+	\includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Lens_2.png}
+	\caption{Lens Filter Result - Barell Distortion}
 \end{figure}
 
-and for negative, pincushion aberration will be created. 
+and for negative, pincushion aberration will be created.
 
 \begin{figure}[H]
-    \includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Lens_4.png}
-    \caption{Lens Filter Result - Pincushion Distortion}
+	\includegraphics[width=0.45\textwidth, height=0.45\textwidth]{resources/Lens_4.png}
+	\caption{Lens Filter Result - Pincushion Distortion}
 \end{figure}
 
 The magnitude of the coefficient represents the impact that the filter
@@ -487,10 +487,226 @@ center, however, due to the user interface implementation, it was not required.
 
 \section{User Interface}
 
+Based on the QtFramework \verb|QWidget| system, this library provides the input and display management system
+for the entire application. Its functionality covers both user input, as well as camera input obtained via
+the \verb|VideoCapture| interface. Each frame has to be captured, processed, converted to a Qt compatible
+format and displayed.
+
+After a given frame is captured off of the systems default camera, it is firstly resized in order to match the
+viewports height and with, such that it is compatible with the region of interest. Afterwards, each selected
+filter is applied on the image, which is still under the shape of a \verb|cv::Mat|. Following this process,
+the result is then converted into a \verb|QPixmap|, such that it is compatible with the rest of the UI
+elements. The conversion takes into account the amount of channels in the captured image and outputs to a
+single RGBA format. It is then displayed to the user in the viewport, which is represented by a
+\verb|QGraphicsView|, encasing a \verb|QGraphicsScene|. \cite{qtConvert, qtDoc}
+
+The entire interface layout cab be broken down into two main components - the viewport displaying the most
+recently processed frame, and the control panel, used to modify the type and amount of filters applied, as
+well as parameters for each. Those elements are, in turn, comprised of other dedicated submodules, leading
+to a tree of encapsulated widgets, whose layout can be seen in the following:
+
+\begin{figure}[H]
+	\label{fig:uiSchema}
+	\begin{tikzpicture}[%
+			grow via three points={one child at (0.5,-0.7) and
+					two children at (0.5,-0.7) and (0.5,-1.4)},
+			edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+		\node {Window}
+		child { node {Viewport}
+				child { node {Scene}
+						child {node {Pixmap}}
+						child {node {Region of interest}
+								child{node {Anchor}}
+							}
+					}
+			}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child { node {Control Panel}
+				child{node {Miscellaneous}
+						child{node {Toggle Freeze}}
+						child{node {Toggle Selection}}
+					}
+				child [missing] {}
+				child [missing] {}
+				child{node {Layer Management}
+						child{node {Add Layer}}
+						child{node {Delete Layer}}
+						child{node {Move Layer Up}}
+						child{node {Move Layer Down}}
+					}
+				child [missing] {}
+				child [missing] {}
+				child [missing] {}
+				child [missing] {}
+				child{node {Filter Selection}
+						child{node {Filter Information}}
+						child{node {Filter Parameters}}
+					}
+			};
+	\end{tikzpicture}
+	\caption{Widget nesting diagram}
+\end{figure}
+
+After each element described in \cref{fig:uiSchema} is implemented and placed into its parent layout, the end
+result can be seen in the following:
+
+\begin{figure}[H]
+	\includegraphics[width=0.9\textwidth, height=0.45\textwidth]{resources/Empty_1.png}
+	\caption{User Interface Overview}
+\end{figure}
+
 \subsection{Region of Interest}
+
+The region of interest represents the portion of the captured frame that is affected by any given filter. Its
+primary use is to confine a filter to a subset of the original image, in order to create a context for
+comparing and contrasting the before and after displays of the same set of features.
+
+It is implemented as a child of the \verb|QGraphicsItem| class, due to its inherent properties, mainly being
+resizable and movable withing the scene. This is achieved through opperating on the items ``bounding rectangle``
+\cite{qtDoc}
+
+The resizing of a region of interest is done through the anchors present in each corner of its parents
+bounding rectangle. The anchors are also inherited from \verb|QGraphicsItem|, and can be moved only within
+the confines of the scene. Each anchor also affects the position of its neighbors, such that the region of
+interest is always rectangular. The regions bounding rectangle is always drawn in between the top-left and
+bottom-right anchors, in order to ensure the expected behavior if two anchors were to overlap.
+
+\begin{figure}[H]
+	\includegraphics[width=0.9\textwidth, height=0.45\textwidth]{resources/Roi_1.png}
+	\caption{Resized Region of Interest}
+\end{figure}
+
+In case of a region of interest smaller than the bounds of the scene, it can be moved around the scene, as
+long as its anchor points remain within bounds. This is done in order to preserve the integrity of the applied
+filters.
+
+\begin{figure}[H]
+	\includegraphics[width=0.9\textwidth, height=0.45\textwidth]{resources/Roi_2.png}
+	\caption{Moved Region of Interest}
+\end{figure}
 
 \subsection{Layer system}
 
+In order to provide the experience of combining different filters, such that the interaction between them can
+be observed and studied, the layer system allows for the sequential application of several filters on any one
+frame. Each layer operates within its own region of interest, which has to be accounted for when applying the
+desired filters.
+
+The main features of the \verb|Layer| class are the \verb|GenericFilterWrapper*| array, holding exactly one
+of each type of filter available, and the \verb|applyFilter| function, that first maps the region of interest
+onto the input image, applies the filter currently selected onto the subsection, and copies the selection back
+to the original, keeping the region parameters unchanged.
+
+It can be used to gauge the ways each filter can affect another, such as the case for the Sobel and Dilate
+filters. If the Sobel operator is applied first, the result will be further enhanced by the Dilate filter
+picking up each edge pixel as a local maximum and spreading its intensity to the neighboring pixels:
+
+\begin{figure}[H]
+	\includegraphics[width=0.9\textwidth, height=0.45\textwidth]{resources/Layers_1.png}
+	\caption{Dilate filter applied on top of Sobel}
+\end{figure}
+
+To contrast, if the Dilate is applied first, then the entire image will be segmented into chunks of similar
+or identical color, leading to the edges determined by the Sobel operator to be jagged, following the color
+difference between any neighboring chunks:
+
+\begin{figure}[H]
+	\includegraphics[width=0.9\textwidth, height=0.45\textwidth]{resources/Layers_2.png}
+	\caption{Sobel filter applied on top of Dilate}
+\end{figure}
+
+Another use of this system is the combination of smoothing operators, targeted on noise removal, with more
+visually impactful filters, such as edge detection or lens distortion. The current application capacity is
+at three filters, due to the computational strain each additional filter produces.
+
+\begin{figure}[H]
+	\includegraphics[width=0.9\textwidth, height=0.45\textwidth]{resources/Layers_3.png}
+	\caption{Smoothing filters applied before edge detection}
+\end{figure}
+
 \subsection{Signals and Slots}
 
+Like many other user interface frameworks, Qt also provides event-based communication, through the use of
+``signals and ``slots``. Signals are present on event senders, such as timers and buttons, and dictate the
+type of event that is being triggered. Slots are implemented on the side that needs to respond to an event,
+such as a value update of filter swap. The link between those function categories is done through the
+\verb|connect| function, that takes as inputs two objects, a signal acting on the first object and a slot
+comprising the second, slot that can be expressed a lambda function if the need arises. \cite{qtDoc}
+
+Signals and slots are used throughout the entire user interface in order to communicate state changes and
+required updates, most important of which is the frame change functionality. Tied to the \verb|timeout|
+signal of a \verb|QTimer|, the \verb|Update| slot of the main window is responsible for the entire process
+of accessing the current frame, applying all the required filters and displaying the result in the scene.
+This function is triggered every \(33 ms\), leading to a potential frame rate of \(60 FPS\).
+
+The other main functionality of this communication system is to control the aforementioned layers, regions
+of interest and filter parameters. Achieved through the use of buttons, sliders and combo boxes, this
+functionality is managed through the control panel, or sidebar.
+
 \subsection{Control panel}
+
+The sidebar is the main user interaction hub for the application. It is comprised of several sub-layouts,
+each encompassing interactable widgets that serve a common purpose. Those layouts are, in order:
+miscellaneous, layer control, layer select, filter select, parameter tweak.
+
+The miscellaneous sections is comprised of two button, each responsible for toggling a different feature of
+the application. The \verb|Toggle Freezeframe| button was added in order to provide the means of alleviating
+computational strain, in case the desired filter combination proves to be too computationally expensive for
+the given system to handle at a manageable frame rate. It will stop the capturing of a new frame, allowing for
+tweaks to be done on a constant input stream, thus leading to a more consistent comparison. The
+\verb|Toggle Selection| button allows for the removal of any layer selection, consequence of which is the
+locking of the region of interest and the removal of its potentially distracting outline.
+
+Four buttons comprise the layer control layout, two of which are used for adding or removing a layer, and  the
+other two for changing layer position relative to its neighbors. Similar to other image manipulation software,
+the layer order is bottom-up, with the lowest filter in the stack being applied first, and the top one last.
+
+\begin{figure}[H]
+	\includegraphics[width=0.7\textwidth, height=0.2\textwidth]{resources/Buttons_Misc.png}
+	\caption{Miscellaneous and Layer control layout}
+\end{figure}
+
+The third section provides functionality for selecting each layer, one at a time. The layer currently selected
+is highlighted and it cannot be selected again. When selecting a filter, its region of interest becomes active,
+meaning that it can be interacted with for movement and resizing. The layer order is in accordance with the
+order in which they are applied on the current frame, and it is updated whenever a layer is added, removed
+or changes position.
+
+\begin{figure}[H]
+	\includegraphics[width=0.7\textwidth, height=0.3\textwidth]{resources/Buttons_Layers.png}
+	\caption{Layer select layout}
+\end{figure}
+
+The aforementioned layouts are entirely comprised of \verb|Buttons|, a child class of the \verb|QPushButton|
+class. Each functionality is tied to the \verb|QPushButton::clicked| signal through a lambda function providing
+the slot implementation. \cite{qtDoc}
+
+For selecting the filter applied on the current layer, a \verb|QComboBox| is populated with the data relevant
+to each filter wrapper contained within the layer implementation. It is built at every layer change, in order
+to set its value to the filter present on the newly selected layer. After a filter is selected, both the
+viewport and the other controls are updated with the current wrapper parameters. The other component of this
+layout is the \verb|Information| button, whose \verb|QPushButtonPressed| signal is tied to a lambda function
+that can show a \verb|QToolTip| on the current cursor position, tool-tip that provides information about the
+filter and each of its parameters. \cite{qtDoc}
+
+\begin{figure}[H]
+	\includegraphics[width=0.7\textwidth, height=0.1\textwidth]{resources/Buttons_Selector.png}
+	\caption{Filter select layout}
+\end{figure}
+
+The final component of the control panel is specific for each filter, and that is the parameter tweaking
+sliders, each of which is based on the \verb|QSlider| parent class. All sliders are built based off of the
+structure presented in \cref{code:parameterConfig}, and is layer independent. This means that, if the same
+filter is applied from two different layers, each filter will have its private set of parameters modified
+at a given time. The slider steps and boundaries were chosen in accordance to the OpenCV specifications,
+in order to not run into incompatibility issues, and with great consideration towards the set of measurements
+done in order to observe filter latency.
+
+\begin{figure}[H]
+	\includegraphics[width=0.7\textwidth, height=0.5\textwidth]{resources/Buttons_Sliders.png}
+	\caption{Filter parameters layout}
+\end{figure}
+

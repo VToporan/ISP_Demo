@@ -9,7 +9,7 @@
 \usepackage{multirow}
 \usepackage{listings}
 \usepackage{csquotes}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
 \usepackage{xurl}
 \usepackage{hyperref}
 \usepackage{float}
@@ -23,6 +23,8 @@
 \usepackage{cleveref}
 \usepackage{newfloat}
 \usepackage{tikz}
+\usepackage{longtable}
+\usepackage{array}
 
 %generates filler text
 \usepackage{lipsum}
@@ -30,6 +32,10 @@
 \addbibresource{bibliography.bib}
 
 \usetikzlibrary{trees}
+
+\setlength{\arrayrulewidth}{0.5mm}
+\setlength{\tabcolsep}{12pt}
+\renewcommand{\arraystretch}{1.0}
 
 \input{customs}
 \input{format}

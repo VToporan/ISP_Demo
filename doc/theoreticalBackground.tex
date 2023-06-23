@@ -11,10 +11,11 @@ to refer to such elements. Due to having a physical representation, the pixels a
 their coordinates, are finite. \cite{dipBook}
 
 Each pixel value and position can be modified by different operators, which can be classified into ``linear``
-or ``non-linear``. A given operator \(h\), that gives a given output when applied on a certain input
-\[h[f(x, y)] = g(x, y) \text{ \cite{dipBook}}\] is considered linear if it satisfies the following condition:
+or ``non-linear``. A given operator \(h\), that gives a given output when applied on a certain input \cite{dipBook}
+\[h[f(x, y)] = g(x, y)\] 
+is considered linear if it satisfies the following condition \cite{dipBook}
 \[h[a f_1(x, y) + b f_2(x, y)] = a h[f_1(x, y)] + b h[f_2(x, y)] =
-	a g_1(x, y) + b g_2(x, y) \text{ \cite{dipBook}}\]
+	a g_1(x, y) + b g_2(x, y)\]
 
 Another classification criterion is the amount of data required to apply a certain operand, as well as the
 resulting effect on the final image. Based on this, operand that only affect the intensity value of a pixel
@@ -25,7 +26,7 @@ considered a ``geometric transformation``. \cite{dipBook}
 
 \subsection{Color Manipulation}
 
-For gray-scale images, single-pixel operations, defined as \[s = T(z) \text{ \cite{dipBook}}\], where \(z\)
+For gray-scale images, single-pixel operations, defined \cite{dipBook} by \[s = T(z)\], where \(z\)
 represents the current value, \(T\) denotes the applied transformation and \(s\) represents the output
 result, linearly change the intensity of the pixel. In most systems, the pixel values are encoded on 8 bits,
 meaning that both the input and the output will be in the range 0-255.
@@ -39,7 +40,7 @@ color space, however, is comprised of three channels of different sizes. The Y c
 intensity, in the same manner as a 1-channel image would. The UV channels hold 4-bit values amounting to the
 quantity of red and blue at a certain position. This is done in order to preserve image detail, whilst
 sacrificing color data for more efficient storage. The conversion between the color spaces is done through
-matrix multiplication
+matrix multiplication \cite{rgb2yuv}
 \[
 	\begin{bmatrix}
 		R \\
@@ -58,7 +59,6 @@ matrix multiplication
 		U - 128 \\
 		V - 128 \\
 	\end{bmatrix}
-	\text{ \cite{rgb2yuv}}
 \]
 and is used to change from multi-channel to single-channel, or vice-versa, depending on the circumstance.
 \cite{rgb2yuv}
@@ -73,16 +73,19 @@ matrices are formally known as ``kernels``, and their coefficients denote the ty
 \cite{dipBook}
 
 Because the kernel acts as a ``floating window``, it can easily be assimilated to the convolution operation
-from 1-dimensional signal processing \[g(x) = \sum_{s=-a}^{a} w(s)f(x+s) \text{ \cite{dipBook}}\] from which
-the formula for the 2-dimensional convolution operation can be extrapolated \[(w*f)(x, y) = \sum_{s=-a}^{a}
-	\sum_{t=-b}^{b} w(s, t)f(x + s, y + t)\text{ \cite{dipBook}}\] This, in turn, has to account for the kernel
+from 1-dimensional signal processing \cite{dipBook}
+\[g(x) = \sum_{s=-a}^{a} w(s)f(x+s)\]
+from which
+the formula for the 2-dimensional convolution operation \cite{dipBook} can be extrapolated 
+\[(w*f)(x, y) = \sum_{s=-a}^{a}	\sum_{t=-b}^{b} w(s, t)f(x + s, y + t)\] 
+This, in turn, has to account for the kernel
 traversing the entire image, meaning that the picture will need to be padded with additional data, in order to
 ensure the edge pixels are covered by the convolution.
 
 \subsection{Pixel Remapping}
 
 Geometric transformations consist of changing the position of each pixels, usually to induce or correct pixel
-placement errors. Such an operation can be denoted as:
+placement errors. Such an operation can be denoted \cite{dipBook} by
 \[
 	\begin{bmatrix}
 		x' \\
@@ -103,11 +106,10 @@ placement errors. Such an operation can be denoted as:
 		x \\
 		y \\
 	\end{bmatrix}
-	\text{ \cite{dipBook}}
 \]
 where \(x'\) and \(y'\) represent the new pixel coordinates. While this model can be used to compute the
 operations of rotation, scaling and sheering, it cannot be used for translation. In order to accommodate
-all ``affine transformations``, a 3x3 model was proposed:
+all ``affine transformations``, a 3x3 model \cite{dipBook} was proposed
 \[
 	\begin{bmatrix}
 		x' \\
@@ -132,7 +134,6 @@ all ``affine transformations``, a 3x3 model was proposed:
 		y \\
 		1 \\
 	\end{bmatrix}
-	\text{ \cite{dipBook}}
 \]
 
 Each type of transformation is implemented and showcased in the application, with the help of the
@@ -149,7 +150,7 @@ The main OpenCV functionalities that this project makes use of are the video cap
 to interface with the systems default camera, and the image processing module, used extensively in
 order to exchange and modify image data throughout the entire application.
 
-\subsection{Video Capture}
+\subsection{Modules}
 
 The \verb|VideoCapture| class ``provides C++ API for capturing video from cameras or for reading video
 files and image sequences``. It allows for opening video streams based on camera index and desired
@@ -161,8 +162,6 @@ for the proper opening and closing of the capture target, as well as the success
 In order to ensure the optimal user experience, all operations done one each frame have to fall within
 the video captures sampling period. If this cannot be achieved, the framerate can be adjusted in order
 to ensure minimal delays in grabbing and processing the following frame.
-
-\subsection{Image Processing}
 
 Provided in the module \verb|imgproc| are tools ``used to perform various linear or non-linear filtering
 operations on 2D images`` stored as 2-dimensional \verb|cv::Mat| - data array ``compatible with the

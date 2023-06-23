@@ -62,11 +62,9 @@ all required dependencies, or install them manually, using the systems package m
 \begin{code}
 	\begin{lstlisting}
     cd ISP_Demo
-    ./dependencies.sh
+    sudo ./dependencies.sh
     \end{lstlisting}
-\end{code}
-or
-\begin{code}
+	or
 	\begin{lstlisting}
     sudo apt-get install g++
     sudo apt-get install cmake
@@ -75,8 +73,21 @@ or
     \end{lstlisting}
 \end{code}
 
-After that, use the \verb|install.sh| script in order to build the executable and create a desktop shortcut.
-Upon completion, navigate to the desktop and run the application.
+After that, use the \verb|install.sh| script, or compile manually, in order to build the executable and create
+a desktop shortcut. Upon completion, if the install script was used or a shortcut was manually created,
+navigate to the desktop and run the application.
+
+\begin{code}
+	\begin{lstlisting}
+    ./install.sh
+    \end{lstlisting}
+	or
+	\begin{lstlisting}
+    cmake -H. -Bbuild
+    cd build
+    make all
+    \end{lstlisting}
+\end{code}
 
 \pagebreak
 \section{Interface}
@@ -101,6 +112,8 @@ It can be separated into the following subsections:
 \end{itemize}
 
 \addtocontents{toc}{\protect\setcounter{tocdepth}{5}}
+
+
 
 
 

@@ -1365,4 +1365,39 @@ around the center that is affected by the distortion.
 The distortion amount, presented in percentile points, has almost no effect on the end result. The filter
 radius, however, can lead an \(100\%\) increase in compute time.
 
+\pagebreak
+\section{Performance comparison}
+
+Running the same test-bench on three different platforms allows for contrasting between the systems, such that
+another comparison avenue is available in choosing the one most desirable for a practical demonstration.
+
+\begin{figure}[H]
+    \label{fig:medianResults}
+    \frame{\includegraphics[width=0.8\textwidth, height=0.5\textwidth]{resources/Measurements_Median.png}}
+    \caption{Performance comparison on Median filter results}
+\end{figure}
+
+As shown in \cref{fig:medianResults}, all three systems are on par for lower computational sizes, however, as
+the workload increases, compute times increase exponentially, due to the required calculation increasing with
+the square of the kernel size. With the x86 outperforming both ARM platforms, as was expected from the 
+technical specifications, it can be noted that the Raspberry Pi systems give similar results when working
+on medium workloads, with the Raspberry Pi 2 falling behind only when the computational requirements are
+significantly increased.
+
+Another relevant metric is the time in which the directional Sobel filter is computed on all three platforms,
+with it being one of the more visually impactful operations available.
+
+\begin{figure}[H]
+    \label{fig:sobelResults}
+    \frame{\includegraphics[width=0.8\textwidth, height=0.5\textwidth]{resources/Measurements_Sobel.png}}
+    \caption{Performance comparison on Sobel filter results}
+\end{figure}
+
+It can be observed in \cref{fig:sobelResults} that only the x86 can perform the necessary trigonometric 
+computations within the required time limit of \(33ms\), with both Raspberry Pi systems experiencing frame
+drops.
+
+Although the x86 is the decisive leader in terms of computational prowess, other factors such as touchsecrren
+capability, setup requirements, visual impact and cost have to be considered when choosing the optimal system
+for the demonstration.
 

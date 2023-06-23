@@ -74,8 +74,9 @@ all required dependencies, or install them manually, using the systems package m
 \end{code}
 
 After that, use the \verb|install.sh| script, or compile manually, in order to build the executable and create
-a desktop shortcut. Upon completion, if the install script was used or a shortcut was manually created,
-navigate to the desktop and run the application.
+a desktop shortcut. If the application was built manually, the executable will have the name \verb|ISP_Demo.exe|.
+Upon completion, if the install script was used or a shortcut was manually created, navigate to the desktop and
+run the application.
 
 \begin{code}
 	\begin{lstlisting}
@@ -83,6 +84,7 @@ navigate to the desktop and run the application.
     \end{lstlisting}
 	or
 	\begin{lstlisting}
+    cd src
     cmake -H. -Bbuild
     cd build
     make all
@@ -112,6 +114,7 @@ It can be separated into the following subsections:
 \end{itemize}
 
 \addtocontents{toc}{\protect\setcounter{tocdepth}{5}}
+
 
 
 

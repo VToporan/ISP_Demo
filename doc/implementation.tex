@@ -59,8 +59,8 @@ user - usually, the graphical interface - the filter library can be extended ind
 the limitations imposed by the constructs defined in \cref{code:GenericFilterWrapper} and
 \cref{code:parameterConfig} are adhered to.
 
-The empty filter is the default filter wrapper, and it does not affect the input frame in any way. Its 
-purpose is to be used as a reference point, both when visualizing other filters, or when measuring filter 
+The empty filter is the default filter wrapper, and it does not affect the input frame in any way. Its
+purpose is to be used as a reference point, both when visualizing other filters, or when measuring filter
 delay.
 
 \begin{figure}[H]
@@ -72,7 +72,7 @@ delay.
 
 Also known as box blur, this filters inherent result is a diffuse copy of the original. This effect is
 achieved through averaging the pixel neighborhood situated under the kernel. A basic 3x3 implementation
-of the convolution mask is:
+of the convolution mask \cite{ispBook}
 \begin{equation}
 	h = 1/9
 	\begin{bmatrix}
@@ -80,10 +80,9 @@ of the convolution mask is:
 		1 & 1 & 1 \\
 		1 & 1 & 1 \\
 	\end{bmatrix}
-	\text{ \cite{ispBook}}
 \end{equation}
 
-The kernel can be generalized as follows:
+The kernel can be generalized as \cite{opencvImproc}
 \begin{equation}
 	\label{eq:boxFilterFormula}
 	h = \alpha
@@ -99,7 +98,6 @@ The kernel can be generalized as follows:
 		1 / width * height & \text{, if normalized} \\
 		1                  & \text{, otherwise}     \\
 	\end{cases}
-	\text{ \cite{opencvImproc}}
 \end{equation}
 
 OpenCV provides the implementation of \cref{eq:boxFilterFormula} in the form of the \verb|boxFilter| function.
@@ -137,14 +135,14 @@ computational limitations.
 
 \subsection{Erode Filter}
 
-Erosion is a ``morphological expression`` defined by a set of pixels \(A\) and a ``structuring element \(B\)
-as follows: \[A \ominus B = \{z | (B)_z \subseteq A\}\text{ \cite{dipBook}}\] and refers to the notion that
+Erosion is a ``morphological expression`` defined by a set of pixels \(A\) and a ``structuring element \(B\) \cite{dipBook}
+as \[A \ominus B = \{z | (B)_z \subseteq A\}\] and refers to the notion that
 ``the erosion of \(A\) by \(B\) is the set of all points \(z\) such that \(B\), translated by z, is contained
 in A``. \cite{dipBook}
 
 In practice, as provided by the \verb|erode| function, the computation of the erosion is done by finding a
-local minimum in each kernel, provided by a structuring element.
-\[erode(x, y) = \min\limits_{(x', y'): element(x', y') \neq 0} f(x + x', y + y')\text{ \cite{opencvImproc}}\]
+local minimum in each kernel, provided by a structuring element. \cite{opencvImproc}
+\[erode(x, y) = \min\limits_{(x', y'): element(x', y') \neq 0} f(x + x', y + y')\]
 Although an entire structuring element can be given as a parameter, for the purpose of this application only
 the diameter of a square structuring element can be provided.
 
@@ -156,13 +154,13 @@ the diameter of a square structuring element can be provided.
 \subsection{Dilate Filter}
 
 The dilation expression directly opposes the erosion, being defined on the same set of pixels \(A\) and
-structuring element \(B\) as follows:
-\[A \oplus B = \{z | (\hat{B}) \cap A \neq \emptyset\}\text{ \cite{dipBook}}\]
+structuring element \(B\) \cite{dipBook} as
+\[A \oplus B = \{z | (\hat{B}) \cap A \neq \emptyset\}\]
 
 Also provided by OpenCV via the \verb|dilate| function, it achieves the opposite effect to the erosion,
 computing instead the maximum value within the given structuring element and providing it to the current
-pixel.
-\[dilate(x, y) = \max\limits_{(x', y'): element(x', y') \neq 0} f(x + x', y + y')\text{ \cite{opencvImproc}}\]
+pixel. \cite{opencvImproc}
+\[dilate(x, y) = \max\limits_{(x', y'): element(x', y') \neq 0} f(x + x', y + y')\]
 Also similar to the erode filter, dilation permits as a parameter the entire structuring element, however
 only the kernel diameter is used.
 
@@ -174,11 +172,10 @@ only the kernel diameter is used.
 \subsection{Gaussian Filter}
 
 The Gaussian filter, also called Gaussian blur, is a smoothing filter that based on the
-Gaussian distribution function, defined in 2D space by the following:
+Gaussian distribution function, defined in 2D space \cite{gaussian} by
 \begin{equation}
 	\label{eq:gaussianFormula}
 	G(x, y) = {1\over\pi \sigma^2}{e^{(x^2 + y^2) / 2\sigma^2}}
-	\text{ \cite{gaussian}}
 \end{equation}
 
 The curve defined in \cref{eq:gaussianFormula} can be visualized as:
@@ -187,7 +184,8 @@ The curve defined in \cref{eq:gaussianFormula} can be visualized as:
 	\caption{2D Gaussian distribution curve \cite{gaussian}}
 \end{figure}
 
-and approximated (for a \(\sigma\) value of \(1.4\)) with the following integer kernel:
+and approximated, in its normalized form, (for a \(\sigma\) value of \(1.4\)) with the integer kernel
+\cite{gaussian}
 
 \begin{equation}
 	\label{eq:gaussianKernel}
@@ -199,7 +197,6 @@ and approximated (for a \(\sigma\) value of \(1.4\)) with the following integer 
 		4 & 9  & 12 & 9  & 4 \\
 		2 & 4  & 5  & 4  & 2 \\
 	\end{bmatrix}
-	\text{ \cite{gaussian}}
 \end{equation}
 
 OpenCV provides the implementation in the form of the \verb|GaussianBlur| function, defined by the size of
@@ -217,11 +214,10 @@ each direction.
 
 As the last smoothing technique demonstrated in this application, bilateral filtering is also the most
 complex, accounting not only for the neighborhood of each given pixel, but for the color disparity within
-a given neighborhood. It can be represented by the following:
+a given neighborhood. It can be represented \cite{bilateral} by
 \begin{equation}
 	\label{eq:bilateralFormula}
 	k(x) = \int_{-\infty}^{\infty} c(\xi, x) s(f(\xi), f(x))
-	\text{ \cite{bilateral}}
 \end{equation}
 where ``\(c(\xi, x)\) measures the geometric closeness`` and ``\(s(f(\xi), f(x))\) measures the photometric
 similarity`` between point \(x\), denoting the neighborhood center, and point \(\xi\), representing a point
@@ -249,17 +245,16 @@ capable  of computing gradient differences in pixel intensity and color, leading
 each distinct object present in the image.
 
 One such implementation is provided by OpenCV via the \verb|Sobel| function, which computes ``the first,
-second, third, or mixed image derivatives using an extended Sobel operator``.
+second, third, or mixed image derivatives using an extended Sobel operator``. \cite{opencvImproc}
 \begin{equation}
 	\label{eq:sobelDerivatives}
 	sobel(x, y) =
 	{{\partial^{x_{order}+y_{order}}f(x, y)}\over{\partial x^{x_{order}} \partial y^{y_{order}}}}
-	\text{ \cite{opencvImproc}}
 \end{equation}
 
 The practical implementation of \cref{eq:sobelDerivatives} is done through the ``Sobel operator``, an
 extensible operator, used to compute the \(n-th\) order derivative on each axis. The 3x3 shape of the
-first order derivative is represented for the \(x\) and \(y\) axes as:
+first order derivative is represented for the \(x\) and \(y\) axes \cite{ispBook} as
 \begin{equation}
 	\label{eq:sobelOperators}
 	h_x =
@@ -275,7 +270,6 @@ first order derivative is represented for the \(x\) and \(y\) axes as:
 		0  & 0  & 0  \\
 		-1 & -2 & -1 \\
 	\end{bmatrix}
-	\text{ \cite{ispBook}}
 \end{equation}
 
 By computing the convolution of the initial image with the operators defined in \cref{eq:sobelOperators},
@@ -289,21 +283,19 @@ two separate images are obtained, each holding a partial gradient with respect t
 \end{equation}
 
 Using the partial results, the final image, providing data on edges detected on both axes, can be computed
-by calculating the ``magnitude`` of the pixel intensity for each location
+by calculating the ``magnitude`` of the pixel intensity for each location \cite{ispBook}
 \begin{equation}
 	\label{eq:sobelMagnitude}
 	G(x, y) = \sqrt{G_x^2(x, y) + G_y^2(x, y)}
 	\text{ or }
 	G(x, y) = |G_x(x, y)| + |G_y(x, y)|
-	\text{ \cite{ispBook}}
 \end{equation}
 
 The magnitude on each axis obtained with \cref{eq:sobelResults} can also be used to determine the angle
-of the detected edge, through the following:
+of the detected edge, through \cite{ispBook}
 \begin{equation}
 	\label{eq:sobelTheta}
 	\tan(\theta) = {G_y\over{G_x}} \Rightarrow \theta = \arctan({G_y\over{G_x}})
-	\text{ \cite{ispBook}}
 \end{equation}
 
 Implemented in the application, the wrapper for the Sobel filter takes several parameters, namely the size
@@ -328,7 +320,7 @@ computing the \(\theta\) angle value.
 
 For the case of the non-directional edge detection, the image can be displayed once each pixel intensity is
 computed. However, if the directional approach is desired, each color channel in the resulting image is used
-to encode the angle as follows:
+to encode the angle as
 \begin{equation}
 	\label{eq:sobelRGB}
 	\begin{cases}
@@ -357,7 +349,7 @@ the image, and creates an effect similar to that of a depth map.
 
 The Canny approach to edge detection takes into account three criteria in order to optimize result quality
 applied on images ``corrupted by white noise``. Those are ``detection``, referring to edge importance,
-``localization``, referring to the distance between an edge and the position where it was detected, and the
+``localization``, referring to the distance between an edge and the position where it is detected, and the
 ``one response criterion``, referring to the removal of multiple hits for the same edge. This leads to the
 resulting image pixels having only two possible states: edge pixels, encoded with an intensity of \(255\), and
 non-edge pixels, encoded as 0s.
@@ -382,8 +374,8 @@ step is undesirable or computationally expensive.
 
 The aforementioned Sobel operator is able to detect an edge based only on the \(x\) and \(y\) axis, going from
 top to bottom and right to left, other kernels can be used in order to provide directional data within the end
-result. Such a kernel is the ``Prewitt operator``, a permutation of which was used for the purposes of this
-application:
+result. Such a kernel is the ``Prewitt operator``, a permutation of which is used for the purposes of this
+application \cite{dipBook}
 \begin{equation}
 	\mathop{
 		\begin{bmatrix}
@@ -400,13 +392,12 @@ application:
 			0  & 1  & 1 \\
 		\end{bmatrix}
 	}_{\textstyle \text{Permutation}}
-	\text{ \cite{dipBook}}
 \end{equation}
 
 The generated operator can be used to detect transitions on a 45\textdegree offset from the main axis. This
 kernel can also be rotated, either by 45\textdegree or 90\textdegree, in order to achieve different results.
 
-For use in this application, each kernel rotation was manually generated, with the sole parameter of the
+For use in this application, each kernel rotation is manually generated, with the sole parameter of the
 filter wrapper being the rotational step of the initial kernel, with each increment denoting a 90\textdegree
 rotation of the initial operator. After the convolution is computed, a fixed base value is added to the
 result, in order to flatten the output. The final image will represent a gray-scale version of the input,
@@ -442,24 +433,22 @@ For this reason, wave distortion is significantly more difficult to account for 
 
 Due to the physical nature of the distortion, with light rays hitting the image sensor in places that do not
 correspond with the real-life picture, the proposed solution does not affect the intensity values of each
-pixel, but modifies their geometric location. A general re-mapping implementation is as follows:
+pixel, but modifies their geometric location. A general re-mapping implementation \cite{lensFromula} is
 \begin{equation}
 	\label{eq:lensFormula}
 	\begin{cases}
 		x_u = x_d(1 + \lambda_1r_d^2 + \lambda_2r_d^4 + \dots) \\
 		y_u = y_d(1 + \lambda_1r_d^2 + \lambda_2r_d^4 + \dots) \\
 	\end{cases}
-	\text{ \cite{lensFromula}}
 \end{equation}
 where \(x_d\) and \(y_d\) refer to the initial, distorted coordinates, \(x_u\) and \(y_u\) refer to the
 undistorted output, and \(r_d\) refers to the distance of the current point from the center coordinates,
 usually \((0, 0)\), with \(r_d = \sqrt((x_d - x_0)^2 + (y_d - y_0)^2)\).
 
-For efficient computation and usability, only the first \(\lambda\) parameter is computed using the following:
+For efficient computation and usability, only the first \(\lambda\) parameter is computed using \cite{lensStack}
 \begin{equation}
 	\label{eq:lensLambda}
 	\lambda_1 = (\sin({{\pi r_d}\over{2 r_{max}}}))^{d_c}
-	\text{ \cite{lensStack}}
 \end{equation}
 with \(r_{max}\) denoting the maximum radius around the center that is affected by the algorithm, and \(d_c\)
 representing the distortion coefficient.
@@ -482,7 +471,7 @@ and for negative, pincushion aberration will be created.
 The magnitude of the coefficient represents the impact that the filter
 will have on the end result. The wrapper takes as parameters the maximum distortion radius and the distortion
 coefficient. It would also be possible to implement parameters for changing the position of the distortion
-center, however, due to the user interface implementation, it was not required.
+center, however, due to the user interface implementation, it is not required.
 
 \section{User Interface}
 
@@ -502,7 +491,7 @@ single RGBA format. It is then displayed to the user in the viewport, which is r
 The entire interface layout cab be broken down into two main components - the viewport displaying the most
 recently processed frame, and the control panel, used to modify the type and amount of filters applied, as
 well as parameters for each. Those elements are, in turn, comprised of other dedicated submodules, leading
-to a tree of encapsulated widgets, whose layout can be seen in the following:
+to a tree of encapsulated widgets, with the following layout.
 
 \begin{figure}[H]
 	\label{fig:uiSchema}
@@ -549,8 +538,8 @@ to a tree of encapsulated widgets, whose layout can be seen in the following:
 	\caption{Widget nesting diagram}
 \end{figure}
 
-After each element described in \cref{fig:uiSchema} is implemented and placed into its parent layout, the end
-result can be seen in the following:
+After each element described in \cref{fig:uiSchema} is implemented and placed into its parent layout, with the
+following end result.
 
 \begin{figure}[H]
 	\includegraphics[width=0.9\textwidth, height=0.45\textwidth]{resources/Empty_1.png}
@@ -564,8 +553,8 @@ primary use is to confine a filter to a subset of the original image, in order t
 comparing and contrasting the before and after displays of the same set of features.
 
 It is implemented as a child of the \verb|QGraphicsItem| class, due to its inherent properties, mainly being
-resizable and movable withing the scene. This is achieved through opperating on the items ``bounding rectangle``
-\cite{qtDoc}
+resizable and movable withing the scene. This is achieved through opperating on the items ``bounding
+rectangle``. \cite{qtDoc}
 
 The resizing of a region of interest is done through the anchors present in each corner of its parents
 bounding rectangle. The anchors are also inherited from \verb|QGraphicsItem|, and can be moved only within
@@ -708,4 +697,6 @@ done in order to observe filter latency.
 	\includegraphics[width=0.8\textwidth, height=0.5\textwidth]{resources/Buttons_Sliders.png}
 	\caption{Filter parameters layout}
 \end{figure}
+
+
 

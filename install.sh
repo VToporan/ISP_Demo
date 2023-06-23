@@ -1,4 +1,5 @@
 #!/bin/bash
+cd src
 
 cmake -H. -Bbuild
 cd build

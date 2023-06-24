@@ -23,8 +23,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
     layout->addWidget(view);
     setLayout(layout);
 
-    setWindowTitle("Image Processing Demo");
-    setWindowIcon(QIcon("/home/vtoporan/ISP_Demo/resources/ISP_Demo_Shutter.png"));
+    setWindowTitle("iLID");
     showMaximized();
 }
 

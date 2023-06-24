@@ -5,6 +5,7 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
+apt-get install g++
 apt-get install cmake
 apt-get install qt5-default
 apt-get install libopencv-dev

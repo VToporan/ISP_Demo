@@ -1,15 +1,16 @@
 #!/bin/bash
+cd src
 
 cmake -H. -Bbuild
 cd build
 make all
 
 cd ../
-DESKTOP_SHORTCUT=$HOME/Desktop/ISP_Demo.desktop
+DESKTOP_SHORTCUT=$HOME/Desktop/iLID.desktop
 
 echo "
 [Desktop Entry]
-Name=ISP Demo
+Name=iLID
 Exec=$(pwd)/build/IspDemo.exe
 Icon=$(pwd)/resources/ISP_Demo_Shutter.png
 Type=Application

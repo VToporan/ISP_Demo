@@ -1,0 +1,84 @@
+\newcommand*{\blankpage}{
+	\null
+	\thispagestyle{empty}
+	\addtocounter{page}{-1}
+	\newpage
+}
+% set document margins
+\geometry{
+	left=20mm,
+	right=20mm,
+	top=25mm,
+	bottom=20mm,
+	headheight=21mm,
+	headsep=4mm
+}
+
+% set Nimbus Sans as default font - it is similar to Arial and Helvetica
+% Arial is proprietary and it doesn't work with diacritics
+\renewcommand*\familydefault{\sfdefault}
+\linespread{1.15}
+\setlength{\parindent}{1.5cm}
+
+% Link border style
+\hypersetup{
+	colorlinks   = true,
+	urlcolor     = black,
+	linkcolor    = black,
+	citecolor    = black
+}
+
+\lstset{
+	numbers=none,
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,
+	frame=lines,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	% keywordstyle=\bfseries\color{green!40!black},
+	% commentstyle=\itshape\color{purple!40!black},
+	% identifierstyle=\color{blue},
+	% stringstyle=\color{orange}
+}
+
+% Disable hyphenation
+\pretolerance=10000
+\tolerance=2000
+\emergencystretch=10pt
+
+%\floatstyle{}
+% \newfloat{code}{ht}{loc}[chapter]
+\DeclareFloatingEnvironment[
+listname={List of Code},
+name=Code,
+placement=H,
+within=chapter,
+chapterlistsgaps=off,
+]{code}
+
+% Set caption names
+\floatname{equation}{Equation}
+\floatname{figure}{Figure}
+\floatname{table}{Table}
+\floatname{code}{Code}
+
+\setlength{\intextsep }{12pt plus 1pt minus 1pt}
+
+% Set citation names
+\crefname{code}{Snippet}{Snippet}
+\crefname{figure}{Figure}{Figure}
+\crefname{table}{Table}{Table}
+\crefname{equation}{Eq.}{Eq.}
+\crefname{section}{Section}{Section}
+\crefname{chapter}{Chapter}{Capter}
+%\renewcommand*{\lstlistlistingname}{Snippet list}
+
+% Make floats centered
+\captionsetup{width=0.8\textwidth}
+
+\makeatletter
+\g@addto@macro\@floatboxreset\centering
+\makeatother
+
+
+

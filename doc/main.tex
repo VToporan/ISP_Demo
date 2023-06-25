@@ -1,0 +1,56 @@
+\documentclass[12pt, english, a4paper]{report}
+\include{packages}
+\graphicspath{{resources/}}
+
+\begin{document}
+\let\oldref\ref
+\renewcommand{\ref}[1]{(\oldref{#1})}
+\renewcommand\bibname{References}
+\tikzstyle{every node}=[draw=black,thick,anchor=west]
+\counterwithin{lstlisting}{section}
+\counterwithin{figure}{section}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+
+\pagenumbering{Alph}
+\include{title}
+\pagenumbering{arabic}
+
+% \blankpage
+
+\include{abstract}
+
+\pagestyle{pagestyle}
+
+\tableofcontents
+
+\include{introduction}
+
+\include{stateOfTheArt}
+
+\include{theoreticalBackground}
+
+\include{implementation}
+
+\include{measurements}
+
+\include{future}
+
+\include{conclusion}
+
+\addcontentsline{toc}{chapter}{References}
+\printbibliography
+
+\include{appendix}
+
+\pagestyle{empty}
+\includepdf[pages={1}, pagecommand={\phantomsection  \addcontentsline{toc}{chapter}{Authenticity statement}}]{\declarationPath}
+
+\end{document}
+
+
+
+
+
+

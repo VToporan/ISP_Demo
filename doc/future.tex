@@ -1,0 +1,61 @@
+\chapter{Future Development}
+
+\section{Interface Improvements}
+
+The graphical interface, while intuitive, currently lacks the means of providing the user with information
+regarding run-time events. Such a situation could be a specific combination of filters and filter parameters
+that greatly affect the current frame-rate. In such a case, the application will automatically freeze
+the current frame in order to spare computational resources, as well as inform the user of the situation,
+via a pop-up message.
+
+Another significant improvement to the user experience will be a toggle switch that will allow for a filter
+to be temporally disabled, without it being deselected. This will greatly facilitate the visual component,
+leading to an accessible way of creating comparisons.
+
+For ease of use, specifically in cases where access to a video camera is limited, an input field will be 
+added in order to allow for running the application on a pre-recorded video or image. This will also lead
+to more consistency between subsequent runs, due to the ability to compare and contrast the resulting 
+output on the same input frames.
+
+\section{Optimizations}
+
+While the measurements have contributed to understanding the average compute-time for each filter, they
+also show that one of the greatest bottlenecks comes from the interface side of the application. This is 
+due to the need for resizing the input frame to the size of the view-port. A possible solution will be 
+to modify the \verb|VideoCapture| such that the input frame is captured directly at the desired scale.
+
+Another issue posed by the upscaling of the input image is that of filter performance with large
+view-ports. A resolution could be the application of each filer before the size modification, however
+this approach could lead to time losses when computing the region of interest.
+
+\section{Portability}
+
+The RaspberryPi implementation is ideal for a demonstration environment, however, it lacks the flexibility
+of a desktop application. With the educational component not limited to practical demonstration of all 
+filter capabilities, but, instead, singular applications of individual convolutions, the need for 
+cross-platform Portability becomes obvious.
+
+Considering all application dependencies - cmake, OpenCV and Qt - can be build for multiple platforms,
+the greatest constraint for Portability is the implementation of the install scripts for different operating
+systems. Notably, the Windows build will require specifically constructed batch scripts, both for 
+building the application and, more importantly, for installing the dependencies without significant input
+from the end-user.
+
+Another hurdle int the way of a dedicated desktop application is that of the user interface design. For this, 
+a dedicated configuration menu will have to be designed in order to set the graphical parameters - such as
+the image dimensions and the amount of filters available - in accordance to the processing and display 
+capabilities of each system.
+
+\section{Overhauling}
+
+While the application rose up to the notion of an educational demo for image signal processing techniques, it
+allows for plenty of untapped potential in the form of image analysis and synthesis. In order to achieve this,
+however, the entire interface will need to be redesigned in order to allow for significantly more control over
+increasingly complex analysis tools, spanning from a simple frame counter to separate displays showcasing the
+histogram, 2-dimensional Fourier transform or Hough transform corresponding to the current frame.
+
+In order for such an expansion to be possible, all the aforementioned changes need to be made, especially the 
+proposed optimization steps. On top of those, the application will have to transition from a demonstration to 
+a fully fledged desktop application. Such an extensive overhaul will require a significant time investment, and 
+will, most likely, be achieved during a masters program, with the potential of becoming a dissertation project 
+in and of itself.
